@@ -1,9 +1,11 @@
 #FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
-<h1 class="grostitre">Abonnements</h1>
+<h1 class="grostitre"><:abos:abonnements:></h1>
 
+<BOUCLE_hasoffre(ABO_OFFRES){0,1}>
 <h2><:abonnement:titre_abonnements:></h2>
 
 <INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,statut=#ENV{statut}|is_null|?{ok,#ENV{statut}},export=oui,env,ajax}>
+</BOUCLE_hasoffre>
 
 <h2><:abooffre:titre_abo_offres:></h2>
 
