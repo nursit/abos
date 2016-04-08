@@ -1,0 +1,16 @@
+<div class="abonnements">
+<INCLURE{fond=prive/objets/liste/abonnements,id_auteur,titre=<:abonnement:info_abonnements_auteur:>,ajax,env} />
+	<div class="abonnements-admin">
+		<button class="right" style="float: right" onclick="jQuery(this).hide().next().show('fast');return false;"><:abonnement:icone_creer_abonnement:></button>
+		<div class="none">
+			#FORMULAIRE_DISTRIBUER_ABONNEMENT{#ID_AUTEUR}
+		</div>
+	</div>
+	<script>
+		jQuery(function(){
+			if (jQuery('#formulaire_distribuer_abonnement').find('.reponse_formulaire,.erreur').length){
+				jQuery('#formulaire_distribuer_abonnement').closest('.none').show().prev().hide();
+			}
+		});
+	</script>
+</div>

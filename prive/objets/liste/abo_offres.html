@@ -1,0 +1,44 @@
+[(#SET{defaut_tri,#ARRAY{
+	titre,1, 
+	id_abo_offre,-1,
+	points,-1
+}})]<B_liste_abo_offres>
+#ANCRE_PAGINATION
+<div class="liste-objets abo_offres">
+<table class='spip liste'>
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{abooffre:info_1_abooffre,abooffre:info_nb_abo_offres}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th>
+			<th class='titre' scope='col'>[(#TRI{titre,<:abooffre:label_titre:>,ajax})]</th>
+			<th class='duree' scope='col'><:abooffre:label_duree:></th>
+			<th class='prix' scope='col'>Prix</th>
+			<th class='wha_oid' scope='col'>Wha</th>
+			<th class='produits' scope='col'>Prod.</th>
+			<th class='nombre' scope='col'>Nb</th>
+			<th class='id' scope='col'>[(#TRI{id_abo_offre,<:info_numero_abbreviation:>,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_liste_abo_offres(ABO_OFFRES){id_mot?}{id_auteur?}{where?}{statut?}{recherche?}{tri #ENV{par,num titre},#GET{defaut_tri}}{par titre}{pagination #ENV{nb,10}}>
+		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
+			<td class='statut'>[(#STATUT|puce_statut{abooffre,#ID_ABO_OFFRE})]</td>
+			<td class='titre principale'>[(#LOGO_ABOOFFRE|image_reduire{20,26})]<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></td>
+			<td class='duree'>[(#DUREE|abos_periode_en_clair)]</td>
+			<td class='prix'>[(#PRIX_RENOUVELLEMENT|sinon{#PRIX}|affiche_monnaie)]</td>
+			<td class='wha_oid'>[(#WHA_OID)]</td>
+			<td class='produits'><BOUCLE_p(MOTS){id_groupe=9}{id_abo_offre}{', '}><abbr title="[(#TITRE|attribut_html)]">[(#TITRE|substr{0,1})]</abbr></BOUCLE_p></td>
+			<td class='nombre'><BOUCLE_nb(ABONNEMENTS){id_abo_offre}{statut=ok} />[(#TOTAL_BOUCLE|sinon{''})]<//B_nb></td>
+			<td class='id'>[(#AUTORISER{modifier,abooffre,#ID_ABO_OFFRE}|?{
+				<a href="[(#URL_ECRIRE{abooffre_edit,id_abo_offre=#ID_ABO_OFFRE})]">#ID_ABO_OFFRE</a>,
+				#ID_ABO_OFFRE
+			})]</td>
+		</tr>
+	</BOUCLE_liste_abo_offres>
+	</tbody>
+</table>
+[<p class='pagination'>(#PAGINATION{prive})</p>]
+</div>
+</B_liste_abo_offres>[
+<div class="liste-objets abo_offres caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_liste_abo_offres>

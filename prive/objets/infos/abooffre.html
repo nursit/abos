@@ -1,0 +1,9 @@
+<BOUCLE_abooffre(ABO_OFFRES){id_abo_offre=#ENV{id}}{statut?}>
+<div class='infos'>
+[(#SET{texte_objet,<:abooffre:titre_abooffre:>})]
+<div class='numero'><:titre_cadre_numero_objet{objet=#GET{texte_objet}}:><p>#ID_ABO_OFFRE</p></div>
+
+[(#FORMULAIRE_INSTITUER_OBJET{abo_offres,#ID_ABO_OFFRE})]
+
+</div>
+</BOUCLE_abooffre>

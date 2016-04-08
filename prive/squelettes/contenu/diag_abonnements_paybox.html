@@ -1,0 +1,5 @@
+#FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+<h1 class="grostitre"><:abonnement:titre_diagnostic_paybox:></h1>
+
+[(#SET{where,#REM|where_abonnements_paybox_ok})]
+<INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,statut=#ENV{statut}|is_null|?{ok,#ENV{statut}},where=#GET{where},mode_paiement=paybox,env,ajax,nb=30} />

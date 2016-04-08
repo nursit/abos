@@ -1,0 +1,44 @@
+<BOUCLE_abooffre(ABO_OFFRES){id_abo_offre}{statut?}>
+
+[<div class="champ contenu_titre[ (#TITRE*|strlen|?{'',vide})]">
+	<label><:abooffre:label_titre:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{titre} titre'>(#TITRE)</span>
+</div>]
+
+[<div class="champ contenu_duree[ (#DUREE*|strlen|?{'',vide})]">
+	<label><:abooffre:label_duree:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{duree} duree'>(#DUREE|abos_periode_en_clair)</span>
+</div>]
+
+[<div class="champ contenu_prix[ (#PRIX*|strlen|?{'',vide})]">
+	<label><:abooffre:label_prix:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{prix} prix'>(#PRIX|affiche_monnaie)</span>
+</div>]
+
+[<div class="champ contenu_prix_renouvellement[ (#PRIX_RENOUVELLEMENT*|strlen|?{'',vide})]">
+	<label><:abooffre:label_prix_renouvellement:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{prix_renouvellement} prix_renouvellement'>(#PRIX_RENOUVELLEMENT|affiche_monnaie)</span>
+</div>]
+
+[<div class="champ contenu_taux_tva[ (#TAUX_TVA*|strlen|?{'',vide})]">
+	<label><:abooffre:label_taux_tva:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{taux_tva} taux_tva'>(#TAUX_TVA|mult{100}|round{2})%</span>
+</div>]
+
+[<div class="champ contenu_wha_oid[ (#WHA_OID*|strlen|?{'',vide})]">
+	<label><:abooffre:label_wha_oid:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{wha_oid} wha_oid'>(#WHA_OID)</span>
+</div>]
+<hr />
+
+[<div class="champ contenu_descriptif[ (#DESCRIPTIF*|strlen|?{'',vide})]">
+	<label><:abooffre:label_descriptif:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{descriptif} descriptif'>(#DESCRIPTIF)</span>
+</div>]
+
+[<div class="champ contenu_texte[ (#TEXTE*|strlen|?{'',vide})]">
+	<label><:abooffre:label_texte:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{texte} texte'>(#TEXTE)</span>
+</div>]
+
+</BOUCLE_abooffre>

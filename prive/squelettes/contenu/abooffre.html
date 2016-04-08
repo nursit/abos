@@ -1,0 +1,56 @@
+[(#AUTORISER{voir,abooffre,#ID_ABO_OFFRE}|sinon_interdire_acces)]
+<BOUCLE_abooffre(ABO_OFFRES){id_abo_offre}{statut==.*}{si #ENV{exec}|=={abooffre}}>
+[(#BOITE_OUVRIR{[
+	[(#AUTORISER{modifier,abooffre,#ID_ABO_OFFRE})
+		[(#ID_ABO_OFFRE|afficher_qui_edite{abooffre}|non)
+			[(#URL_ECRIRE{abooffre_edit,id_abo_offre=#ID_ABO_OFFRE}|icone_verticale{<:abooffre:icone_modifier_abooffre:>,abooffre,edit,right ajax preload})]
+		]
+		[(#ID_ABO_OFFRE|afficher_qui_edite{abooffre}|oui)
+			[(#URL_ECRIRE{abooffre_edit,id_abo_offre=#ID_ABO_OFFRE}|icone_verticale{#ID_ABO_OFFRE|afficher_qui_edite{abooffre},warning-24,'',right edition_deja ajax preload})]
+		]
+	]
+
+	<h1>[(#RANG). ](#TITRE|sinon{<:info_sans_titre:>})[(#CHEMIN_IMAGE{abooffre-24.png}|balise_img{abooffre,cadre-icone})]</h1>
+	<p class="soustitre">
+		<strong>[(#PRIX|affiche_monnaie)][ \(puis(#PRIX_RENOUVELLEMENT|oui)[(#PRIX_RENOUVELLEMENT|affiche_monnaie)]\)]</strong>
+		[<br />(#DUREE|abos_periode_en_clair)]
+	</p>
+
+],simple fiche_objet})]
+
+<div class="ajax">
+	#FORMULAIRE_DATER{abooffre,#ID_ABO_OFFRE}
+</div>
+
+<!--affiche_milieu-->
+
+<div id="wysiwyg">
+<INCLURE{fond=prive/objets/contenu/abooffre,id=#ID_ABO_OFFRE,id_abo_offre=#ID_ABO_OFFRE,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
+</div>
+
+<div class="nettoyeur"></div>
+
+[(#AUTORISER{modifier,abooffre,#ID_ABO_OFFRE})
+	[(#ID_ABO_OFFRE|afficher_qui_edite{abooffre}|non)
+		[(#URL_ECRIRE{abooffre_edit,id_abo_offre=#ID_ABO_OFFRE}|icone_verticale{<:abooffre:icone_modifier_abooffre:>,abooffre,edit,right ajax preload})]
+	]
+	[(#ID_ABO_OFFRE|afficher_qui_edite{abooffre}|oui)
+		[(#URL_ECRIRE{abooffre_edit,id_abo_offre=#ID_ABO_OFFRE}|icone_verticale{#ID_ABO_OFFRE|afficher_qui_edite{abooffre},warning-24,'',right edition_deja ajax preload})]
+	]
+]
+
+[(#ID_ABO_OFFRE|abonnements_historique_encaissements)]
+
+#PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,abooffre,id,#ID_ABO_OFFRE},data,'<div class="nettoyeur"></div>'}}
+
+#BOITE_FERMER
+
+<INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,statut=#ENV{statut}|is_null|?{ok,#ENV{statut}},env,ajax}>
+
+
+[(#EVAL{_AJAX}|oui)
+	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin,#extra');/*\\]\\]>*/</script>
+]
+</BOUCLE_abooffre>
+[(#ENV**{exec}|=={abooffre_edit}|?{#INCLURE{fond=prive/squelettes/contenu/abooffre_edit,redirect='',env,retourajax=oui},#REM|sinon_interdire_acces})]
+<//B_abooffre>

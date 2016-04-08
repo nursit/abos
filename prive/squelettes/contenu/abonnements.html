@@ -1,0 +1,15 @@
+#FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+<h1 class="grostitre">Abonnements</h1>
+
+<h2><:abonnement:titre_abonnements:></h2>
+
+<INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,statut=#ENV{statut}|is_null|?{ok,#ENV{statut}},export=oui,env,ajax}>
+
+<h2><:abooffre:titre_abo_offres:></h2>
+
+<INCLURE{fond=prive/objets/liste/abo_offres, par=id_abo_offre, nb=5, env, ajax, sinon=<:abooffre:info_aucun_abooffre:>}>
+
+[(#AUTORISER{creer,abooffre})
+	[(#URL_ECRIRE{abooffre_edit,new=oui}|icone_verticale{<:abooffre:icone_creer_abooffre:>,abooffre,new,right})]
+<div class="nettoyeur"></div>
+]

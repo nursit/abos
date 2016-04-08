@@ -1,0 +1,56 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_abo_offre,nouveau}'>
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	[(#ENV{editable})
+	<form method='post' action='#ENV{action}'><div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<input type='hidden' name='id_abo_offre' value='#ENV{id_abo_offre}' />
+		<ul>
+
+			[(#SAISIE{input, titre, obligatoire=oui,
+				label=<:abooffre:label_titre:>})]
+
+			[(#SAISIE{textarea, descriptif,rows=3,
+				label=<:abooffre:label_descriptif:>})]
+
+			[(#SAISIE{input, prix,
+				label=<:abooffre:label_prix:>})]
+
+			[(#SAISIE{input, prix_renouvellement,
+				label=<:abooffre:label_prix_renouvellement:>})]
+
+			[(#SAISIE{input, taux_tva,
+				label=<:abooffre:label_taux_tva:>})]
+
+			#SET{name,duree}#SET{obli,'obligatoire'}#SET{defaut,''}#SET{erreurs,#ENV**{erreurs}|table_valeur{#GET{name}}}
+			<li class="editer editer_[(#GET{name})][ (#GET{obli})][ (#GET{erreurs}|oui)erreur]">
+				<label for="duree_valeur"><:abooffre:label_duree:></label>[
+				<span class='erreur_message'>(#GET{erreurs})</span>
+				]#SET{name,duree_valeur}#SET{obli,'obligatoire'}#SET{defaut,'1'}
+				<input type="text" name="#GET{name}" class="text" value="#ENV*{#GET{name},#GET{defaut}}" id="#GET{name}" [(#HTML5|et{#GET{obli}})required='required']/>
+				#SET{name,duree_unite}#SET{obli,'obligatoire'}#SET{defaut,'month'}
+				<select name="#GET{name}" class="select" id="#GET{name}">
+					#SET{val,week}
+					<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>semaines</option>
+					#SET{val,month}
+					<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>mois</option>
+					#SET{val,year}
+					<option value="#GET{val}"[(#ENV{#GET{name},#GET{defaut}}|=={#GET{val}}|oui)selected="selected"]>année</option>
+				</select>
+			</li>
+
+			[(#SAISIE{input, wha_oid,
+				label=<:abooffre:label_wha_oid:>,
+			  explication=<:abooffre:explication_wha_oid:>})]
+
+			[(#SAISIE{textarea, texte,rows=10,
+				label=<:abooffre:label_texte:>})]
+
+		</ul>
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	</div></form>
+	]
+</div>

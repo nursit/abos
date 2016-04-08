@@ -1,0 +1,19 @@
+#INCLURE{fond=prive/squelettes/inclure/menu-navigation,
+	menu=boutique,
+	bloc=navigation,
+	env}
+
+[(#BOITE_OUVRIR{<:abos:echeances:>,simple})]
+[(#REM|abos_compter_abonnes_actifs) abonnés actifs]
+<B_abosecheances>
+<ul class="liste-items">
+<BOUCLE_abosecheances(ABONNEMENTS){statut=ok}{id_abo_offre?}{id_auteur?}{fusion duree_echeance}{somme_echeance}>[(#SOMME_ECHEANCE|>{0.01}|oui)
+<li class="item">[(#SOMME_ECHEANCE|affiche_monnaie{2})] [(#DUREE_ECHEANCE|abos_periode_en_clair)]</li>
+]</BOUCLE_abosecheances>
+</ul>
+</B_abosecheances>
+#BOITE_FERMER
+
+[(#BOITE_OUVRIR{'',raccourcis})]
+[(#URL_ECRIRE{stats_abonnements}|icone_horizontale{Statistiques,repartition-24})]
+#BOITE_FERMER

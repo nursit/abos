@@ -1,0 +1,33 @@
+#FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
+<h1 class="grostitre"><:abonnement:titre_diagnostic:></h1>
+
+<h2>Profils qui ont payés une transaction mais n'ont pas eu d'abonnement</h2>
+<INCLURE{fond=prive/objets/liste/visiteurs,id_auteur=#REM|abonnements_auteur_sans{},env,ajax,sinon='Aucun - tout est OK'} />
+
+<h2>Profils qui ont plusieurs abonnements actifs</h2>
+<INCLURE{fond=prive/objets/liste/visiteurs,id_auteur=#REM|abonnements_auteur_plusieurs{},env,ajax,sinon='Aucun - tout est OK'} />
+
+
+<h2>Date de fin passée</h2>
+#SET{where,#VAL{'date_fin<'}|concat{#ENV{date}|sql_quote}}
+<INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,statut=#ENV{statut}|is_null|?{ok,#ENV{statut}},where=#GET{where},env,ajax,nb=10} />
+
+<h2>Echéance passée depuis 2 jours (paybox)</h2>
+#SET{where,#VAL{'date_echeance < DATE_SUB('}|concat{#ENV{date}|sql_quote{},',INTERVAL 2 DAY)'}}
+<INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,statut=#ENV{statut}|is_null|?{ok,#ENV{statut}},where=#GET{where},mode_paiement=paybox,env,ajax,nb=10} />
+
+<h2>Resiliation post-echeance (paybox)</h2>
+#SET{where,#VAL{'date_echeance < DATE_SUB('}|concat{#ENV{date}|sql_quote{},',INTERVAL 2 DAY)'}}
+#SET{where,#GET{where}|concat{' AND date_fin>date_echeance'}}
+<INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,statut=#ENV{statut}|is_null|?{resilie,#ENV{statut}},where=#GET{where},mode_paiement=paybox,env,ajax,nb=10} />
+
+<h2>Abonnements sans transaction</h2>
+#SET{where,#VAL{'id_abonnement NOT IN (select ZZZ.id_abonnement from spip_abonnements_liens AS ZZZ WHERE ZZZ.objet='}|concat{#VAL{transaction}|sql_quote{},')'}}
+<INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,where=#GET{where},env,ajax,nb=10} />
+
+
+<h2>Date de fin &lt; Date de début</h2>
+#SET{where,'date_fin<date_debut'}
+<INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,where=#GET{where},env,ajax,nb=10} />
+
+

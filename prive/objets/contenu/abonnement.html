@@ -1,0 +1,75 @@
+<BOUCLE_abonnement(ABONNEMENTS){id_abonnement}{statut?}>
+
+#BOITE_OUVRIR{'','note'}
+[<div class="champ contenu_date_debut[ (#DATE_DEBUT*|strlen|?{'',vide})]">
+	<label><:abonnement:label_date_debut:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{date_debut} date_debut'>(#DATE_DEBUT|affdate_heure)</span>
+</div>]
+
+[<div class="champ contenu_date_echeance[ (#DATE_ECHEANCE*|strlen|?{'',vide})]">
+	<label><:abonnement:label_date_echeance:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{date_echeance} date_echeance'>(#DATE_ECHEANCE|affdate_heure)</span>
+</div>]
+
+[<div class="champ contenu_date_fin[ (#DATE_FIN*|strlen|?{'',vide})]">
+	<label><:abonnement:label_date_fin:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{date_fin} date_fin'>(#DATE_FIN|affdate_heure)</span>
+</div>]
+[<div class="champ contenu_credits[ (#CREDITS*|strlen|?{'',vide})]">
+	<label><:abonnement:label_credits:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{credits} credits'>(#CREDITS|abos_credits_en_clair)</span>
+</div>]
+
+#BOITE_FERMER
+
+[<div class="champ contenu_duree_echeance[ (#DUREE_ECHEANCE*|strlen|?{'',vide})]">
+	<label><:abonnement:label_duree_echeance:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{duree_echeance} duree_echeance'>(#DUREE_ECHEANCE|abos_periode_en_clair)</span>
+</div>]
+
+[<div class="champ contenu_prix_echeance[ (#PRIX_ECHEANCE*|strlen|?{'',vide})]">
+	<label><:abonnement:label_prix_echeance:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{prix_echeance} prix_echeance'>(#PRIX_ECHEANCE|affiche_monnaie)</span>
+</div>]
+
+[<div class="champ contenu_credits_echeance[ (#CREDITS_ECHEANCE*|strlen|?{'',vide})]">
+	<label><:abonnement:label_credits_echeance:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{credits_echeance} credits_echeance'>(#CREDITS_ECHEANCE|abos_credits_en_clair)</span>
+</div>]
+
+[<div class="champ contenu_mode_echeance[ (#MODE_ECHEANCE*|strlen|?{'',vide})]">
+	<label><:abonnement:label_mode_echeance:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{mode_echeance} mode_echeance'>(#MODE_ECHEANCE)</span>
+</div>]
+
+[<div class="champ contenu_id_transaction_echeance[ (#ID_TRANSACTION_ECHEANCE*|strlen|?{'',vide})]">
+	<label><:abonnement:label_id_transaction_echeance:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{id_transaction_echeance} id_transaction_echeance'>(#ID_TRANSACTION_ECHEANCE)</span>
+</div>]
+
+[<div class="champ contenu_id_transaction_essai[ (#ID_TRANSACTION_ESSAI*|strlen|?{'',vide})]">
+	<label><:abonnement:label_id_transaction_essai:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{id_transaction_essai} id_transaction_essai'>(#ID_TRANSACTION_ESSAI)</span>
+</div>]
+
+[<div class="champ contenu_mode_paiement[ (#MODE_PAIEMENT*|strlen|?{'',vide})]">
+	<label><:abonnement:label_mode_paiement:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{mode_paiement} mode_paiement'>(#MODE_PAIEMENT)</span>
+</div>]
+
+[<div class="champ contenu_confirm[ (#CONFIRM*|strlen|?{'',vide})]">
+	<label><:abonnement:label_confirm:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{confirm} confirm'>(#CONFIRM)</span>
+</div>]
+
+[<div class="champ contenu_commentaire[ (#COMMENTAIRE*|strlen|?{'',vide})]">
+	<label><:abonnement:label_commentaire:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{commentaire} commentaire'>(#COMMENTAIRE|propre)</span>
+</div>]
+
+[<div class="champ contenu_message[ (#MESSAGE*|strlen|?{notice,vide})]">
+	<label><:abonnement:label_message:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{message} message'>(#MESSAGE)</span>
+</div>]
+
+</BOUCLE_abonnement>

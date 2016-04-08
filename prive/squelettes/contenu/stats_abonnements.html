@@ -1,0 +1,46 @@
+<h1>Statistiques d'abonnements</h1>
+
+<BOUCLE_total(ABONNEMENTS){statut=ok} />#SET{total,#TOTAL_BOUCLE}<//B_total>
+
+<h2>Répartition des offres</h2>
+<p>Abonnements en cours</p>
+<table class="spip">
+	<thead>
+	<tr><th>Offre</th><th class='center'>Nombre</th><th class='center'>%</th></tr>
+	</thead>
+	<tbody>
+	<BOUCLE_offres(abo_offres){par id_abo_offre}>
+		<BOUCLE_totaloffre(ABONNEMENTS){statut=ok}{id_abo_offre} />#SET{totaloffre,#TOTAL_BOUCLE}<//B_totaloffre>
+		<tr>
+			<td>
+				<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a>
+			</td>
+			<td class='numeric'>#GET{totaloffre}</td>
+			<td class='numeric'>[(#GET{totaloffre}|div{#GET{total}}|mult{1000}|round|div{10})%]</td>
+		</tr>
+	</BOUCLE_offres>
+	</tbody>
+	<tfoot>
+	<tr>
+		<td>Total</td><td class='numeric'>#GET{total}</td><td class='numeric'></td>
+	</tr>
+
+	</tfoot>
+</table>
+
+<BOUCLE_paroffre(abo_offres){par id_abo_offre}>
+
+<h2><a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></h2>
+<p>Abonnements finis en fonction des mois</p>
+<table class="spip">
+	<thead>
+	<tr><th>Mois de fin</th><th class='center'>Nombre</th><th colspan="2" class='center'>Renouvelés</th><th colspan="2" class='center'>Non renouvelés</th></tr>
+	</thead>
+	<tbody>
+	<BOUCLE_mois(POUR){tableau #LISTE{-2,-1,0,1,2,3,4,5,6}}>
+	[(#VALEUR|afficher_stats_echeances_offre{#ID_ABO_OFFRE})]
+	</BOUCLE_mois>
+	</tbody>
+</table>
+
+</BOUCLE_paroffre>

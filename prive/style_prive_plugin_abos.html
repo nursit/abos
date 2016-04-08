@@ -1,0 +1,27 @@
+[(#REM)
+
+	Ce squelette definit les styles de l'espace prive
+
+	Note: l'entete "Vary:" sert a repousser l'entete par
+	defaut "Vary: Cookie,Accept-Encoding", qui est (un peu)
+	genant en cas de "rotation du cookie de session" apres
+	un changement d'IP (effet de clignotement).
+
+	ATTENTION: il faut absolument le charset sinon Firefox croit que
+	c'est du text/html !
+<style>
+]
+
+.formulaire_editer_abooffre .editer_duree .text {width: 5em;}
+.formulaire_editer_abooffre .editer_duree .select {width: auto;}
+.abooffre #wysiwyg label {font-weight: bold; color:#666;}
+
+.liste-objets.abonnements .abonnement_info_statut_impaye td, .liste-objets.abonnements .abonnement_info_statut_impaye th {background-color: #D2D2C1}
+.liste-objets.abonnements .abonnement_info_statut_resilie td, .liste-objets.abonnements .abonnement_info_statut_resilie th {background-color: #B7A5A5}
+
+.liste-objets.abonnements .wo-credits td.credits,.liste-objets.abonnements .wo-credits th.credits {display: none}
+.liste-objets.abonnements .wo-echeance td.echeance,.liste-objets.abonnements .wo-echeance th.echeance  {display: none}
+.liste-objets.abonnements .wo-uid td.uid,.liste-objets.abonnements .wo-uid th.uid  {display: none}
+
+
+.abonnement #wysiwyg label {font-weight: bold; color:#888;}

@@ -1,0 +1,42 @@
+[(#REM)
+
+Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_html
+
+
+]
+<BOUCLE_abonnement(ABONNEMENTS){id_abonnement}{tout}>
+<title>[[(#NOM_SITE_SPIP|textebrut)]] Fin de votre abonnement...</title>
+
+<intro>Renouvelez-le avant le [(#DATE_FIN|date_relativecourt)]&nbsp;! | </intro>
+
+<body>
+	<div class="header">
+		<p>
+		</p>
+
+		<hr/>
+	</div>
+	<h2>Votre abonnement se termine <strong>[(#DATE_FIN|date_relativecourt|replace{' ',&nbsp;})]</strong>&nbsp;!...</h2>
+
+	<p>Renouvelez-le vite, directement depuis <a href="#URL_PAGE{profil}">la page de votre compte</a>.</p>
+	<p>Merci !</p>
+
+
+	<div class="footer">
+		<hr/>
+		<h3>Votre abonnement actuel</h3>
+		<strong>#INFO_TITRE{abo_offre,#ID_ABO_OFFRE}</strong>
+		<p class="publication" style="display: block">[(#DATE_FIN|intval|?{#DATE_DEBUT|affdate_debut_fin{#DATE_FIN,non},[(#DATE_DEBUT|<{#ENV{date}}|?{[Depuis le (#DATE_DEBUT|affdate)],[à partir du (#DATE_DEBUT|affdate)]})]})]</p>
+		[(#GET{fini}|non)
+	  [<div class="info">(#MESSAGE)</div>]
+	  ]
+		<ul class="spip">
+		  <BOUCLE_t(TRANSACTIONS abonnements_liens){id_abonnement}{!par date_transaction}{statut IN ok,attente}>
+		  <li>Paiement ##ID_TRANSACTION du [(#DATE_TRANSACTION|affdate)] - [(#MONTANT|affiche_monnaie)] par [(#MODE|bank_titre_type_paiement)]</li>
+		  </BOUCLE_t>
+	  </ul>
+	</div>
+
+</body>
+</BOUCLE_abonnement>
+#FILTRE{facteur_email_wrap_to_html}

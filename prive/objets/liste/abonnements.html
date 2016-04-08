@@ -1,0 +1,51 @@
+[(#SET{defaut_tri,#ARRAY{
+	id_abonnement,-1,
+  id_abo_offre,-1,
+	points,-1
+}})]#SET{hide_credits,' '}#SET{hide_echeance,' '}#SET{hide_uid,' '}
+<B_liste_abonnements>
+#ANCRE_PAGINATION
+<div class="liste-objets abonnements">
+<table class='spip liste[(#GET{hide_credits})wo-credits][(#GET{hide_uid})wo-uid][(#GET{hide_echeance})wo-echeance]'>
+	[<caption><strong class="caption">(#ENV*{titre,#GRAND_TOTAL|singulier_ou_pluriel{abonnement:info_1_abonnement,abonnement:info_nb_abonnements}})</strong></caption>]
+	<thead>
+		<tr class='first_row'>
+            <th class='id' scope='col'>[(#TRI{id_abonnement,<:info_numero_abbreviation:>,ajax})]</th>
+			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th>
+			<th class='client' scope='col'>Compte</th>
+			<th class='offre' scope='col'>[(#TRI{id_abo_offre,Offre,ajax})]</th>
+			<th class='credits' scope='col'>Crd.</th>
+			<th class='uid' scope='col'>UID</th>
+			<th class='debut' scope='col'>[(#TRI{date_debut,Début,ajax})]</th>
+			<th class='echeance' scope='col'>[(#TRI{date_echeance,Ech.,ajax})]</th>
+			<th class='fin' scope='col'>[(#TRI{date_fin,Fin,ajax})]</th>
+			<th class='mode' scope='col'>[(#TRI{mode_paiement,Mode,ajax})]</th>
+		</tr>
+	</thead>
+	<tbody>
+	<BOUCLE_liste_abonnements(ABONNEMENTS){id_abo_offre?}{id_transaction_echeance?}{id_transaction_essai?}{id_mot?}{id_auteur?}{where?}{statut?}{mode_paiement?}{recherche?}{tri #ENV{par,id_abonnement},#GET{defaut_tri}}{pagination #ENV{nb,10}}>
+		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})][ statut_(#STATUT)][ (#STATUT|abos_statut_en_clair{#DATE_ECHEANCE}|replace{'\W','_'})]'>
+            <td class='id'><a href="[(#ID_ABONNEMENT|generer_url_entite{abonnement})]" title="#ID_ABONNEMENT">#ID_ABONNEMENT</a></td>
+			<td class='statut'>[ (#STATUT|abos_statut_en_clair{#DATE_ECHEANCE}|_T)]</td>
+			<td class='client secondaire'>[<a(#ID_AUTEUR|oui)
+				href="#URL_ECRIRE{auteur,id_auteur=#ID_AUTEUR}"
+				title="#INFO_EMAIL{auteur,#ID_AUTEUR}">[(#INFO_EMAIL{auteur,#ID_AUTEUR}|couper{20,'...'})]</a>][(#ID_AUTEUR|non)
+				[(#INFO_AUTEUR{transaction,#ID_TRANSACTION_ECHEANCE}|abos_couper_abbr{20})]
+				]
+			</td>
+			<td class='offre secondaire'><a href="#URL_ECRIRE{abooffre,id_abo_offre=#ID_ABO_OFFRE}">##ID_ABO_OFFRE</a></td>
+			<td class='credits secondaire'>[(#CREDITS|abos_credits_en_clair)#SET{hide_credits,''}]</td>
+			<td class='uid secondaire'><abbr title="#ABONNE_UID">[(#ABONNE_UID|couper{10,'...'})#SET{hide_uid,''}]</abbr></td>
+			<td class='debut secondaire'>[(#DATE_DEBUT|affdate{d/m/Y})]</td>
+			<td class='echeance secondaire'>[(#DATE_ECHEANCE|<{#DATE_FIN}|ou{#DATE_FIN|intval|non}?{#DATE_ECHEANCE|affdate{d/m/y}})#SET{hide_echeance,''}]</td>
+			<td class='fin secondaire'>[(#DATE_FIN|intval|?{#DATE_FIN|affdate{d/m/y}})]</td>
+			<td class='mode secondaire'>[(#MODE_PAIEMENT)[/(#CONFIRM|table_valeur{partner})]]</td>
+		</tr>
+	</BOUCLE_liste_abonnements>
+	</tbody>
+</table>
+[<p class='pagination'>(#PAGINATION{prive})</p>]
+</div>
+</B_liste_abonnements>[
+<div class="liste-objets abonnements caption-wrap"><strong class="caption">(#ENV*{sinon,''})</strong></div>
+]<//B_liste_abonnements>

@@ -1,0 +1,13 @@
+<BOUCLE_abonnement(ABONNEMENTS){id_abonnement=#ENV{id}}{statut?}>
+<div class='infos'>
+[(#SET{texte_objet,<:abonnement:titre_abonnement:>})]
+<div class='numero'><:titre_cadre_numero_objet{objet=#GET{texte_objet}}:><p>#ID_ABONNEMENT</p></div>
+
+[(#FORMULAIRE_INSTITUER_OBJET{abonnements,#ID_ABONNEMENT,"",0})]
+[(#STATUT|=={ok}|et{#AUTORISER{resilier,abonnement,#ID_ABONNEMENT}}|oui)
+	[(#BOUTON_ACTION{Résilier immédiatement,#URL_ACTION_AUTEUR{resilier_abonnement,#ID_ABONNEMENT,#SELF},right,'Résilier immédiatement ?'})]<br /><br />
+	[(#BOUTON_ACTION{Résilier à l'échéance,#URL_ACTION_AUTEUR{resilier_abonnement,#ID_ABONNEMENT-echeance,#SELF},right,'Résilier à l'échéance ?'})]
+]
+
+</div>
+</BOUCLE_abonnement>
