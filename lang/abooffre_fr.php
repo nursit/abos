@@ -28,6 +28,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_titre' => 'Titre',
 	'label_wha_oid' => 'oId MSCA WHA/Orange Select',
 	'label_taux_tva' => 'Taux TVA',
+	'label_colonne_prix' => 'Prix',
+	'label_colonne_description' => 'Desc.',
+	'label_colonne_nombre' => 'Nb.',
 
 	// R
 	'retirer_lien_abooffre' => 'Retirer cette offre d\'abonnement',
