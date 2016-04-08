@@ -228,7 +228,12 @@ function abonnements_auteur_plusieurs(){
 }
 
 
-function abonnements_historique_encaissements($id_abo_offre){
+/**
+ * Calculer un historique du CA genere par cette offre d'abonnement
+ * @param $id_abo_offre
+ * @return string
+ */
+function abos_historique_encaissements($id_abo_offre){
 	$rows = sql_allfetsel(
 		"count(T.id_transaction) as nombre_mensuel, sum(T.montant_ht) as montant_mensuel_ht,sum(T.montant) as montant_mensuel,T.date_paiement",
 		"spip_transactions AS T
@@ -247,9 +252,11 @@ function abonnements_historique_encaissements($id_abo_offre){
 		$out .= "<tr><td>$mois</td><td class='numeric'>$nb</td><td class='numeric'>$montant_ht</td><td class='numeric'>$montant</td></tr>\n";
 	}
 
-	$out = "<table class='spip'>
+	if ($out) {
+		$out = "<table class='spip'>
 <thead><tr class='row_first'><th>Mois</th><th class='numeric'>Nombre</th><th class='numeric'>Montant HT</th><th class='numeric'>Montant</th></td></thead>
 <tbody>$out</tbody></table>";
+	}
 
 	return $out;
 }
