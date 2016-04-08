@@ -1,18 +1,18 @@
 #FORMULAIRE_RECHERCHE_ECRIRE{#SELF,ajax}
 <h1 class="grostitre"><:abonnement:titre_diagnostic:></h1>
 
-<h2>Profils qui ont payés une transaction mais n'ont pas eu d'abonnement</h2>
-<INCLURE{fond=prive/objets/liste/visiteurs,id_auteur=#REM|abonnements_auteur_sans{},env,ajax,sinon='Aucun - tout est OK'} />
+<h2>Profils qui ont payÃ©s une transaction mais n'ont pas eu d'abonnement</h2>
+<INCLURE{fond=prive/objets/liste/visiteurs,id_auteur=#REM|abos_auteur_sans_abonnement{},env,ajax,sinon='Aucun - tout est OK'} />
 
 <h2>Profils qui ont plusieurs abonnements actifs</h2>
-<INCLURE{fond=prive/objets/liste/visiteurs,id_auteur=#REM|abonnements_auteur_plusieurs{},env,ajax,sinon='Aucun - tout est OK'} />
+<INCLURE{fond=prive/objets/liste/visiteurs,id_auteur=#REM|abos_auteur_plusieurs_abonnements{},env,ajax,sinon='Aucun - tout est OK'} />
 
 
-<h2>Date de fin passée</h2>
+<h2>Date de fin passÃ©e</h2>
 #SET{where,#VAL{'date_fin<'}|concat{#ENV{date}|sql_quote}}
 <INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,statut=#ENV{statut}|is_null|?{ok,#ENV{statut}},where=#GET{where},env,ajax,nb=10} />
 
-<h2>Echéance passée depuis 2 jours (paybox)</h2>
+<h2>EchÃ©ance passÃ©e depuis 2 jours (paybox)</h2>
 #SET{where,#VAL{'date_echeance < DATE_SUB('}|concat{#ENV{date}|sql_quote{},',INTERVAL 2 DAY)'}}
 <INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,statut=#ENV{statut}|is_null|?{ok,#ENV{statut}},where=#GET{where},mode_paiement=paybox,env,ajax,nb=10} />
 
@@ -26,7 +26,7 @@
 <INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,where=#GET{where},env,ajax,nb=10} />
 
 
-<h2>Date de fin &lt; Date de début</h2>
+<h2>Date de fin &lt; Date de dÃ©but</h2>
 #SET{where,'date_fin<date_debut'}
 <INCLURE{fond=prive/squelettes/inclure/abonnements-filtres,abonnements-filtres,where=#GET{where},env,ajax,nb=10} />
 

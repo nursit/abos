@@ -156,6 +156,8 @@ function balise_SOMME_ECHEANCE_dist($p) {
 
 /**
  * <BOUCLE(ABONNEMENTS)>
+ * si il n'y a pas de critere statut, le boucle ABONNEMENTS filtre sur statut=ok
+ * ET date_fin valide (date<date_fin ou date_fin null ou date_fin<date_debut)
  *
  * @param $id_boucle
  * @param $boucles
@@ -191,8 +193,11 @@ function critere_ABONNEMENTS_parrain_dist($idb, &$boucles, $crit){
 	$boucle->where[]= $where;
 }
 
-
-function abonnements_auteur_sans(){
+/**
+ * Trouver les auteurs qui ont payes une transaction mais n'ont aucun abonnement
+ * @return array
+ */
+function abos_auteur_sans_abonnement(){
 	include_spip('base/abstract_sql');
 
 	$hasabo = sql_allfetsel('id_auteur','spip_abonnements',"statut IN ('ok','resilie')");
@@ -204,7 +209,11 @@ function abonnements_auteur_sans(){
 	return $hastrans;
 }
 
-function abonnements_auteur_plusieurs(){
+/**
+ * Trouver les auteurs qui ont plusieurs abonnements en cours
+ * @return array
+ */
+function abos_auteur_plusieurs_abonnements(){
 	include_spip('base/abstract_sql');
 
 	$hasabo = sql_allfetsel('id_auteur, count(id_auteur) AS N','spip_abonnements',"statut IN ('ok')","id_auteur","","","N>1");
@@ -247,9 +256,3 @@ function abos_historique_encaissements($id_abo_offre){
 
 	return $out;
 }
-
-/*
-function mailsubscribers_synchro_list_newsletter_echeance_mois(){
-
-}
-*/
