@@ -11,7 +11,11 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
-function abos_compter_abonnes_actifs(){
+/**
+ * Compter les abonnes vus connectes sur le mois passe
+ * @return mixed
+ */
+function abos_compter_abonnes_recents_enligne(){
 
 	$from = date('Y-m-d H:i:s',strtotime("-1 month"));
 	//$now = date('Y-m-d H:i:s');
@@ -21,6 +25,7 @@ function abos_compter_abonnes_actifs(){
 
 	return $n;
 }
+
 
 /**
  * Traduire le combo statut+date echeance en une chaine de langue
@@ -115,24 +120,6 @@ function abos_couper_abbr($texte,$longueur=20){
 	$t = '<abbr title="'.attribut_html($texte).'">'.couper($texte,$longueur).'</abbr>';
 	return $t;
 }
-
-/**
- * Dans le cas d'une boucle groupe_mots, si id_groupe=9 et qu'on essaye d'associer a un abooffre
- * il faut faker #UNSEUL pour permettre plusieurs mots sur les offres d'abo
- * (mais un seul mot partout ailleurs pour ce groupe)
- * @param $p
- * @return mixed
- */
-/*
-function balise_UNSEUL_dist($p){
-	$_unseul = champ_sql("unseul",$p);
-	$_objet = champ_sql("objet",$p);
-	$_id_groupe = champ_sql("id_groupe",$p);
-
-	$p->code = "(($_id_groupe!=9 OR $_objet!='abooffre')?$_unseul:'')";
-	return $p;
-}
-*/
 
 
 /**
