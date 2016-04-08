@@ -57,9 +57,14 @@ function abos_declarer_tables_objets_sql($tables) {
 			"duree"              => "varchar(10) NOT NULL DEFAULT ''",
 			"prix"               => "varchar(25) NOT NULL DEFAULT ''",
 			"prix_renouvellement" => "varchar(25) NOT NULL DEFAULT ''",
-			"taux_tva"           => "varchar(10) NOT NULL DEFAULT ''",
+			"taxe"               => "decimal(4,3) default null",
 			"wha_oid"            => "varchar(10) NOT NULL DEFAULT ''",
-			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL", 
+			"immateriel"         => "tinyint(1) NOT NULL DEFAULT 0",
+			"poids"              => "bigint(21) NOT NULL DEFAULT 0", // poids en g
+			"largeur"            => "bigint(21) NOT NULL DEFAULT 0", // largeur en cm
+			"longueur"           => "bigint(21) NOT NULL DEFAULT 0", // longueur en cm
+			"hauteur"            => "bigint(21) NOT NULL DEFAULT 0", // hauteur en cm
+			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL",
 			"maj"                => "TIMESTAMP"
 		),
 		'key' => array(
@@ -68,8 +73,8 @@ function abos_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		 #'date' => "",
-		'champs_editables'  => array('titre', 'descriptif', 'texte', 'duree', 'prix', 'prix_renouvellement','taux_tva'),
-		'champs_versionnes' => array('titre', 'descriptif', 'texte', 'duree', 'prix', 'prix_renouvellement','taux_tva'),
+		'champs_editables'  => array('titre', 'descriptif', 'texte', 'duree', 'prix', 'prix_renouvellement','taxe','immateriel','poids','largeur','longueur','hauteur'),
+		'champs_versionnes' => array('titre', 'descriptif', 'texte', 'duree', 'prix', 'prix_renouvellement','taxe','immateriel','poids','largeur','longueur','hauteur'),
 		'rechercher_champs' => array('titre'=>4,'descriptif'=>2,'texte'=>2,'wha_oid'=>1),
 		'tables_jointures'  => array(),
 		'statut_textes_instituer' => array(

@@ -27,10 +27,18 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_texte' => 'Argumentaire',
 	'label_titre' => 'Titre',
 	'label_wha_oid' => 'oId MSCA WHA/Orange Select',
-	'label_taux_tva' => 'Taux TVA',
+	'label_taxe' => 'Taxe',
+	'label_immateriel' => 'Immateriel',
+	'label_poids' => 'Poids (g)',
+	'label_largeur' => 'Largeur (cm)',
+	'label_longueur' => 'Longueur (cm)',
+	'label_hauteur' => 'Hauteur (cm)',
+
 	'label_colonne_prix' => 'Prix',
 	'label_colonne_description' => 'Desc.',
 	'label_colonne_nombre' => 'Nb.',
+
+	'legend_dimensions' => 'Dimensions',
 
 	// R
 	'retirer_lien_abooffre' => 'Retirer cette offre d\'abonnement',

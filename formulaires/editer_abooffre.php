@@ -64,6 +64,11 @@ function formulaires_editer_abooffre_charger_dist($id_abo_offre='new', $retour='
 	$duree = explode(" ",$valeurs['duree']);
 	$valeurs['duree_valeur'] = reset($duree);
 	$valeurs['duree_unite'] = end($duree);
+
+	if (strlen($valeurs['taxe'])){
+		$valeurs['taxe'] = 100 * $valeurs['taxe'];
+	}
+
 	return $valeurs;
 }
 
@@ -95,9 +100,18 @@ function formulaires_editer_abooffre_verifier_dist($id_abo_offre='new', $retour=
 		set_request('duree',intval(_request('duree_valeur')).' '._request('duree_unite'));
 	$erreurs = formulaires_editer_objet_verifier('abooffre',$id_abo_offre, array('titre', 'duree'));
 
-	foreach(array('prix','prix_renouvellement') as $c)
-		if (!preg_match(',^[0-9]*([.][0-9]*)?$,Uims',_request($c)))
-			$erreurs[$c] = 'Format du prix incorrect (chiffre et point décimal uniquement)';
+	$verifier = charger_fonction('verifier','inc');
+
+	foreach(array('prix','prix_renouvellement') as $champ_prix){
+		if ($err=$verifier(_request($champ_prix),'decimal')){
+			$erreurs[$champ_prix] = $err;
+		}
+	}
+
+	if ($err=$verifier(_request('taxe'),'decimal',array('min' => 0,'max' => 100))){
+		$erreurs['taxe'] = $err;
+	}
+
 	return $erreurs;
 }
 
@@ -124,8 +138,10 @@ function formulaires_editer_abooffre_verifier_dist($id_abo_offre='new', $retour=
  *     Retours des traitements
  */
 function formulaires_editer_abooffre_traiter_dist($id_abo_offre='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+	if ($taxe = _request('taxe')){
+		set_request('taxe',$taxe/100);
+	}
+
 	return formulaires_editer_objet_traiter('abooffre',$id_abo_offre,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
 }
 
-
-?>

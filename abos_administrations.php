@@ -43,6 +43,10 @@ function abos_upgrade($nom_meta_base_version, $version_cible) {
 	$maj['2.0.4'] = array(
 		array('maj_tables', array('spip_abonnements')),
 	);
+	$maj['2.0.5'] = array(
+		array('sql_alter','TABLE spip_abo_offres CHANGE taux_tva taxe decimal(4,3) default null'),
+		array('maj_tables', array('spip_abo_offres')),
+	);
 
 
 	include_spip('base/upgrade');
