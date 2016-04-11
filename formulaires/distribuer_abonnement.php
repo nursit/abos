@@ -69,5 +69,3 @@ function formulaires_distribuer_abonnement_traiter_dist($id_auteur){
 			'editable' => true
 		);
 }
-
-?>

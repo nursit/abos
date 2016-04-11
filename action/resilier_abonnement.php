@@ -46,5 +46,3 @@ function action_resilier_abonnement_dist($arg=null){
 	}
 
 }
-
-?>
