@@ -103,6 +103,7 @@ function abos_declarer_tables_objets_sql($tables) {
 			"id_abonnement"      => "bigint(21) NOT NULL",
 			"id_abo_offre"       => "bigint(21) NOT NULL",
 			"id_auteur"          => "bigint(21) NOT NULL",
+			"id_commande"        => "bigint(21) NOT NULL",
 			"date_debut"         => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 			"date_fin"           => "datetime DEFAULT NULL",
 			"date_echeance"      => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",

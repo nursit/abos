@@ -18,9 +18,9 @@ include_spip('base/abstract_sql');
  *   string statut
  *   string prix_initial
  *   string prix_echeance
- *   int id_transaction
+ *   int id_commande
  *   string date_debut
- * @return array|bool
+ * @return int|bool
  */
 function abos_abonner_dist($id_abo_offre, $options = array()){
 
@@ -30,9 +30,9 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 		$defaut = array(
 			'id_auteur'=>0,
 			'statut'=>'prepa',
-			'prix_initial'=>null,
-			'prix_echeance'=>null,
-			'id_transaction'=>0,
+			'prix_ht_initial'=>null,
+			'prix_ht_echeance'=>null,
+			'id_commande'=>0,
 			'date_debut'=>''
 		);
 		$options = array_merge($defaut,$options);
@@ -50,26 +50,36 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 		if (!$id_auteur)
 			$statut = 'prepa';
 
-		$prix_initial = $options['prix_initial'];
-		if (is_null($prix_initial))
-			$prix_initial = $row['prix_ht'];
+		$prix_ht_initial = $options['prix_ht_initial'];
+		if (is_null($prix_ht_initial))
+			$prix_ht_initial = $row['prix_ht'];
 
-		if ($options['prix_echeance']){
-			$prix = $options['prix_echeance'];
+		if ($options['prix_ht_echeance']){
+			$prix_ht = $options['prix_ht_echeance'];
 		}
 		else {
-			$prix = (intval($row['prix_ht_renouvellement']*100)?$row['prix_ht_renouvellement']:$prix_initial);
+			$prix_ht = (intval($row['prix_ht_renouvellement']*100)?$row['prix_ht_renouvellement']:$prix_ht_initial);
 		}
+
+		$fonction_prix = charger_fonction("abooffre","prix");
+		$prix_ttc = $fonction_prix($id_abo_offre,$prix_ht);
 
 		// creer l'abonnement
 		$date_debut = ($options['date_debut']?$options['date_debut']:date('Y-m-d H:i:s'));
+		$date_echeance = $date_debut;
+		if ($statut=='ok'){
+			$date_echeance = strotime($date_debut);
+			$date_echeance = strtotime("+".$row['duree'],$date_echeance);
+			$date_echeance = date('Y-m-d H:i:s',$date_echeance);
+		}
 		$ins= array(
 			'id_abo_offre'=>$id_abo_offre,
 			'id_auteur'=>$id_auteur,
+			'id_commande'=>$options['id_commande'],
 			'date_debut'=>$date_debut,
-			'date_echeance'=>$date_debut,
+			'date_echeance'=>$date_echeance,
 			'duree_echeance'=>$row['duree'],
-			'prix_echeance'=>$prix,
+			'prix_echeance'=>$prix_ttc,
 			'statut'=>$statut,
 		);
 		$id_abonnement = sql_insertq('spip_abonnements',$ins);
@@ -92,20 +102,7 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			sql_updateq("spip_abonnements",array("credits_echeance"=>$limites,"credits"=>$limites),"id_abonnement=".intval($id_abonnement));
 		}
 
-		// creer la transaction correspondante, avec le prix du premier mois !
-		include_spip('inc/abos');
-		$id_transaction = abos_creer_transaction($id_abonnement,$prix_initial,$options['id_transaction']);
-
-		if(!$id_transaction AND intval($prix_initial * 100)>0) {
-			spip_log("Erreur lors de la creation de la transaction en base ".var_export(array($id_abonnement,$prix_initial,$options['id_transaction']),true),"abos"._LOG_ERREUR);
-			sql_delete("spip_abonnements","id_abonnement=".intval($id_abonnement));
-			return false;
-		}
-		else {
-			// marquer la transacion/echeance
-			sql_updateq("spip_abonnements",array("id_transaction_echeance"=>$id_transaction),"id_abonnement=".intval($id_abonnement));
-			return array($id_transaction,$id_abonnement);
-		}
+		return $id_abonnement;
 
 	}
 	return false;

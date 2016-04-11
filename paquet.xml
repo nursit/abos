@@ -6,7 +6,7 @@
 	compatibilite="[3.0.0;3.1.*]"
 	logo="prive/themes/spip/images/abos-32.png"
 	documentation=""
-	schema="2.0.7"
+	schema="2.0.8"
 >
 
 	<nom>Abonnements</nom>

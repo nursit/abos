@@ -54,6 +54,9 @@ function abos_upgrade($nom_meta_base_version, $version_cible) {
 	$maj['2.0.7'] = array(
 		array('sql_alter','TABLE spip_abonnements CHANGE commentaire log text NOT NULL DEFAULT \'\''),
 	);
+	$maj['2.0.8'] = array(
+		array('maj_tables', array('spip_abonnements')),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
