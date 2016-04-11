@@ -22,8 +22,8 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	// L
 	'label_descriptif' => 'Descriptif',
 	'label_duree' => 'Duree',
-	'label_prix' => 'Prix 1ère écheance',
-	'label_prix_renouvellement' => 'Prix renouvellement (si différent)',
+	'label_prix_ht' => 'Prix HT 1ère écheance',
+	'label_prix_ht_renouvellement' => 'Prix HT renouvellement (si différent)',
 	'label_texte' => 'Argumentaire',
 	'label_titre' => 'Titre',
 	'label_wha_oid' => 'oId MSCA WHA/Orange Select',
@@ -34,7 +34,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_longueur' => 'Longueur (cm)',
 	'label_hauteur' => 'Hauteur (cm)',
 
-	'label_colonne_prix' => 'Prix',
+	'label_colonne_prix_ht' => 'Prix HT',
 	'label_colonne_description' => 'Desc.',
 	'label_colonne_nombre' => 'Nb.',
 

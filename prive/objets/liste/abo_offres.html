@@ -12,7 +12,7 @@
 			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th>
 			<th class='titre' scope='col'>[(#TRI{titre,<:abooffre:label_titre:>,ajax})]</th>
 			<th class='duree' scope='col'><:abooffre:label_duree:></th>
-			<th class='prix' scope='col'><:abooffre:label_colonne_prix:></th>
+			<th class='prix_ht' scope='col'><:abooffre:label_colonne_prix_ht:></th>
 			<th class='desc' scope='col'><:abooffre:label_colonne_description:></th>
 			<th class='nombre' scope='col'><:abooffre:label_colonne_nombre:></th>
 			<th class='id' scope='col'>[(#TRI{id_abo_offre,<:info_numero_abbreviation:>,ajax})]</th>
@@ -24,7 +24,7 @@
 			<td class='statut'>[(#STATUT|puce_statut{abooffre,#ID_ABO_OFFRE})]</td>
 			<td class='titre principale'>[(#LOGO_ABOOFFRE|image_reduire{20,26})]<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></td>
 			<td class='duree'>[(#DUREE|abos_periode_en_clair)]</td>
-			<td class='prix'>[(#PRIX_RENOUVELLEMENT|sinon{#PRIX}|affiche_monnaie)]</td>
+			<td class='prix_ht'>[(#PRIX_HT_RENOUVELLEMENT|sinon{#PRIX_HT}|affiche_monnaie)]</td>
 			<td class='desc'>
 				[WHA_oid:(#WHA_OID)<br />]
 			</td>

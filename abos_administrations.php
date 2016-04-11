@@ -47,7 +47,10 @@ function abos_upgrade($nom_meta_base_version, $version_cible) {
 		array('sql_alter','TABLE spip_abo_offres CHANGE taux_tva taxe decimal(4,3) default null'),
 		array('maj_tables', array('spip_abo_offres')),
 	);
-
+	$maj['2.0.6'] = array(
+		array('sql_alter','TABLE spip_abo_offres CHANGE prix prix_ht varchar(25) NOT NULL DEFAULT \'\''),
+		array('sql_alter','TABLE spip_abo_offres CHANGE prix_renouvellement prix_ht_renouvellement varchar(25) NOT NULL DEFAULT \'\''),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
