@@ -73,8 +73,8 @@ function abos_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		 #'date' => "",
-		'champs_editables'  => array('titre', 'descriptif', 'texte', 'duree', 'prix', 'prix_renouvellement','taxe','immateriel','poids','largeur','longueur','hauteur'),
-		'champs_versionnes' => array('titre', 'descriptif', 'texte', 'duree', 'prix', 'prix_renouvellement','taxe','immateriel','poids','largeur','longueur','hauteur'),
+		'champs_editables'  => array('titre', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','immateriel','poids','largeur','longueur','hauteur'),
+		'champs_versionnes' => array('titre', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','immateriel','poids','largeur','longueur','hauteur'),
 		'rechercher_champs' => array('titre'=>4,'descriptif'=>2,'texte'=>2,'wha_oid'=>1),
 		'tables_jointures'  => array(),
 		'statut_textes_instituer' => array(

@@ -52,13 +52,13 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 
 		$prix_initial = $options['prix_initial'];
 		if (is_null($prix_initial))
-			$prix_initial = $row['prix'];
+			$prix_initial = $row['prix_ht'];
 
 		if ($options['prix_echeance']){
 			$prix = $options['prix_echeance'];
 		}
 		else {
-			$prix = (intval($row['prix_renouvellement']*100)?$row['prix_renouvellement']:$prix_initial);
+			$prix = (intval($row['prix_ht_renouvellement']*100)?$row['prix_ht_renouvellement']:$prix_initial);
 		}
 
 		// creer l'abonnement
