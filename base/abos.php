@@ -116,7 +116,7 @@ function abos_declarer_tables_objets_sql($tables) {
 			"mode_paiement"      => "varchar(10) NOT NULL DEFAULT ''",
 			"abonne_uid"         => "varchar(50) NOT NULL DEFAULT ''",
 			"confirm"            => "varchar(255) NOT NULL DEFAULT ''",
-			"commentaire"        => "text NOT NULL DEFAULT ''",
+			"log"                => "text NOT NULL DEFAULT ''",
 			"message"            => "text NOT NULL DEFAULT ''",
 			"relance"            => "varchar(3) NOT NULL DEFAULT ''",
 			"statut"             => "varchar(20)  DEFAULT '0' NOT NULL",

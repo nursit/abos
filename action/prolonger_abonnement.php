@@ -18,20 +18,20 @@ function action_prolonger_abonnement_dist($arg=null){
 		$arg = $securiser_action();
 	}
 
-	list($id_abonnement,$nb_mois) = explode('-',$arg);
+	list($id_abonnement,$nb,$unite) = explode('-',$arg);
 
 	include_spip('inc/autoriser');
 	if (autoriser('modifier','abonnement',$id_abonnement)
 	  AND $row = sql_fetsel("*","spip_abonnements","id_abonnement=".intval($id_abonnement))){
 
 		$set = array(
-			'commentaire' => $row['commentaire']
-				. "Prolongation de $nb_mois mois par auteur #" . $GLOBALS['visiteur_session']['id_auteur']
+			'log' => $row['log']
+				. "Prolongation de $nb $unite par auteur #" . $GLOBALS['visiteur_session']['id_auteur']
 			  . "\n--\n"
 		);
-		$set['date_echeance'] = date('Y-m-d H:i:s',strtotime("+$nb_mois month",strtotime($row['date_echeance'])));
+		$set['date_echeance'] = date('Y-m-d H:i:s',strtotime("+$nb $unite",strtotime($row['date_echeance'])));
 		if (intval($row['date_fin']) AND $row['date_fin']>$row['date_debut']){
-			$set['date_fin'] = date('Y-m-d H:i:s',strtotime("+$nb_mois month",strtotime($row['date_fin'])));
+			$set['date_fin'] = date('Y-m-d H:i:s',strtotime("+$nb $unite",strtotime($row['date_fin'])));
 		}
 		sql_updateq("spip_abonnements",$set,"id_abonnement=".intval($id_abonnement));
 	}

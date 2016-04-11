@@ -51,6 +51,9 @@ function abos_upgrade($nom_meta_base_version, $version_cible) {
 		array('sql_alter','TABLE spip_abo_offres CHANGE prix prix_ht varchar(25) NOT NULL DEFAULT \'\''),
 		array('sql_alter','TABLE spip_abo_offres CHANGE prix_renouvellement prix_ht_renouvellement varchar(25) NOT NULL DEFAULT \'\''),
 	);
+	$maj['2.0.7'] = array(
+		array('sql_alter','TABLE spip_abonnements CHANGE commentaire log text NOT NULL DEFAULT \'\''),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);

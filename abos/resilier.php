@@ -22,7 +22,7 @@ include_spip('base/abstract_sql');
  * @return bool
  */
 function abos_resilier_dist($id,$options=array()){
-	$commentaire = (isset($options['message'])?$options['message']:'');
+	$abo_log = (isset($options['message'])?$options['message']:'');
 	$immediat = (isset($options['immediat'])?$options['immediat']:false);
 	$notify_bank = (isset($options['notify_bank'])?$options['notify_bank']:true);
 
@@ -103,8 +103,8 @@ function abos_resilier_dist($id,$options=array()){
 		// plus de relance pour un abonnement resilie
 		$set['relance'] = sql_quote('off');
 
-		if ($commentaire){
-			$set["commentaire"] = $row['commentaire'] . sql_quote($commentaire) . "\n--\n";
+		if ($abo_log){
+			$set["log"] = $row['log'] . sql_quote($abo_log) . "\n--\n";
 		}
 
 		sql_update("spip_abonnements",$set,"id_abonnement=".intval($id_abonnement));

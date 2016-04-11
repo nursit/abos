@@ -19,7 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	// L
 	'label_abonne_uid' => 'Abonne uid',
-	'label_commentaire' => 'Commentaire',
+	'label_log' => 'Log',
 	'label_confirm' => 'Confirm',
 	'label_message' => 'Message',
 	'label_credits' => 'Credits',
