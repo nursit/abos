@@ -12,7 +12,7 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('base/abstract_sql');
 /**
- * TODO : revoir lien abonnement-transaction qui doit passer par la commande
+ * Activer un abonnement reccurent (appele par bank)
  *
  * @param $id_transaction
  * @param $abo_uid
@@ -32,27 +32,33 @@ function abos_activer_abonnement_dist($id_transaction,$abo_uid,$mode_paiement,$v
 	$id_abonnement = 0;
 	$old_statut = $new_statut = "";
 	$regle = false;
+	$trans = false;
 
 	// recuperer la transaction et son abonnement associe
 	// et verifier que c'est bien le bon
 	if ($id_transaction){
-		$res = sql_select("*","spip_abonnements_liens","objet='transaction' AND id_objet=".intval($id_transaction));
-		if (!$row = sql_fetch($res)
-		 OR !$id_abonnement = $row['id_abonnement']
-		 OR !($abo = sql_fetsel("*","spip_abonnements","id_abonnement=".intval($id_abonnement)))
-		){
-		 	spip_log("Impossible de retrouver l'abo lie a la transaction $id_transaction",'abo_erreurs'._LOG_ERREUR);
-			return false;
-		}
 
 		if (!$trans = sql_fetsel("*","spip_transactions","id_transaction=".intval($id_transaction))){
 			spip_log("statut inconnu sur transaction $id_transaction",'abo_erreurs'._LOG_ERREUR);
 			return false;
 		}
+
 		if ($trans['statut']=='commande'){
 		 	spip_log("La transaction $id_transaction n'a pas ete reglee (abo $abo_uid)",'abo_erreurs'._LOG_ERREUR);
 			return false;
 		}
+
+	  if (!$id_commande = $trans['id_commande']){
+		  spip_log("La transaction $id_transaction n'a pas de id_commande associee (abo $abo_uid)",'abo_erreurs'._LOG_ERREUR);
+			return false;
+	  }
+
+		if ($abo = sql_fetsel("*","spip_abonnements","id_commande=".intval($id_commande))
+		 OR !$id_abonnement = $abo['id_abonnement']){
+		 	spip_log("Impossible de retrouver l'abo lie a la transaction $id_transaction",'abo_erreurs'._LOG_ERREUR);
+			return false;
+		}
+
 		$regle = true;
 		if (strncmp($trans['statut'],'echec',5)==0
 		  AND $id_transaction==$abo['id_transaction_echeance']){
@@ -61,6 +67,7 @@ function abos_activer_abonnement_dist($id_transaction,$abo_uid,$mode_paiement,$v
 		 	spip_log("La transaction $id_transaction a echoue (abo $abo_uid)",'abo_erreurs');
 			$regle = false;
 		}
+
 		// si la transaction est reglee et liee a une souscription, on appelle le pipeline activer_abonnement
 		// pour que la souscription se mette a jour, il faut lui passr un data=0 pour cela
 		if ($trans['parrain']=='souscription' AND $trans['statut']==='ok'){
@@ -100,6 +107,21 @@ function abos_activer_abonnement_dist($id_transaction,$abo_uid,$mode_paiement,$v
 		"mode_paiement"=>$mode_paiement,
 	);
 
+	// si l'abo a ete cree en oneshot mais qu'on est en recurent, repositionner la date de fin
+	if ($abo['statut']=='ok'
+		AND !$abo['id_transaction_echeance']
+		AND $abo['date_fin']==$abo['date_echeance']){
+		if ($validite=='echeance'){
+			$set["date_fin"] = date('Y-m-d H:i:s',strtotime("+1 day",strtotime($abo['date_echeance'])));
+		}
+		elseif($validite){
+			$set["date_fin"] = $validite;
+		}
+		else {
+			$set["date_fin"] = "0000-00-00 00:00:00";
+		}
+	}
+
 	if ($id_transaction
 	  AND ($id_transaction==$abo['id_transaction_echeance']) ){
 		if ($regle){
@@ -124,7 +146,8 @@ function abos_activer_abonnement_dist($id_transaction,$abo_uid,$mode_paiement,$v
 	}
 
 	if (!$abo['id_auteur'] OR $abo['id_auteur']==-1) {
-		if (!$id_auteur AND $trans['parrain']=='souscription' AND $id_souscription = $trans['tracking_id']){
+		if (!$id_auteur
+			AND $trans AND $trans['parrain']=='souscription' AND $id_souscription = $trans['tracking_id']){
 			$souscription = sql_fetsel("*", "spip_souscriptions", 'id_souscription=' . intval($id_souscription));
 			if ($cadeau = $souscription['cadeau']
 			  AND $cadeau = unserialize($cadeau)){

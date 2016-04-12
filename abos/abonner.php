@@ -85,6 +85,12 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			'statut'=>$statut,
 			'mode_paiement'=>$options['mode_paiement'],
 		);
+		// si c'est un abonnement actif, on le met en date_fin=date_echeance
+		// si c'est un paiement recurrent periodique, activer_abonnement changera la date_fin
+		if ($statut=='ok'){
+			$ins['date_fin'] = $date_echeance;
+		}
+
 		$id_abonnement = sql_insertq('spip_abonnements',$ins);
 
 		if (!$id_abonnement){
@@ -104,6 +110,12 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			$limites = serialize($limites);
 			sql_updateq("spip_abonnements",array("credits_echeance"=>$limites,"credits"=>$limites),"id_abonnement=".intval($id_abonnement));
 		}
+
+		if ($statut=='ok') {
+			$notifications = charger_fonction("notifications","inc");
+			$notifications('activerabonnement',$id_abonnement,array('statut'=>$statut,'statut_ancien'=>'prepa'));
+		}
+
 
 	}
 	return $id_abonnement;
