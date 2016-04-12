@@ -1,4 +1,4 @@
-<h1>Statistiques d'abonnements</h1>
+<h1 class="grostitre">Statistiques d'abonnements</h1>
 
 <BOUCLE_total(ABONNEMENTS){statut=ok} />#SET{total,#TOTAL_BOUCLE}<//B_total>
 
@@ -31,16 +31,20 @@
 <BOUCLE_paroffre(abo_offres){par id_abo_offre}>
 
 <h2><a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></h2>
+<B_mois>
 <p>Abonnements finis en fonction des mois</p>
 <table class="spip">
 	<thead>
 	<tr><th>Mois de fin</th><th class='center'>Nombre</th><th colspan="2" class='center'>Renouvelés</th><th colspan="2" class='center'>Non renouvelés</th></tr>
 	</thead>
 	<tbody>
-	<BOUCLE_mois(POUR){tableau #LISTE{-2,-1,0,1,2,3,4,5,6}}>
-	[(#VALEUR|afficher_stats_echeances_offre{#ID_ABO_OFFRE})]
-	</BOUCLE_mois>
+	<BOUCLE_mois(POUR){tableau #LISTE{-2,-1,0,1,2,3,4,5,6}}>[
+	(#VALEUR|afficher_stats_echeances_offre{#ID_ABO_OFFRE})
+	]</BOUCLE_mois>
 	</tbody>
 </table>
+</B_mois>
+<p>Aucune fin d'abonnement d'ici 6 mois.</p>
+<//B_mois>
 
 </BOUCLE_paroffre>

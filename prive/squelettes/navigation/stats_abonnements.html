@@ -1,0 +1,10 @@
+#INCLURE{fond=prive/squelettes/inclure/menu-navigation,
+	menu=boutique,
+	bloc=navigation,
+	env}
+
+<BOUCLE_hasabos(ABONNEMENTS){statut=ok}{0,1}>
+[(#BOITE_OUVRIR{'',raccourcis})]
+[(#URL_ECRIRE{abonnements}|icone_horizontale{<:abonnement:titre_abonnements:>,abonnement-24})]
+#BOITE_FERMER
+</BOUCLE_hasabos>

@@ -47,9 +47,14 @@ function afficher_stats_echeances_offre($mois_relatif,$id_abo_offre){
 	if (!$nombre) $nombre="";
 	if (!$nombre_reabos) $nombre_reabos="";
 	if (!$nombre_nonreabos) $nombre_nonreabos="";
+
+	if (!$nombre AND !$nombre_reabos AND !$nombre_nonreabos){
+		return "";
+	}
 	return "<tr><td>$mois</td>"
 	 . "<td class='numeric'>$nombre</td>"
 	 . "<td class='numeric'>$nombre_reabos</td><td class='numeric'>$pourcent_reabos</td>"
-	 . "<td class='numeric'>$nombre_nonreabos</td><td class='numeric'>$pourcent_nonreabos</td>";
+	 . "<td class='numeric'>$nombre_nonreabos</td><td class='numeric'>$pourcent_nonreabos</td>"
+	 . "</tr>";
 
 }

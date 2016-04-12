@@ -21,11 +21,15 @@
 
 <div class="nettoyeur"></div>
 
-
-<INCLURE{fond=prive/objets/liste/transactions,id_transaction=#ID_ABONNEMENT|abos_liste_transactions} />
 #PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,abonnement,id,#ID_ABONNEMENT},data,'<div class="nettoyeur"></div>'}}
 
 #BOITE_FERMER
+
+[(#ID_COMMANDE|oui)
+<INCLURE{fond=prive/objets/liste/commandes,id_commande=#ID_COMMANDE} />
+]
+<INCLURE{fond=prive/objets/liste/transactions,id_transaction=#ID_ABONNEMENT|abos_liste_transactions{#ID_COMMANDE}} />
+
 [(#EVAL{_AJAX}|oui)
 	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin,#extra');/*\\]\\]>*/</script>
 ]

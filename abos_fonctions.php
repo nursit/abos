@@ -81,12 +81,18 @@ function abos_duree_abonnement($date_debut){
 
 /**
  * Lister les transactions liees a un abonnement
- * @param $id_abonnement
+ * @param int $id_abonnement
+ * @param int $id_commande
  * @return array
  */
-function abos_liste_transactions($id_abonnement){
+function abos_liste_transactions($id_abonnement,$id_commande=0){
 	$ids = sql_allfetsel("id_objet","spip_abonnements_liens","id_abonnement=".intval($id_abonnement)." AND objet=".sql_quote('transaction'));
 	$ids = array_map('reset',$ids);
+	if ($id_commande){
+		$id2s = sql_allfetsel("id_transaction","spip_transactions","id_commande=".intval($id_commande ));
+		$id2s = array_map('reset',$id2s);
+		$ids = array_merge($id2s,$ids);
+	}
 	if (!$ids) $ids = array(0);
 	return $ids;
 }
