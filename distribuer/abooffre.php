@@ -24,6 +24,7 @@ function distribuer_abooffre_dist($id_abo_offre,$detail,$commande){
 		'id_commande' => $commande['id_commande'],
 		'id_auteur' => $commande['id_auteur'],
 		'statut' => 'ok',
+		'mode_paiement' => $commande['mode'],
 	);
 	$nb = $detail['quantite'];
 	while($nb-->0){

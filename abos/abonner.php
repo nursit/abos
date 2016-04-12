@@ -20,6 +20,7 @@ include_spip('base/abstract_sql');
  *   string prix_echeance
  *   int id_commande
  *   string date_debut
+ *   string mode_paiement
  * @return int|bool
  */
 function abos_abonner_dist($id_abo_offre, $options = array()){
@@ -28,12 +29,13 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 	if ($row = sql_fetsel("*","spip_abo_offres","id_abo_offre=".intval($id_abo_offre))){
 
 		$defaut = array(
-			'id_auteur'=>0,
-			'statut'=>'prepa',
-			'prix_ht_initial'=>null,
-			'prix_ht_echeance'=>null,
-			'id_commande'=>0,
-			'date_debut'=>''
+			'id_auteur' => 0,
+			'statut' => 'prepa',
+			'prix_ht_initial' => null,
+			'prix_ht_echeance' => null,
+			'id_commande' => 0,
+			'date_debut' => '',
+			'mode_paiement' => '',
 		);
 		$options = array_merge($defaut,$options);
 
@@ -81,6 +83,7 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			'duree_echeance'=>$row['duree'],
 			'prix_echeance'=>$prix_ttc,
 			'statut'=>$statut,
+			'mode_paiement'=>$options['mode_paiement'],
 		);
 		$id_abonnement = sql_insertq('spip_abonnements',$ins);
 
