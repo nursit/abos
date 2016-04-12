@@ -11,6 +11,16 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('base/abstract_sql');
+/**
+ * TODO : revoir lien abonnement-transaction qui doit passer par la commande
+ *
+ * @param $id_transaction
+ * @param $abo_uid
+ * @param $mode_paiement
+ * @param string $validite
+ * @param int $id_auteur
+ * @return bool|int
+ */
 function abos_activer_abonnement_dist($id_transaction,$abo_uid,$mode_paiement,$validite="",$id_auteur=0){
 	spip_log("abos/activer_abonnement id_transaction=$id_transaction abo_uid=$abo_uid mode=$mode_paiement validite=$validite","bank");
 

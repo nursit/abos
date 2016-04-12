@@ -12,6 +12,8 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('base/abstract_sql');
 /**
+ * TODO : revoir lien abonnement-transaction qui doit passer par la commande
+ *
  * @param int $id_transaction
  * @param bool $force_auto
  *   true : l'echeance sera forcement prelevee automatiquement

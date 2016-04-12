@@ -87,6 +87,7 @@ function abos_duree_abonnement($date_debut){
 function abos_liste_transactions($id_abonnement){
 	$ids = sql_allfetsel("id_objet","spip_abonnements_liens","id_abonnement=".intval($id_abonnement)." AND objet=".sql_quote('transaction'));
 	$ids = array_map('reset',$ids);
+	if (!$ids) $ids = array(0);
 	return $ids;
 }
 

@@ -41,7 +41,7 @@
 	<label><:abonnement:label_mode_echeance:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{mode_echeance} mode_echeance'>(#MODE_ECHEANCE)</span>
 </div>]
-
+<!--
 [<div class="champ contenu_id_transaction_echeance[ (#ID_TRANSACTION_ECHEANCE*|strlen|?{'',vide})]">
 	<label><:abonnement:label_id_transaction_echeance:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{id_transaction_echeance} id_transaction_echeance'>(#ID_TRANSACTION_ECHEANCE)</span>
@@ -51,7 +51,7 @@
 	<label><:abonnement:label_id_transaction_essai:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{id_transaction_essai} id_transaction_essai'>(#ID_TRANSACTION_ESSAI)</span>
 </div>]
-
+-->
 [<div class="champ contenu_mode_paiement[ (#MODE_PAIEMENT*|strlen|?{'',vide})]">
 	<label><:abonnement:label_mode_paiement:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{mode_paiement} mode_paiement'>(#MODE_PAIEMENT)</span>
@@ -62,14 +62,14 @@
 	<span dir='#LANG_DIR' class='#EDIT{confirm} confirm'>(#CONFIRM)</span>
 </div>]
 
-[<div class="champ contenu_log[ (#LOG*|strlen|?{'',vide})]">
-	<label><:abonnement:label_log:> : </label>
-	<span dir='#LANG_DIR' class='#EDIT{log} log'>(#LOG|propre)</span>
-</div>]
-
 [<div class="champ contenu_message[ (#MESSAGE*|strlen|?{notice,vide})]">
 	<label><:abonnement:label_message:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{message} message'>(#MESSAGE)</span>
+</div>]
+
+[<div class="champ contenu_log[ (#LOG*|strlen|?{'',vide})]">
+	<label><:abonnement:label_log:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{log} log'>(#LOG|propre)</span>
 </div>]
 
 </BOUCLE_abonnement>

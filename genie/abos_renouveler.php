@@ -16,7 +16,8 @@ include_spip('inc/filtres');
 
 /**
  * Renouveler les abonnements manuels (payboxdirectplus)
- *
+ * @deprecated
+ * A revoir
  */
 function genie_abos_renouveler_dist(){
 

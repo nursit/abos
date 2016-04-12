@@ -29,21 +29,7 @@ function formulaires_distribuer_abonnement_traiter_dist($id_auteur){
 
 	$id_abo_offre = _request('id_abo_offre');
 	$abonner = charger_fonction('abonner','abos');
-	list($id_transaction,$id_abonnement) = $abonner($id_abo_offre,array('id_auteur'=>$id_auteur,'statut'=>'ok','prix_initial'=>'0'));
-	
-	// modifier la transaction en la mettant a prix nul, et reglee
-	$set = array(
-		"statut"=>'ok',
-		"reglee"=>'oui',
-		"montant_ht"=>'0',
-		"montant"=>'0',
-		"montant_regle"=>'0',
-		"date_paiement"=>date('Y-m-d H:i:s'),
-		"message"=>'abonnement depuis BO',
-		'mode' => 'gratuit',
-	);
-
-	sql_updateq("spip_transactions",$set,"id_transaction=".intval($id_transaction));
+	$id_abonnement = $abonner($id_abo_offre,array('id_auteur'=>$id_auteur,'statut'=>'ok','prix_initial'=>'0'));
 
 	// modifier l'abonnement en mettant les echeances a prix nul
 	$set = array(
@@ -58,9 +44,9 @@ function formulaires_distribuer_abonnement_traiter_dist($id_auteur){
 		$set['date_echeance'] = $d;
 	}
 	else {
-		$set['date_echeance'] = date("Y-m-d H:i:s",strtotime("+10 year"));
+		// fin a l'echeance, c'est la duree par defaut de l'abonnement
+		$set['date_fin'] = sql_getfetsel("date_echeance","spip_abonnements","id_abonnement=".intval($id_abonnement));
 	}
-	$set['id_transaction_echeance'] = 0;
 
 	sql_updateq("spip_abonnements",$set,"id_abonnement=".intval($id_abonnement));
 	return 

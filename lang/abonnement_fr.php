@@ -16,12 +16,16 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_abonnements_auteur' => 'Les abonnements de cet auteur',
 	'info_aucun_abonnement' => 'Aucun abonnement',
 	'info_nb_abonnements' => '@nb@ abonnements',
+	'info_resilier_immediatement' => 'Résilier immédiatement',
+	'info_resilier_echeance' => 'Résilier à l\'échéance',
+	'confirmer_resilier_immediatement' => 'Résilier immédiatement l\'abonnement ? (tous les droits seront coupés)',
+	'confirmer_resilier_echeance' => 'Résilier à l\'échéance ?  (L\'utilisateur pourra normalement utiliser son abonnement jusqu\'à la date d\'échéance)',
 
 	// L
 	'label_abonne_uid' => 'Abonne uid',
 	'label_log' => 'Log',
 	'label_confirm' => 'Confirm',
-	'label_message' => 'Message',
+	'label_message' => 'Message client',
 	'label_credits' => 'Credits',
 	'label_credits_echeance' => 'Credits echeance',
 	'label_date_debut' => 'Date debut',

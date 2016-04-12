@@ -95,7 +95,7 @@ function abos_taches_generales_cron($taches_generales){
 	if (defined('_DUREE_CONSULTATION_ESSAI')){
 		$taches_generales['abos_confirmer_essais'] = 60; // toutes les 60s
 	}
-	$taches_generales['abos_renouveler'] = 3600; // toutes les 3600s
+	//$taches_generales['abos_renouveler'] = 3600; // toutes les 3600s
 	$taches_generales['abos_reparer'] = 3600*12; // toutes les 12h
 	$taches_generales['abos_relancer'] = 3600; // toutes les 1h
 	return $taches_generales;
@@ -109,6 +109,7 @@ function abos_taches_generales_cron($taches_generales){
  * @param $flux
  * @return mixed
  */
+/*
 function abos_bank_traiter_reglement($flux){
 	if ($id_transaction=intval($flux['args']['id_transaction'])){
 		// mettre a jour l'uid abonne d'une transaction essai
@@ -195,3 +196,4 @@ function abos_bank_traiter_reglement($flux){
 	}
 	return $flux;
 }
+*/

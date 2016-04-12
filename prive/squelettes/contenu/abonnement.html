@@ -25,13 +25,6 @@
 <INCLURE{fond=prive/objets/liste/transactions,id_transaction=#ID_ABONNEMENT|abos_liste_transactions} />
 #PIPELINE{afficher_complement_objet,#ARRAY{args,#ARRAY{type,abonnement,id,#ID_ABONNEMENT},data,'<div class="nettoyeur"></div>'}}
 
-[(#DATE_FIN|intval|oui)
-	<div class="right">
-		#BOUTON_ACTION{'Prolonger de <b>1 mois</b>',#URL_ACTION_AUTEUR{prolonger_abonnement,#ID_ABONNEMENT-1-month,#SELF}}
-		#BOUTON_ACTION{'Prolonger de <b>3 mois</b>',#URL_ACTION_AUTEUR{prolonger_abonnement,#ID_ABONNEMENT-3-month,#SELF}}
-	</div>
-]
-
 #BOITE_FERMER
 [(#EVAL{_AJAX}|oui)
 	<script type="text/javascript">/*<!\\[CDATA\\[*/reloadExecPage('#ENV{exec}','#navigation,#chemin,#extra');/*\\]\\]>*/</script>

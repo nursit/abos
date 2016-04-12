@@ -10,6 +10,26 @@
  */
 
 /**
+ * Mise en forme des logs abonnement
+ * @param $abo_log
+ * @return string
+ */
+function abos_log($abo_log){
+	$par = "";
+	if (isset($GLOBALS['visiteur_session']['id_auteur'])){
+		$par = _T('public:par_auteur').' #'.$GLOBALS['visiteur_session']['id_auteur'].' '.$GLOBALS['visiteur_session']['nom'];
+	}
+	else {
+		$par = _T('public:par_auteur').' '.$GLOBALS['ip'];
+	}
+
+	$abo_log = date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME'])." | "
+		. $par
+		.' : '.$abo_log . "\n--\n";
+	return $abo_log;
+}
+
+/**
  * Creer la transaction en statut commande pour un abonnement
  * @param int $id_abonnement
  * @param null $prix_abo

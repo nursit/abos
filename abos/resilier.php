@@ -26,6 +26,11 @@ function abos_resilier_dist($id,$options=array()){
 	$immediat = (isset($options['immediat'])?$options['immediat']:false);
 	$notify_bank = (isset($options['notify_bank'])?$options['notify_bank']:true);
 
+	if (!$abo_log){
+		$abo_log = "Resiliation";
+		$abo_log .= ($immediat?" (Immediat)":" (A echeance)");
+	}
+
 	$id_abonnement = $id;
 	if (!is_numeric($id)) {
 		if (strncmp($id,"uid:",4)==0)
@@ -104,7 +109,8 @@ function abos_resilier_dist($id,$options=array()){
 		$set['relance'] = sql_quote('off');
 
 		if ($abo_log){
-			$set["log"] = $row['log'] . sql_quote($abo_log) . "\n--\n";
+			include_spip('inc/abos');
+			$set["log"] = sql_quote($row['log'] . abos_log($abo_log)) ;
 		}
 
 		sql_update("spip_abonnements",$set,"id_abonnement=".intval($id_abonnement));

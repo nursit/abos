@@ -11,6 +11,11 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 include_spip('base/abstract_sql');
+/**
+ * TODO : revoir lien abonnement-transaction qui doit passer par la commande
+ * @param $id
+ * @return bool|int
+ */
 function abos_preparer_echeance_dist($id){
 	spip_log("abos/preparer_echeance id=$id","bank");
 

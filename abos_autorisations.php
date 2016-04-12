@@ -146,6 +146,24 @@ function autoriser_abonnement_modifier_dist($faire, $type, $id, $qui, $opt) {
 }
 
 /**
+ * Autorisation de prolonger (abonnement)
+ *
+ * @param  string $faire Action demandée
+ * @param  string $type  Type d'objet sur lequel appliquer l'action
+ * @param  int    $id    Identifiant de l'objet
+ * @param  array  $qui   Description de l'auteur demandant l'autorisation
+ * @param  array  $opt   Options de cette autorisation
+ * @return bool          true s'il a le droit, false sinon
+**/
+function autoriser_abonnement_prolonger_dist($faire, $type, $id, $qui, $opt) {
+	$abo = sql_fetsel("statut,date_fin","spip_abonnements","id_abonnement=".intval($id));
+	return
+		($abo['statut']=='ok'
+			AND intval($abo['date_fin'])
+			AND autoriser('modifier','abonnement',$id,$qui,$opt));
+}
+
+/**
  * Autorisation de supprimer (abonnement)
  *
  * @param  string $faire Action demandée

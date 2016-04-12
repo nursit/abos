@@ -68,7 +68,7 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 		$date_debut = ($options['date_debut']?$options['date_debut']:date('Y-m-d H:i:s'));
 		$date_echeance = $date_debut;
 		if ($statut=='ok'){
-			$date_echeance = strotime($date_debut);
+			$date_echeance = strtotime($date_debut);
 			$date_echeance = strtotime("+".$row['duree'],$date_echeance);
 			$date_echeance = date('Y-m-d H:i:s',$date_echeance);
 		}
@@ -102,8 +102,6 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			sql_updateq("spip_abonnements",array("credits_echeance"=>$limites,"credits"=>$limites),"id_abonnement=".intval($id_abonnement));
 		}
 
-		return $id_abonnement;
-
 	}
-	return false;
+	return $id_abonnement;
 }

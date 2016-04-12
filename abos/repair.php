@@ -23,6 +23,7 @@ include_spip('base/abstract_sql');
 function abos_repair_dist(){
 
 	// activer des abonnements payes mais pas actives (probleme technique)
+	/*
 	include_spip('inc/bank');
 	$res = sql_select("*","spip_abonnements","id_auteur>0 AND id_transaction_echeance>0 AND statut='prepa'");
 	while ($row = sql_fetch($res)){
@@ -44,6 +45,7 @@ function abos_repair_dist(){
 			}
 		}
 	}
+	*/
 
 	// jeter les vieux abos pas souscrit finalement
 	/*
@@ -80,25 +82,29 @@ function abos_repair_dist(){
 
 
 	// marquer en resilie les souscriptions recurrentes mensuelles liees aux abonnements resilies
-	$ids = sql_allfetsel('S.id_souscription',
-	"spip_abonnements as A
-	JOIN spip_abonnements_liens as L on (L.id_abonnement=A.id_abonnement)
-	JOIN spip_transactions as T on (L.id_objet=T.id_transaction AND L.objet='transaction')
-	JOIN spip_souscriptions AS S ON (S.id_souscription=T.tracking_id AND T.parrain='souscription')",
-	"A.statut='resilie' AND S.abo_statut='ok'");
-	if (count($ids)){
-		$ids = array_map('reset',$ids);
-		spip_log('Resilier souscriptions '.implode(',',$ids).' car abos resilies','resiliation_auto'._LOG_INFO_IMPORTANTE);
-		$set = array(
-			'abo_statut' => 'resilie',
-			'abo_fin_raison' => 'abonnement resilie',
-		);
-		sql_updateq('spip_souscriptions',$set,sql_in('id_souscription',$ids));
+	if (test_plugin_actif('souscription')){
+		$ids = sql_allfetsel('S.id_souscription',
+		"spip_abonnements as A
+		JOIN spip_abonnements_liens as L on (L.id_abonnement=A.id_abonnement)
+		JOIN spip_transactions as T on (L.id_objet=T.id_transaction AND L.objet='transaction')
+		JOIN spip_souscriptions AS S ON (S.id_souscription=T.tracking_id AND T.parrain='souscription')",
+		"A.statut='resilie' AND S.abo_statut='ok'");
+		if (count($ids)){
+			$ids = array_map('reset',$ids);
+			spip_log('Resilier souscriptions '.implode(',',$ids).' car abos resilies','resiliation_auto'._LOG_INFO_IMPORTANTE);
+			$set = array(
+				'abo_statut' => 'resilie',
+				'abo_fin_raison' => 'abonnement resilie',
+			);
+			sql_updateq('spip_souscriptions',$set,sql_in('id_souscription',$ids));
+		}
 	}
 
-	renouveler_abos_valides_echus();
+	// ne doit plus servir, couverture de bug
+	// renouveler_abos_valides_echus();
 
 	// selectionner les abos qui ont une date de fin pourrie
+	/*
 	$echeance = date('Y-m-d H:i:s',strtotime("-45 day"));
 	$res = sql_select("*","spip_abonnements","date_fin<date_debut AND date_fin>='1999-01-01 00:00:00' AND date_fin<'2001-01-01 00:00:00' AND (date_echeance<='$echeance' OR statut='resilie')");
 	while ($row = sql_fetch($res)){
@@ -110,6 +116,7 @@ function abos_repair_dist(){
 		spip_log("Nettoyage vieil abonnement perime avec date_fin erronnee : ".$row['id_abonnement']." / ".$row['date_fin'],'abos_reparer_cron'._LOG_INFO_IMPORTANTE);
 		sql_update("spip_abonnements",$set,"id_abonnement=".intval($row['id_abonnement']));
 	}
+	*/
 }
 
 
@@ -118,7 +125,7 @@ function abos_repair_dist(){
  * on ne renouvelle que ceux qui ont une date de fin (date de validite de la CB)
  * et paye par paybox
  * Ces abonnements devraient etre renouveles par notification paybox, mais qui n'est pas arrivee au serveur
- *
+ * @deprecated
  */
 function renouveler_abos_valides_echus(){
 	$renouveler = charger_fonction('renouveler','abos');

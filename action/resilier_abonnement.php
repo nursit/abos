@@ -30,6 +30,7 @@ function action_resilier_abonnement_dist($arg=null){
 	 AND $id_abonnement = sql_getfetsel("id_abonnement","spip_abonnements","abonne_uid=".sql_quote($uid))) {
 		$immediat = false;
 	}
+	$raison .= ($immediat?" (Immediat)":" (A echeance)");
 
 	if ($id_abonnement){
 		$row = sql_fetsel("mode_paiement,abonne_uid,id_transaction_essai,statut","spip_abonnements","id_abonnement=".intval($id_abonnement));
