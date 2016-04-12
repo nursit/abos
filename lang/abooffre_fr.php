@@ -33,6 +33,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_largeur' => 'Largeur (cm)',
 	'label_longueur' => 'Longueur (cm)',
 	'label_hauteur' => 'Hauteur (cm)',
+	'label_acces_zones' => 'Donne accès aux zones',
 
 	'label_colonne_prix_ht' => 'Prix HT',
 	'label_colonne_description' => 'Desc.',

@@ -28,6 +28,12 @@
 <INCLURE{fond=prive/objets/contenu/abooffre,id=#ID_ABO_OFFRE,id_abo_offre=#ID_ABO_OFFRE,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
 </div>
 
+[(#PLUGIN{accesrestreint}|oui)
+<div class="ajax">
+	#FORMULAIRE_EDITER_LIENS{zones,abooffre,#ID_ABO_OFFRE,' '}
+</div>
+]
+
 <div class="nettoyeur"></div>
 
 [(#AUTORISER{modifier,abooffre,#ID_ABO_OFFRE})

@@ -69,6 +69,14 @@ function formulaires_editer_abooffre_charger_dist($id_abo_offre='new', $retour='
 		$valeurs['taxe'] = 100 * $valeurs['taxe'];
 	}
 
+	if (test_plugin_actif('accesrestreint')){
+		$valeurs['acces_zones'] = array();
+		if (intval($id_abo_offre)){
+			$zones = sql_allfetsel("id_zone","spip_zones_liens","objet='abooffre' AND id_objet=".intval($id_abo_offre));
+			$valeurs['acces_zones'] = array_map('reset',$zones);
+		}
+	}
+
 	return $valeurs;
 }
 
@@ -142,6 +150,21 @@ function formulaires_editer_abooffre_traiter_dist($id_abo_offre='new', $retour='
 		set_request('taxe',$taxe/100);
 	}
 
-	return formulaires_editer_objet_traiter('abooffre',$id_abo_offre,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
+	$res = formulaires_editer_objet_traiter('abooffre',$id_abo_offre,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
+
+	if (test_plugin_actif('accesrestreint')
+	  AND $id_abo_offre = $res['id_abo_offre']){
+		$ins = array();
+		$zones = _request('acces_zones');
+		foreach($zones as $id_zone){
+			if ($id_zone = intval($id_zone)){
+				$ins = array('id_zone'=>$id_zone,'objet'=>'abooffre','id_objet'=>$id_abo_offre);
+				sql_insertq("spip_zones_liens",$ins);
+			}
+		}
+		sql_delete("spip_zones_liens","objet='abooffre' AND id_objet=".intval($id_abo_offre)." AND ".sql_in('id_zone',$zones,'NOT'));
+	}
+
+	return $res;
 }
 

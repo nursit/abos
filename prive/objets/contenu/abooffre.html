@@ -40,19 +40,20 @@
 	<label><:abooffre:label_texte:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{texte} texte'>(#TEXTE)</span>
 </div>]
-<div class="champ contenu_poids[ (#POIDS*|intval|?{'',vide})]">
+
+<div class="champ contenu_poids[ (#IMMATERIEL|non|et{#POIDS*|intval}|?{'',vide})]">
 	<div class='label'><:abooffre:label_poids:></div>
 	<div dir='#LANG_DIR' class='#EDIT{poids} poids'>#POIDS</div>
 </div>
-<div class="champ contenu_largeur[ (#LARGEUR*|intval|?{'',vide})]">
+<div class="champ contenu_largeur[ (#IMMATERIEL|non|et{#LARGEUR*|intval}|?{'',vide})]">
 	<div class='label'><:abooffre:label_largeur:></div>
 	<div dir='#LANG_DIR' class='#EDIT{largeur} largeur'>#LARGEUR</div>
 </div>
-<div class="champ contenu_longueur[ (#LONGUEUR*|intval|?{'',vide})]">
+<div class="champ contenu_longueur[ (#IMMATERIEL|non|et{#LONGUEUR*|intval}|?{'',vide})]">
 	<div class='label'><:abooffre:label_longueur:></div>
 	<div dir='#LANG_DIR' class='#EDIT{longueur} longueur'>#LONGUEUR</div>
 </div>
-<div class="champ contenu_hauteur[ (#HAUTEUR*|intval|?{'',vide})]">
+<div class="champ contenu_hauteur[ (#IMMATERIEL|non|et{#HAUTEUR*|intval}|?{'',vide})]">
 	<div class='label'><:abooffre:label_hauteur:></div>
 	<div dir='#LANG_DIR' class='#EDIT{hauteur} hauteur'>#HAUTEUR</div>
 </div>
