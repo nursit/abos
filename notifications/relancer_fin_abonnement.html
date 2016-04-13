@@ -31,7 +31,7 @@ Mail HTML simplifie mis en forme complete par le filtre |facteur_email_wrap_to_h
 	  [<div class="info">(#MESSAGE)</div>]
 	  ]
 		<ul class="spip">
-		  <BOUCLE_t(TRANSACTIONS abonnements_liens){id_abonnement}{!par date_transaction}{statut IN ok,attente}>
+		  <BOUCLE_t(TRANSACTIONS){id_transaction IN #ID_ABONNEMENT|abos_liste_transactions{#ID_COMMANDE}}{!par date_transaction}{statut IN ok,attente}>
 		  <li>Paiement ##ID_TRANSACTION du [(#DATE_TRANSACTION|affdate)] - [(#MONTANT|affiche_monnaie)] par [(#MODE|bank_titre_type_paiement)]</li>
 		  </BOUCLE_t>
 	  </ul>
