@@ -2,7 +2,7 @@
 	prefix="abos"
 	categorie="outil"
 	version="3.0.0"
-	etat="dev"
+	etat="test"
 	compatibilite="[3.0.0;3.1.*]"
 	logo="prive/themes/spip/images/abos-32.png"
 	documentation=""
