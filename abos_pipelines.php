@@ -10,7 +10,55 @@
  */
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
-	
+
+/**
+ * Ouvrir les acces a des zones restreintes via un abonnement valide en cours
+ * si le plugin acces restreint est present (pipeline du plugin accesrestreint)
+ * @param string $zones
+ * @param null|int $id_auteur
+ * @return string
+ */
+function abos_accesrestreint_liste_zones_autorisees($zones='', $id_auteur=NULL) {
+	$id = NULL;
+	if (!is_null($id_auteur))
+		$id = $id_auteur;
+	elseif (isset($GLOBALS['visiteur_session']['id_auteur']) && $GLOBALS['visiteur_session']['id_auteur'])
+		$id = $GLOBALS['visiteur_session']['id_auteur'];
+	if (!is_null($id)) {
+		$new = abos_liste_zones_acces_auteur($id);
+		if ($zones AND $new) {
+			$zones = array_unique(array_merge(explode(',',$zones),$new));
+			sort($zones);
+			$zones = join(',', $zones);
+		} else if ($new) {
+			sort($new);
+			$zones = join(',', $new);
+		}
+	}
+	return $zones;
+}
+
+/**
+ * Lister les zones accessibles d'un auteur via un abonnement ok
+ *
+ * @param int $id_auteur
+ * @return array
+ */
+function abos_liste_zones_acces_auteur($id_auteur){
+	static $liste_zones = array();
+	if (!isset($liste_zones[$id_auteur])){
+		$liste_zones[$id_auteur] = array();
+		include_spip('base/abstract_sql');
+		$now = date('Y-m-d H:i:s');
+		if ($id_abo_offres = sql_allfetsel("id_abo_offre","spip_abonnements","id_auteur=".intval($id_auteur)." AND statut='ok' AND (date_fin IS NULL OR date_fin<date_debut OR date_fin>".sql_quote($now).")")){
+			$id_abo_offres = array_map('reset',$id_abo_offres);
+			$liste_zones[$id_auteur] = sql_allfetsel("id_zone","spip_zones_liens","objet='abooffre' AND ".sql_in('id_objet',$id_abo_offres));
+			$liste_zones[$id_auteur] = array_map('reset',$liste_zones[$id_auteur]);
+		}
+	}
+	return $liste_zones[$id_auteur];
+}
+
 
 function abos_preparer_visiteur_session($flux){
 
