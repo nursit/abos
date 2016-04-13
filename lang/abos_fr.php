@@ -19,6 +19,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'un_abonne_en_ligne' => '1 abonné vu en ligne',
 	'nb_abonnes_en_ligne' => '@nb@ abonnés vus en ligne',
 	'titre_profil_abonnement' => 'Votre abonnement',
+	'titre_profil_factures' => 'Vos factures',
 
 );
 

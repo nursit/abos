@@ -50,7 +50,8 @@ function abos_statut_en_clair($statut,$date_echeance){
 }
 
 /**
- * Traduit la duree d'abonnement en info lisible
+ * Traduit la duree d'abonnement en info lisible, sous forme de periode
+ * tous les x mois, tous les ans...
  * @param $duree
  * @return mixed|string
  */
@@ -58,6 +59,19 @@ function abos_periode_en_clair($periodicite){
 	$nb = intval($periodicite);
 	$duree = trim(preg_replace(",^\d+\s+,","",$periodicite));
 	$duree = ($nb==1?_T('abooffre:periodicite_'.$duree):_T('abooffre:tous_les_nb_'.$duree,array('nb'=>$nb)));
+	return $duree;
+}
+
+/**
+ * Traduit la duree d'abonnement en info lisible, sous forme de periode
+ * tous les x mois, tous les ans...
+ * @param $duree
+ * @return mixed|string
+ */
+function abos_duree_en_clair($duree){
+	$nb = intval($duree);
+	$duree = trim(preg_replace(",^\d+\s+,","",$duree));
+	$duree = ($nb==1?_T('abooffre:1_'.$duree):_T('abooffre:nb_'.$duree,array('nb'=>$nb)));
 	return $duree;
 }
 

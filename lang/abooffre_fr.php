@@ -66,6 +66,12 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'tous_les_nb_month'=>'tous les @nb@ mois',
 	'tous_les_nb_week'=>'toutes les @nb@ semaines',
 	'tous_les_nb_year'=>'tous les @nb@ ans',
+	'1_week' => '1 semaine',
+	'nb_week' => '@nb@ semaines',
+	'1_month' => '1 mois',
+	'nb_month' => '@nb@ mois',
+	'1_year' => '1 an',
+	'nb_year' => '@nb@ ans',
 );
 
 ?>
