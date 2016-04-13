@@ -1,0 +1,40 @@
+#SET{renouveler,''}
+<BOUCLE_abosencours(ABONNEMENTS){date_fin>#DATE}{id_auteur}{statut=ok}{0,5}{!par date_debut}{doublons abos}> #SET{renouveler,' '}</BOUCLE_abosencours>
+<BOUCLE_abosencours2(ABONNEMENTS){date_fin<date_debut}{id_auteur}{statut=ok}{0,5}{!par date_debut}{doublons abos}> #SET{renouveler,''}</BOUCLE_abosencours2>
+<BOUCLE_abofini(ABONNEMENTS){id_auteur}{date_fin<=#DATE}{statut=ok}{0,1}{!par date_fin}{doublons abos}> </BOUCLE_abofini>
+<BOUCLE_aboresilie(ABONNEMENTS){id_auteur}{statut=resilie}{0,1}{!par date_fin}{doublons abos}> </BOUCLE_aboresilie>
+
+  <B_abos>
+  <div class="section_profil abonnements clearfix">
+    <h2><span><:abos:titre_profil_abonnement:></span></h2>
+
+   <ul class="liste-items abonnements">
+   <BOUCLE_abos(ABONNEMENTS){id_auteur}{statut==.*}{!doublons abos}{par statut}{!par date_debut}>
+   #SET{fini,#STATUT|=={resilie}|ou{#DATE_FIN|<{#DATE}|et{#DATE_FIN|>{#DATE_DEBUT}}}}
+   <li class="item[ (#GET{fini}|?{short,long})]"[(#GET{fini}|oui) style="background: #eee;"]>
+    <article class="entry article hentry">
+	    [(#REM)
+	    [(#GET{fini}|non|et{#INFO_DUREE{abo_offre,#ID_ABO_OFFRE}|match{month}}|oui)
+	    <div class="action pull-right">
+				#GERER_ABONNEMENT{#MODE_PAIEMENT,#ABONNE_UID}
+	    </div>
+	    ]]
+	    <strong class="h3-like entry-title">#INFO_TITRE{abo_offre,#ID_ABO_OFFRE}[
+		    (#GET{fini}|oui)
+           <span class="label">fini</span>
+         ]</strong>
+	    <p class="publication" style="display: block">[(#DATE_FIN|intval|?{#DATE_DEBUT|affdate_debut_fin{#DATE_FIN,non},[(#DATE_DEBUT|<{#ENV{date}}|?{[Depuis le (#DATE_DEBUT|affdate)],[À partir du (#DATE_DEBUT|affdate)]})]})]</p>
+	    [(#GET{fini}|non)
+	    [<div class="info">(#MESSAGE)</div>]
+	    ]
+	    <ul class="spip">
+	    <BOUCLE_t(TRANSACTIONS){id_transaction IN #ID_ABONNEMENT|abos_liste_transactions{#ID_COMMANDE}}{!par date_transaction}{statut IN ok,attente}>
+	    <li>Paiement ##ID_TRANSACTION du [(#DATE_TRANSACTION|affdate)] - [(#MONTANT|affiche_monnaie)] par [(#MODE|bank_titre_type_paiement)]</li>
+	    </BOUCLE_t>
+	    </ul>
+    </article>
+   </li>
+   </BOUCLE_abos>
+   </ul>
+  </div>
+  </B_abos>
