@@ -145,7 +145,11 @@ function abos_taches_generales_cron($taches_generales){
 	}
 	//$taches_generales['abos_renouveler'] = 3600; // toutes les 3600s
 	$taches_generales['abos_reparer'] = 3600*12; // toutes les 12h
-	$taches_generales['abos_relancer'] = 3600; // toutes les 1h
+
+	include_spip('inc/config');
+	if (lire_config('abos/relances','')){
+		$taches_generales['abos_relancer'] = 3600; // toutes les 1h
+	}
 	return $taches_generales;
 }
 

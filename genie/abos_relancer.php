@@ -12,7 +12,6 @@
 
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
-if (!defined('_ABOS_RELANCES')) define('_ABOS_RELANCES',"-30,-15,-7,0");
 if (!defined('_ABOS_RELANCE_POOL')) define('_ABOS_RELANCE_POOL',20);
 
 /**
@@ -26,6 +25,8 @@ function genie_abos_relancer($t){
 	$now = time();
 
 	$relances = abos_get_relances();
+	if (!$relances) return 0;
+
 	$premiere_relance = reset($relances);
 
 
@@ -75,7 +76,11 @@ function abos_date_fin($relance,$now){
 }
 
 function abos_get_relances(){
-	$relances = explode(",",_ABOS_RELANCES);
+	include_spip('inc/config');
+	// ex : -30,-15,-7,0
+	$relances = lire_config('abos/relances','');
+	$relances = explode(",",$relances);
+	$relances = array_map("trim",$relances);
 	$relances = array_map("intval",$relances);
 	$relances = array_unique($relances);
 	sort($relances);

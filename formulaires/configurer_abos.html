@@ -1,0 +1,28 @@
+<div class="formulaire_spip formulaire_configurer formulaire_#FORM">
+
+	<h3 class="titrem"><:abos:cfg_titre_parametrages:></h3>
+
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV*{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	<form method="post" action="#ENV{action}">
+	<div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+
+		<[(#DIV|sinon{ul})] class="editer-groupe">
+
+			[(#SAISIE{input, taxe, obligatoire=non,
+				label=<:abos:configurer_taxe_defaut_label:>,
+			  explication=<:abos:configurer_taxe_defaut_explication:>})]
+
+			[(#SAISIE{input, relances, obligatoire=non,
+				label=<:abos:configurer_relance_label:>,
+			  explication=<:abos:configurer_relance_explication:>})]
+
+		</[(#DIV|sinon{ul})]>
+
+		<input type="hidden" name="_meta_casier" value="abos" />
+		<p class="boutons"><span class="image_loading">&nbsp;</span><input type="submit" class="submit" value="<:bouton_enregistrer:>" /></p>
+	</div>
+	</form>
+</div>
