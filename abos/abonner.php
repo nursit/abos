@@ -91,6 +91,10 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			$ins['date_fin'] = $date_echeance;
 		}
 
+		if ($abos_personaliser = charger_fonction("personaliser","abos",true)){
+			$ins = $abos_personaliser($ins);
+		}
+
 		$id_abonnement = sql_insertq('spip_abonnements',$ins);
 
 		if (!$id_abonnement){
