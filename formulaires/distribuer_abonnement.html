@@ -4,7 +4,7 @@
 <form action="[(#ENV{action})]" method="post"><div>
 	#ACTION_FORMULAIRE{#ENV{action}}
 	<[(#DIV|sinon{ul})] class="editer-groupe">
-		<[(#DIV|sinon{li})] class="saisie_produit">
+		<[(#DIV|sinon{li})] class="editer editer_id_abo_offre">
 			<label for="id_abo_offre">Offre</label>
 			<select name="id_abo_offre" id="id_abo_offre">
 				<BOUCLE_offres(ABO_OFFRES)>
