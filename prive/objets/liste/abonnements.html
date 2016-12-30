@@ -29,7 +29,7 @@
 			<td class='statut'>[ (#STATUT|abos_statut_en_clair{#DATE_ECHEANCE}|_T)]</td>
 			<td class='client secondaire'>[<a(#ID_AUTEUR|oui)
 				href="#URL_ECRIRE{auteur,id_auteur=#ID_AUTEUR}"
-				title="#INFO_EMAIL{auteur,#ID_AUTEUR}">[(#INFO_EMAIL{auteur,#ID_AUTEUR}|couper{20,'...'})]</a>][(#ID_AUTEUR|non)
+				title="#INFO_EMAIL{auteur,#ID_AUTEUR}">[(#INFO_EMAIL{auteur,#ID_AUTEUR}|sinon{#INFO_NOM{auteur,#ID_AUTEUR}}|couper{20,'...'})]</a>][(#ID_AUTEUR|non)
 				[(#INFO_AUTEUR{transaction,#ID_TRANSACTION_ECHEANCE}|abos_couper_abbr{20})]
 				]
 			</td>
