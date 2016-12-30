@@ -64,7 +64,7 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 		}
 
 		$fonction_prix = charger_fonction("abooffre","prix");
-		$prix_ttc = $fonction_prix($id_abo_offre,$prix_ht);
+		$prix_ttc = round($fonction_prix($id_abo_offre,$prix_ht),2);
 
 		// creer l'abonnement
 		$date_debut = ($options['date_debut']?$options['date_debut']:date('Y-m-d H:i:s'));
