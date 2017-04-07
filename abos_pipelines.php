@@ -150,6 +150,11 @@ function abos_taches_generales_cron($taches_generales){
 	if (lire_config('abos/relances','')){
 		$taches_generales['abos_relancer'] = 3600; // toutes les 1h
 	}
+
+	if (defined('_ABOS_EMAIL_REPORTING')){
+		$taches_generales['abos_daily_reporting'] = 3600*6; // toutes les 6H
+	}
+
 	return $taches_generales;
 }
 
