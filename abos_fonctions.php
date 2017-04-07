@@ -12,6 +12,20 @@
 if (!defined('_ECRIRE_INC_VERSION')) return;
 
 /**
+ * Afficher le rapport stats abos
+ * @return string
+ */
+function filtre_abos_reporting_decompte_dist(){
+	include_spip('abos/compter');
+	return abos_reporting_decompte(36); // sur 36 mois en affichage dans le site
+}
+
+function filtre_abos_reporting_parrainages(){
+	include_spip('abos/compter');
+	return abos_reporting_parrainages(6); // sur 12 mois en affichage dans le site
+}
+
+/**
  * Compter les abonnes vus connectes sur le mois passe
  * @return mixed
  */
