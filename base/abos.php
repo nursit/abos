@@ -103,6 +103,7 @@ function abos_declarer_tables_objets_sql($tables) {
 			"id_abonnement"      => "bigint(21) NOT NULL",
 			"id_abo_offre"       => "bigint(21) NOT NULL",
 			"id_auteur"          => "bigint(21) NOT NULL",
+			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'", // date de creation de l'abonnement (stats)
 			"id_commande"        => "bigint(21) NOT NULL",
 			"date_debut"         => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 			"date_fin"           => "datetime DEFAULT NULL",
@@ -128,7 +129,7 @@ function abos_declarer_tables_objets_sql($tables) {
 			"KEY statut"         => "statut", 
 		),
 		'titre' => "abonne_uid AS titre, '' AS lang",
-		 #'date' => "",
+		'date' => 'date',
 		'champs_editables'  => array(),
 		'champs_versionnes' => array(),
 		'rechercher_champs' => array('abonne_uid'=>1,'mode_paiement'=>1),
@@ -189,6 +190,24 @@ function abos_declarer_tables_auxiliaires($tables) {
 			"KEY id_abonnement"  => "id_abonnement"
 		)
 	);
+	$tables['spip_abo_stats'] = array(
+		'field' => array(
+			"date"	                    => "DATE NOT NULL DEFAULT '0000-00-00'", // date du jour de stats
+			"nb_abonnes"                => "bigint(21) DEFAULT '0' NOT NULL", // nombre d'abonnes uniques
+			"nb_abonnements"            => "bigint(21) DEFAULT '0' NOT NULL", // nombre d'abonnements actifs
+			"nb_abonnements_new"        => "bigint(21) DEFAULT '0' NOT NULL", // nombre d'abonnements souscrits par de nouveaux abonnes (conquete)
+			"nb_abonnements_plus"       => "bigint(21) DEFAULT '0' NOT NULL", // nombre d'abonnements souscrits
+			"nb_abonnements_moins"      => "bigint(21) DEFAULT '0' NOT NULL", // nombre d'abonnements finis
+			"ventil_abonnements"        => "text NOT NULL DEFAULT ''", // par offre : nombre d'abonnements actifs
+			"ventil_abonnements_new"    => "text NOT NULL DEFAULT ''", // par offre : nombre d'abonnements souscrits par de nouveaux abonnes (conquete)
+			"ventil_abonnements_plus"   => "text NOT NULL DEFAULT ''", // par offre : nombre d'abonnements souscrits
+			"ventil_abonnements_moins"  => "text NOT NULL DEFAULT ''", // par offre : nombre d'abonnements finis
+		),
+		'key' => array(
+			"PRIMARY KEY"        => "date",
+		)
+	);
 
 	return $tables;
 }
+

@@ -14,6 +14,11 @@
 		<tr>
 			<td>
 				<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a>
+				<br /> Dont <ul class="spip">
+				<BOUCLE_totalgratuit(ABONNEMENTS){id_abo_offre}{mode_paiement=gratuit} /><li>[(#TOTAL_BOUCLE) gratuits]</li><//B_totalgratuit>
+				<BOUCLE_totalparrain(ABONNEMENTS){id_abo_offre}{mode_paiement=parrain} /><li>[(#TOTAL_BOUCLE) parrainés]</li><//B_totalparrain>
+				<BOUCLE_totalfutur(ABONNEMENTS){id_abo_offre}{mode_paiement !IN parrain,gratuit}{date_debut>#ENV{date}} /><li>[(#TOTAL_BOUCLE) pas encore commencés]</li><//B_totalfutur>
+				</ul>
 			</td>
 			<td class='numeric'>#GET{totaloffre}</td>
 			<td class='numeric'>[(#GET{totaloffre}|div{#GET{total}}|mult{1000}|round|div{10})%]</td>
