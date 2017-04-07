@@ -62,6 +62,10 @@ function abos_repair_dist(){
 	}
 	*/
 
+	$compter = charger_fonction('compter','abos');
+	$compter();
+
+
 	$resilier = charger_fonction('resilier','abos');
 
 	// marquer en resilies les abos finis

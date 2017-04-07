@@ -132,6 +132,9 @@ function abos_activer_abonnement_dist($id_transaction,$abo_uid,$mode_paiement,$v
 			$echeance = date('Y-m-d H:i:s',strtotime("+".$abo['duree_echeance'],strtotime($abo['date_echeance'])));
 			$set["date_echeance"] = $echeance;
 			$set["statut"] = 'ok';
+			if ($old_statut!=='ok'){
+				$set["date"] = date('Y-m-d H:i:s',$_SERVER['REQUEST_TIME']);
+			}
 			$set["id_transaction_echeance"] = 0;
 			if ($validite=='echeance'){
 				// fixons la date de fin a l'echeance+1jour
@@ -146,6 +149,8 @@ function abos_activer_abonnement_dist($id_transaction,$abo_uid,$mode_paiement,$v
 	}
 
 	if (!$abo['id_auteur'] OR $abo['id_auteur']==-1) {
+		// vieille fonctionnalite : si transaction liee a une souscription on recherche id_auteur dans la souscription
+		// notamment dans un cadeau enregistre dans la souscription
 		if (!$id_auteur
 			AND $trans AND $trans['parrain']=='souscription' AND $id_souscription = $trans['tracking_id']){
 			$souscription = sql_fetsel("*", "spip_souscriptions", 'id_souscription=' . intval($id_souscription));

@@ -97,8 +97,12 @@ function abos_resilier_dist($id,$options=array()){
 		$now = date('Y-m-d H:i:s');
 		if ($immediat){
 			$set['statut'] = sql_quote('resilie');
-			$set['date_fin'] = sql_quote($now);
-			$set['date_echeance'] = sql_quote($now);
+			if (!intval($row['date_fin']) OR $row['date_fin']>$now){
+				$set['date_fin'] = sql_quote($now);
+			}
+			if (!intval($row['date_echeance']) OR $row['date_echeance']>$now){
+				$set['date_echeance'] = sql_quote($now);
+			}
 		}
 		else{
 			$set['date_fin'] = "date_echeance";
