@@ -60,19 +60,13 @@ function abos_upgrade($nom_meta_base_version, $version_cible) {
 		array('abos_rattraper_stats'), // compter !
 	);
 
-	$maj['2.2.0'] = array(
+	// rattraper les champs taxe/prix_ht/prix_ht_renouvellement pour les bases forkees depuis 2.1
+	$maj['2.3.0'] = array(
 		array('sql_alter','TABLE spip_abo_offres CHANGE taux_tva taxe decimal(4,3) default null'),
-		array('maj_tables', array('spip_abo_offres')),
-	);
-	$maj['2.2.1'] = array(
 		array('sql_alter','TABLE spip_abo_offres CHANGE prix prix_ht varchar(25) NOT NULL DEFAULT \'\''),
 		array('sql_alter','TABLE spip_abo_offres CHANGE prix_renouvellement prix_ht_renouvellement varchar(25) NOT NULL DEFAULT \'\''),
-	);
-	$maj['2.2.2'] = array(
 		array('sql_alter','TABLE spip_abonnements CHANGE commentaire log text NOT NULL DEFAULT \'\''),
-	);
-	$maj['2.2.3'] = array(
-		array('maj_tables', array('spip_abonnements')),
+		array('maj_tables', array('spip_abonnements','spip_abo_offres')),
 	);
 
 	include_spip('base/upgrade');
