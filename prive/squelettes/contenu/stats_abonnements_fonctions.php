@@ -58,3 +58,48 @@ function afficher_stats_echeances_offre($mois_relatif,$id_abo_offre){
 	 . "</tr>";
 
 }
+
+
+function labas_reporting_cadeaux($nb_mois=6) {
+
+	if (!$nb_mois) $nb_mois=6;
+
+	$now = $_SERVER['REQUEST_TIME'];
+
+	$texte = "";
+	$head = "<tr><th>Mois</th><th>Nb cadeaux</th><th>(dont activés)</th></tr>";
+	// $nb_mois derniers mois
+	$lignes = "";
+	$jm1 = date('Y-m-01',$now);
+	for ($i=0;$i<$nb_mois;$i++){
+		$jm31 = date('Y-m-31',strtotime($jm1));
+
+		$sous = sql_allfetsel('cadeau','spip_souscriptions','statut=\'ok\' AND cadeau!=\'\' AND date_souscription>='.sql_quote($jm1).' AND date_souscription<='.sql_quote($jm31));
+
+		$nb_cadeaux = 0;
+		$nb_actives = 0;
+		foreach($sous as $s){
+			if ($cadeau = unserialize($s['cadeau'])) {
+				$nb_cadeaux++;
+				if ($cadeau['id_auteur']>0) {
+					$nb_actives++;
+				}
+			}
+		}
+
+		$lignes .= "<tr>"
+			. "<td>".ucfirst(affdate_mois_annee($jm1))."</td>"
+			. "<td>$nb_cadeaux</td>"
+			. "<td>$nb_actives</td>";
+
+		// mois precedent
+		$jm1 = date('Y-m-01',strtotime("-15 day",strtotime($jm1)));
+	}
+	$texte .= "<h2>$nb_mois derniers mois</h2>
+<table class='spip'>
+$head
+$lignes
+</table>";
+
+	return $texte;
+}
