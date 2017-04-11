@@ -25,6 +25,7 @@ function abos_resilier_dist($id,$options=array()){
 	$abo_log = (isset($options['message'])?$options['message']:'');
 	$immediat = (isset($options['immediat'])?$options['immediat']:false);
 	$notify_bank = (isset($options['notify_bank'])?$options['notify_bank']:true);
+	$erreur = (isset($options['erreur'])?$options['erreur']:false);
 
 	if (!$abo_log){
 		$abo_log = "Resiliation";
@@ -141,6 +142,7 @@ function abos_resilier_dist($id,$options=array()){
 			'id' => $id,
 			'message' => isset($options['message'])?$options['message']:'',
 			'notify_bank' => false, // on a deja fait si besoin
+			'erreur' => $erreur,
 		);
 		$now = date('Y-m-d H:i:s');
 		if (isset($options['immediat']) AND $options['immediat']){
