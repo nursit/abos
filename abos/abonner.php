@@ -46,21 +46,25 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 		  $id_auteur = $GLOBALS['visiteur_session']['id_auteur'];
 
 		// cas particulier : on demande explicitement a ignorer l'auteur connecte, il sera cree plus tard
+		// deprecated : servait dans un workflow sans commande
 		if ($id_auteur==-1) $id_auteur=0;
 
 		$statut = $options['statut'];
-		if (!$id_auteur)
+		if (!$id_auteur){
 			$statut = 'prepa';
+		}
 
 		$prix_ht_initial = $options['prix_ht_initial'];
-		if (is_null($prix_ht_initial))
+		if (is_null($prix_ht_initial)){
 			$prix_ht_initial = $row['prix_ht'];
+		}
 
+		$prix_ht = $prix_ht_initial;
 		if ($options['prix_ht_echeance']){
 			$prix_ht = $options['prix_ht_echeance'];
 		}
-		else {
-			$prix_ht = (intval($row['prix_ht_renouvellement']*100)?$row['prix_ht_renouvellement']:$prix_ht_initial);
+		elseif(intval($row['prix_ht_renouvellement']*100)) {
+			$prix_ht = $row['prix_ht_renouvellement'];
 		}
 
 		$fonction_prix = charger_fonction("abooffre","prix");
@@ -91,6 +95,7 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			$ins['date_fin'] = $date_echeance;
 		}
 
+		// permettre des ajustement metiers sur les abonnements (date de fin par periode par exemple)
 		if ($abos_personaliser = charger_fonction("personaliser","abos",true)){
 			$ins = $abos_personaliser($ins);
 		}
