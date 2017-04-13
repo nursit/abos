@@ -29,51 +29,74 @@ function abos_log($abo_log){
 	return $abo_log;
 }
 
+
 /**
- * Creer la transaction en statut commande pour un abonnement
- * @param int $id_abonnement
- * @param null $prix_abo
- * @return int
+ * Calculer les echeances d'une commande
+ * @param $id_commande
  */
-function abos_creer_transaction($id_abonnement=0,$prix_abo=null, $id_transaction=0){
+function abos_calculer_echeances_commande($id_commande) {
 
-	$options = array();
-	if (isset($_COOKIE['affiliate'])
-		AND strlen($_COOKIE['affiliate'])){
-		$options['parrain'] = $_COOKIE['affiliate'];
-		if (isset($_COOKIE['affiliate_tracking']) && intval($_COOKIE['affiliate_tracking']))
-			$options['tracking_id'] = $_COOKIE['affiliate_tracking'];
+	$echeances = array(
+		0 => array(
+			'montant' => 0,
+			'nb' => 1
+		)
+	);
+
+	$details = sql_allfetsel('*','spip_commandes_details','id_commande='.intval($id_commande),'','id_commandes_detail');
+	foreach ($details as $detail) {
+		$prix = $detail['prix_unitaire_ht'] * (1.0 + $detail['taxe']) * $detail['quantite'];
+		$echeances[0]['montant'] += $prix;
+		$echeances_type = '';
+
+		if ($detail['objet']=='abooffre'
+		  and $offre = sql_fetsel('*','spip_abo_offres','id_abo_offre='.intval($detail['id_objet']))) {
+			$type = '';
+			if (strpos($offre['duree'],'month')!==false and intval($offre['duree'])){
+				$type = 'mois';
+			}
+			if ($type
+			  and (!$echeances_type or $echeances_type==$type)) {
+				$echeances_type = $type;
+				if (!isset($echeances[1])) {
+					$echeances[1] = array('montant'=>0,'nb'=>0);
+				}
+				$prix_renouvellement = $prix;
+				if (floatval($offre['prix_ht_renouvellement'])>0.01) {
+					$prix_renouvellement = $offre['prix_ht_renouvellement'] * (1.0 + $detail['taxe']) * $detail['quantite'];
+				}
+				$echeances[1]['montant'] += $prix_renouvellement;
+			}
+		}
+
+		if ($echeances_type) {
+			foreach($echeances as $k=>$echeance) {
+				// on force en string pour la serialization qui sinon reintroduit des virgules non significatives
+				$echeances[$k]['montant'] = (string)round($echeances[$k]['montant'],2);
+			}
+
+			if (count($echeances)==2
+				and $echeances[0]['montant']==$echeances[1]['montant']) {
+				if ($echeances[0]['nb']>0 and $echeances[1]['nb']>0) {
+					$echeances[0]['nb'] += $echeances[1]['nb'];
+				}
+				else {
+					$echeances[0]['nb'] = 0;
+				}
+				unset($echeances[1]);
+			}
+
+			$set = array(
+				'echeances_type' => $echeances_type,
+				'echeances' => serialize($echeances),
+			);
+			include_spip('action/editer_objet');
+			include_spip('inc/autoriser');
+			autoriser_exception('modifier', 'commande', $id_commande);
+			objet_modifier('commande',$id_commande, $set);
+			autoriser_exception('modifier', 'commande', $id_commande, false);
+		}
+
 	}
 
-	if ($id_abonnement=intval($id_abonnement)
-	  AND $row = sql_fetsel("*","spip_abonnements","id_abonnement=".intval($id_abonnement))){
-
-		$options['id_auteur'] = $row['id_auteur'];
-		$total = (is_null($prix_abo)?$row['prix_echeance']:$prix_abo);
-
-		$abos_taux_tva = charger_fonction("abos_taux_tva","inc");
-		$taux_tva = $abos_taux_tva($id_abonnement);
-		// on prend la TVA en compte ici
-		$total_ht = $total / (1.0 + $taux_tva);
-		$options['montant_ht'] = round($total_ht,2);
-
-		// ouvrir la transaction si besoin
-		if (!$id_transaction
-		  OR !$id_transaction = sql_getfetsel("id_transaction","spip_transactions","id_transaction=".intval($id_transaction)." AND statut=".sql_quote('commande'))){
-			$inserer_transaction = charger_fonction("inserer_transaction","bank");
-			$id_transaction = $inserer_transaction($total,$options);
-		}
-		else {
-			$set = $options;
-			$set['montant'] = $total;
-			sql_updateq("spip_transactions",$set,"id_transaction=".intval($id_transaction));
-		}
-
-		if (!$id_transaction) return 0;
-
-		sql_insertq('spip_abonnements_liens',array('id_abonnement'=>$id_abonnement,'id_objet'=>$id_transaction,'objet'=>'transaction','date'=>$row['date_echeance']));
-		return $id_transaction;
-	}
-
-	return 0;
 }
