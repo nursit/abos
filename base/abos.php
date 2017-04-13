@@ -107,7 +107,7 @@ function abos_declarer_tables_objets_sql($tables) {
 			"date"               => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'", // date de creation de l'abonnement (stats)
 			"id_commande"        => "bigint(21) NOT NULL",
 			"date_debut"         => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
-			"date_fin"           => "datetime DEFAULT NULL",
+			"date_fin"           => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 			"date_echeance"      => "datetime NOT NULL DEFAULT '0000-00-00 00:00:00'",
 			"duree_echeance"     => "varchar(10) NOT NULL DEFAULT ''",
 			"prix_echeance"      => "varchar(25) NOT NULL DEFAULT ''",

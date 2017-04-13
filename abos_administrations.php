@@ -71,6 +71,10 @@ function abos_upgrade($nom_meta_base_version, $version_cible) {
 	$maj['2.4.0'] = array(
 		array('maj_tables', array('spip_abo_offres', 'spip_abonnements')),
 	);
+	$maj['2.4.2'] = array(
+		array('sql_updateq', 'spip_abonnements', array('date_fin'=>'0000-00-00 00:00:00'), 'date_fin IS NULL'),
+		array('sql_alter','TABLE spip_abonnements CHANGE date_fin date_fin datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\''),
+	);
 
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
