@@ -58,6 +58,7 @@ function abos_declarer_tables_objets_sql($tables) {
 			"prix_ht"               => "varchar(25) NOT NULL DEFAULT ''",
 			"prix_ht_renouvellement" => "varchar(25) NOT NULL DEFAULT ''",
 			"taxe"               => "decimal(4,3) default null",
+			"mode_renouvellement"=> "varchar(10) NOT NULL DEFAULT ''",
 			"wha_oid"            => "varchar(10) NOT NULL DEFAULT ''",
 			"immateriel"         => "tinyint(1) NOT NULL DEFAULT 0",
 			"poids"              => "bigint(21) NOT NULL DEFAULT 0", // poids en g
@@ -73,8 +74,8 @@ function abos_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "titre AS titre, '' AS lang",
 		 #'date' => "",
-		'champs_editables'  => array('titre', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','immateriel','poids','largeur','longueur','hauteur'),
-		'champs_versionnes' => array('titre', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','immateriel','poids','largeur','longueur','hauteur'),
+		'champs_editables'  => array('titre', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','mode_renouvellement','immateriel','poids','largeur','longueur','hauteur'),
+		'champs_versionnes' => array('titre', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','mode_renouvellement','immateriel','poids','largeur','longueur','hauteur'),
 		'rechercher_champs' => array('titre'=>4,'descriptif'=>2,'texte'=>2,'wha_oid'=>1),
 		'tables_jointures'  => array(),
 		'statut_textes_instituer' => array(
@@ -111,7 +112,7 @@ function abos_declarer_tables_objets_sql($tables) {
 			"duree_echeance"     => "varchar(10) NOT NULL DEFAULT ''",
 			"prix_echeance"      => "varchar(25) NOT NULL DEFAULT ''",
 			"credits_echeance"   => "text NOT NULL DEFAULT ''",
-			"mode_echeance"      => "varchar(10) NOT NULL DEFAULT 'tacite'",
+			"mode_echeance"      => "varchar(10) NOT NULL DEFAULT ''",
 			"id_transaction_echeance" => "bigint(21) NOT NULL DEFAULT '0'",
 			"id_transaction_essai" => "bigint(21) NOT NULL DEFAULT '0'",
 			"credits"            => "text NOT NULL DEFAULT ''",

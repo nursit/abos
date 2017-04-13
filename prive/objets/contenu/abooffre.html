@@ -25,6 +25,10 @@
 	<span dir='#LANG_DIR' class='#EDIT{taxe} taxe'>(#TAXE|mult{100}|round{2})%</span>
 </div>]
 
+[<div class="champ contenu_mode_renouvellement[ (#MODE_RENOUVELLEMENT*|strlen|?{'',vide})]">
+	<strong dir='#LANG_DIR' class='#EDIT{mode_renouvellement} mode_renouvellement'>(#VAL{abooffre:label_mode_renouvellement_}|concat{#MODE_RENOUVELLEMENT}|_T)</strong>
+</div>]
+
 [<div class="champ contenu_wha_oid[ (#WHA_OID*|strlen|?{'',vide})]">
 	<label><:abooffre:label_wha_oid:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{wha_oid} wha_oid'>(#WHA_OID)</span>

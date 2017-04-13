@@ -49,23 +49,32 @@ function abos_calculer_echeances_commande($id_commande) {
 		$echeances[0]['montant'] += $prix;
 		$echeances_type = '';
 
+		// trouver toutes les offres d'abonnement en renouvellement tacite dans la commande
+		// et calculer les echeances
+		// on ne prend en compte que les offres avec periode=1 (1 mois ou 1 an),
+		// et si plusieurs offres avec periodes de type differentes, seule la premiere rencontree sera prise en compte
 		if ($detail['objet']=='abooffre'
 		  and $offre = sql_fetsel('*','spip_abo_offres','id_abo_offre='.intval($detail['id_objet']))) {
 			$type = '';
-			if (strpos($offre['duree'],'month')!==false and intval($offre['duree'])){
-				$type = 'mois';
-			}
-			if ($type
-			  and (!$echeances_type or $echeances_type==$type)) {
-				$echeances_type = $type;
-				if (!isset($echeances[1])) {
-					$echeances[1] = array('montant'=>0,'nb'=>0);
+			if ($offre['mode_renouvellement']=='tacite') {
+				if (strpos($offre['duree'],'month')!==false and intval($offre['duree'])){
+					$type = 'mois';
 				}
-				$prix_renouvellement = $prix;
-				if (floatval($offre['prix_ht_renouvellement'])>0.01) {
-					$prix_renouvellement = $offre['prix_ht_renouvellement'] * (1.0 + $detail['taxe']) * $detail['quantite'];
+				if (strpos($offre['duree'],'year')!==false and intval($offre['duree'])){
+					$type = 'annee';
 				}
-				$echeances[1]['montant'] += $prix_renouvellement;
+				if ($type
+				  and (!$echeances_type or $echeances_type==$type)) {
+					$echeances_type = $type;
+					if (!isset($echeances[1])) {
+						$echeances[1] = array('montant'=>0,'nb'=>0);
+					}
+					$prix_renouvellement = $prix;
+					if (floatval($offre['prix_ht_renouvellement'])>0.01) {
+						$prix_renouvellement = $offre['prix_ht_renouvellement'] * (1.0 + $detail['taxe']) * $detail['quantite'];
+					}
+					$echeances[1]['montant'] += $prix_renouvellement;
+				}
 			}
 		}
 

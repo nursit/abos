@@ -85,13 +85,14 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			'date_debut'=>$date_debut,
 			'date_echeance'=>$date_echeance,
 			'duree_echeance'=>$row['duree'],
+			'mode_echeance' => $row['mode_renouvellement'],
 			'prix_echeance'=>$prix_ttc,
 			'statut'=>$statut,
 			'mode_paiement'=>$options['mode_paiement'],
 		);
 		// si c'est un abonnement actif, on le met en date_fin=date_echeance
-		// si c'est un paiement recurrent periodique, activer_abonnement changera la date_fin
-		if ($statut=='ok'){
+		// si c'est un paiement recurrent periodique, pas de date de fin, il sera passe en resilie par cron si date passee
+		if ($statut=='ok' and $ins['mode_echeance']!=='tacite'){
 			$ins['date_fin'] = $date_echeance;
 		}
 

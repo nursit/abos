@@ -9,7 +9,7 @@
 
 <h2><:abooffre:titre_abo_offres:></h2>
 
-<INCLURE{fond=prive/objets/liste/abo_offres, par=id_abo_offre, nb=5, env, ajax, sinon=<:abooffre:info_aucun_abooffre:>}>
+<INCLURE{fond=prive/objets/liste/abo_offres, par=id_abo_offre, nb=10, env, ajax, sinon=<:abooffre:info_aucun_abooffre:>}>
 
 [(#AUTORISER{creer,abooffre})
 	[(#URL_ECRIRE{abooffre_edit,new=oui}|icone_verticale{<:abooffre:icone_creer_abooffre:>,abooffre,new,right})]

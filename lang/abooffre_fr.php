@@ -28,6 +28,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_titre' => 'Titre',
 	'label_wha_oid' => 'oId MSCA WHA/Orange Select',
 	'label_taxe' => 'Taxe',
+	'label_mode_renouvellement_tacite' => 'Renouvellement Automatique',
 	'label_immateriel' => 'Immateriel',
 	'label_poids' => 'Poids (g)',
 	'label_largeur' => 'Largeur (cm)',
