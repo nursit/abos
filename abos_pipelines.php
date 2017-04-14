@@ -88,10 +88,17 @@ function abos_preparer_visiteur_session($flux){
 function abos_affiche_auteurs_interventions($flux) {
 	if ($id_auteur = intval($flux['args']['id_auteur'])) {
 
-		$flux['data'] .= recuperer_fond('prive/squelettes/inclure/abonnements-auteur', array(
+		$ins = recuperer_fond('prive/squelettes/inclure/abonnements-auteur', array(
 			'id_auteur' => $id_auteur,
 			'titre' => _T('abonnement:info_abonnements_auteur')
 		), array('ajax' => true));
+		$mark = '<!--bank-->';
+		if ($p = strpos($flux['data'], $mark) !== false) {
+			$flux['data'] = substr_replace($flux['data'], $ins, $p + strlen($mark) - 1, 0);
+		}
+		else {
+			$flux['data'] .= $ins;
+		}
 
 	}
 	return $flux;
