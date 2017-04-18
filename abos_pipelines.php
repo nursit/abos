@@ -93,8 +93,8 @@ function abos_affiche_auteurs_interventions($flux) {
 			'titre' => _T('abonnement:info_abonnements_auteur')
 		), array('ajax' => true));
 		$mark = '<!--bank-->';
-		if ($p = strpos($flux['data'], $mark) !== false) {
-			$flux['data'] = substr_replace($flux['data'], $ins, $p + strlen($mark) - 1, 0);
+		if (($p = strpos($flux['data'], $mark)) !== false) {
+			$flux['data'] = substr_replace($flux['data'], $ins, $p + strlen($mark), 0);
 		}
 		else {
 			$flux['data'] .= $ins;
