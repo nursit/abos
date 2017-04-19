@@ -1,17 +1,17 @@
 <BOUCLE_abonnement(ABONNEMENTS){id_abonnement}{statut?}>
 
 #BOITE_OUVRIR{'','note'}
-[<div class="champ contenu_date_debut[ (#DATE_DEBUT*|strlen|?{'',vide})]">
+[<div class="champ contenu_date_debut[ (#DATE_DEBUT*|intval|?{'',vide})]">
 	<label><:abonnement:label_date_debut:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{date_debut} date_debut'>(#DATE_DEBUT|affdate_heure)</span>
 </div>]
 
-[<div class="champ contenu_date_echeance[ (#DATE_ECHEANCE*|strlen|?{'',vide})]">
+[<div class="champ contenu_date_echeance[ (#DATE_ECHEANCE*|intval|?{'',vide})]">
 	<label><:abonnement:label_date_echeance:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{date_echeance} date_echeance'>(#DATE_ECHEANCE|affdate_heure)</span>
 </div>]
 
-[<div class="champ contenu_date_fin[ (#DATE_FIN*|strlen|?{'',vide})]">
+[<div class="champ contenu_date_fin[ (#DATE_FIN*|intval|?{'',vide})]">
 	<label><:abonnement:label_date_fin:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{date_fin} date_fin'>(#DATE_FIN|affdate_heure)</span>
 </div>]
@@ -69,7 +69,10 @@
 
 [<div class="champ contenu_log[ (#LOG*|strlen|?{'',vide})]">
 	<label><:abonnement:label_log:> : </label>
-	<span dir='#LANG_DIR' class='#EDIT{log} log'>(#LOG|propre)</span>
+	<pre dir='#LANG_DIR' class='#EDIT{log} log'>(#LOG)</pre>
 </div>]
+<style>
+pre {font-family: monospace;overflow: auto;max-height: 40em;white-space: pre-wrap;}
+</style>
 
 </BOUCLE_abonnement>

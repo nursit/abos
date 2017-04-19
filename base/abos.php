@@ -131,7 +131,7 @@ function abos_declarer_tables_objets_sql($tables) {
 		),
 		'titre' => "abonne_uid AS titre, '' AS lang",
 		'date' => 'date',
-		'champs_editables'  => array(),
+		'champs_editables'  => array('abonne_uid','date_debut','date_echeance','date_fin','prix_echeance'),
 		'champs_versionnes' => array(),
 		'rechercher_champs' => array('abonne_uid'=>1,'mode_paiement'=>1),
 		'rechercher_jointures' => array(

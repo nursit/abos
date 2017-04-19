@@ -1,9 +1,16 @@
 [(#AUTORISER{voir,abonnement,#ID_ABONNEMENT}|sinon_interdire_acces)]
 <BOUCLE_abonnement(ABONNEMENTS){id_abonnement}{statut==.*}{si #ENV{exec}|=={abonnement}}>
 [(#BOITE_OUVRIR{[
+	[(#AUTORISER{modifier,abonnement,#ID_ABONNEMENT})
+		[(#ID_ABONNEMENT|afficher_qui_edite{abonnement}|non)
+			[(#URL_ECRIRE{abonnement_edit,id_abonnement=#ID_ABONNEMENT}|icone_verticale{<:abonnement:icone_modifier_abonnement:>,abonnement,edit,right ajax preload})]
+		]
+		[(#ID_ABONNEMENT|afficher_qui_edite{abonnement}|oui)
+			[(#URL_ECRIRE{abonnement_edit,id_abonnement=#ID_ABONNEMENT}|icone_verticale{#ID_ABONNEMENT|afficher_qui_edite{abonnement},warning-24,'',right edition_deja ajax preload})]
+		]
+	]
 
 	<h1>UID : (#ABONNE_UID|sinon{&mdash;})[(#CHEMIN_IMAGE{abonnement-24.png}|balise_img{abonnement,cadre-icone})]</h1>
-	<h3 class="soustitre">Offre <a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]">##ID_ABO_OFFRE[ : (#INFO_TITRE{abooffre,#ID_ABO_OFFRE})]</a></h3>
 	<h3 class="soustitre">Compte <a href="[(#ID_AUTEUR|generer_url_entite{auteur})]">##ID_AUTEUR[ : (#INFO_EMAIL{auteur,#ID_AUTEUR})]</a></h3>
 
 
@@ -16,6 +23,7 @@
 <!--affiche_milieu-->
 
 <div id="wysiwyg">
+	<h3 class="soustitre">Offre <a href="[(#ID_ABO_OFFRE|generer_url_entite{abonnement})]">##ID_ABO_OFFRE[ : (#INFO_TITRE{abooffre,#ID_ABO_OFFRE})]</a></h3>
 <INCLURE{fond=prive/objets/contenu/abonnement,id=#ID_ABONNEMENT,id_abonnement=#ID_ABONNEMENT,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
 </div>
 

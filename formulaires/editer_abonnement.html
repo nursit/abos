@@ -1,0 +1,35 @@
+<div class='formulaire_spip formulaire_editer formulaire_#FORM formulaire_#FORM-#ENV{id_abonnement,nouveau}'>
+	[<p class="reponse_formulaire reponse_formulaire_ok">(#ENV**{message_ok})</p>]
+	[<p class="reponse_formulaire reponse_formulaire_erreur">(#ENV*{message_erreur})</p>]
+
+	#SET{fl,abonnement}
+	[(#ENV{editable})
+	<form method='post' action='#ENV{action}'><div>
+		#ACTION_FORMULAIRE{#ENV{action}}
+		<input type='hidden' name='id_abonnement' value='#ENV{id_abonnement}' />
+		<[(#DIV|sinon{ul})] class="editer-groupe">
+
+			[(#SAISIE{input, abonne_uid,
+				label=<:abonnement:label_abonne_uid:>})]
+
+			[(#SAISIE{date, date_debut,
+				label=<:abonnement:label_date_debut:>})]
+
+			[(#SAISIE{date, date_echeance,
+				label=<:abonnement:label_date_echeance:>})]
+
+			[(#SAISIE{date, date_fin,
+				label=<:abonnement:label_date_fin:>})]
+
+			[(#ENV{_editer_echeance}|oui)
+				[(#SAISIE{input, prix_echeance,
+					label=<:abonnement:label_prix_echeance:>,
+					explication=[<:abonnement:label_duree_echeance:> : (#DUREE_ECHEANCE|abos_periode_en_clair)]})]
+			]
+		</[(#DIV|sinon{ul})]>
+		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
+		<!--extra-->
+		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>
+	</div></form>
+	]
+</div>

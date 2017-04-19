@@ -114,7 +114,7 @@ function autoriser_abooffre_iconifier_dist($faire, $type, $id, $qui, $opt) {
  * @return bool          true s'il a le droit, false sinon
 **/
 function autoriser_abonnement_creer_dist($faire, $type, $id, $qui, $opt) {
-	return in_array($qui['statut'], array('0minirezo'));
+	return in_array($qui['statut'], array('0minirezo')) and !$qui['restreint'];
 }
 
 /**
@@ -142,7 +142,7 @@ function autoriser_abonnement_voir_dist($faire, $type, $id, $qui, $opt) {
  * @return bool          true s'il a le droit, false sinon
 **/
 function autoriser_abonnement_modifier_dist($faire, $type, $id, $qui, $opt) {
-	return in_array($qui['statut'], array('0minirezo'));
+	return in_array($qui['statut'], array('0minirezo')) and !$qui['restreint'];
 }
 
 /**
