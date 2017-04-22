@@ -1,7 +1,7 @@
 <paquet
 	prefix="abos"
 	categorie="outil"
-	version="3.2.0"
+	version="3.2.1"
 	etat="stable"
 	compatibilite="[3.0.0;3.1.*]"
 	logo="prive/themes/spip/images/abos-32.png"
@@ -24,6 +24,7 @@
 	<pipeline nom="declarer_tables_auxiliaires" inclure="base/abos.php" /> 
 	<pipeline nom="accesrestreint_liste_zones_autorisees" inclure="abos_pipelines.php" />
 	<pipeline nom="affiche_auteurs_interventions" inclure="abos_pipelines.php" />
+	<pipeline nom="afficher_complement_objet" inclure="abos_pipelines.php" />
 	<pipeline nom="compter_contributions_auteur" inclure="abos_pipelines.php" />
 	<pipeline nom="optimiser_base_disparus" inclure="abos_pipelines.php" />
 	<pipeline nom="taches_generales_cron" inclure="abos_pipelines.php" />

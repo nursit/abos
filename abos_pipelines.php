@@ -123,6 +123,17 @@ function abos_compter_contributions_auteur($flux){
 	return $flux;
 }
 
+function abos_afficher_complement_objet($flux) {
+
+	if ($flux['args']['type']=='commande'
+	  and $id_commande = $flux['args']['id']) {
+		$flux['data'] .= recuperer_fond('prive/objets/liste/abonnements',array('where'=>"id_commande=$id_commande"));
+	}
+
+	return $flux;
+
+}
+
 
 
 /**
