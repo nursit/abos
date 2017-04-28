@@ -81,6 +81,7 @@ function abos_declarer_tables_objets_sql($tables) {
 		'statut_textes_instituer' => array(
 			'prepa'    => 'abooffre:texte_statut_en_cours_redaction',
 			'publie'   => 'abooffre:texte_statut_publie',
+			'refuse'   => 'abooffre:texte_statut_refuse',
 			'poubelle' => 'abooffre:texte_statut_poubelle',
 		),
 		'statut'=> array(

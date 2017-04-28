@@ -58,6 +58,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 
 	'texte_statut_en_cours_redaction' => 'en préparation',
 	'texte_statut_publie' => 'en ligne',
+	'texte_statut_refuse' => 'retirée',
 	'texte_statut_poubelle' => 'supprimée',
 
 
