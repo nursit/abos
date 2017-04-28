@@ -268,9 +268,8 @@ function abos_historique_encaissements($id_abo_offre){
 	$rows = sql_allfetsel(
 		"count(T.id_transaction) as nombre_mensuel, sum(T.montant_ht) as montant_mensuel_ht,sum(T.montant) as montant_mensuel,T.date_paiement",
 		"spip_transactions AS T
-			JOIN spip_abonnements_liens AS L ON (L.objet='transaction' AND L.id_objet=T.id_transaction)
-			JOIN spip_abonnements AS A ON A.id_abonnement=L.id_abonnement",
-		"T.statut='ok' AND A.id_abo_offre=".intval($id_abo_offre),
+			JOIN spip_abonnements AS A ON A.id_commande=T.id_commande",
+		"T.id_commande>0 AND T.statut='ok' AND A.id_abo_offre=".intval($id_abo_offre),
 		"DATE_FORMAT(T.date_paiement,'%Y-%m')",
 		"T.date_paiement DESC"
 	);
