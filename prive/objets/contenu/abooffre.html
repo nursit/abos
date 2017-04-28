@@ -10,14 +10,14 @@
 	<span dir='#LANG_DIR' class='#EDIT{duree} duree'>(#DUREE|abos_periode_en_clair)</span>
 </div>]
 
-[<div class="champ contenu_prix_ht[ (#PRIX_HT*|strlen|?{'',vide})]">
+[<div class="champ contenu_prix_ht[ (#CHAMP*{prix_ht}|strlen|?{'',vide})]">
 	<label><:abooffre:label_prix_ht:> : </label>
-	<span dir='#LANG_DIR' class='#EDIT{prix_ht} prix_ht'>(#PRIX_HT|affiche_monnaie)</span>
+	<span dir='#LANG_DIR' class='#EDIT{prix_ht} prix_ht'>(#CHAMP*{prix_ht}|affiche_monnaie)</span>
 </div>]
 
-[<div class="champ contenu_prix_ht_renouvellement[ (#PRIX_HT_RENOUVELLEMENT*|strlen|?{'',vide})]">
+[<div class="champ contenu_prix_ht_renouvellement[ (#CHAMP*{prix_ht_renouvellement}|strlen|?{'',vide})]">
 	<label><:abooffre:label_prix_ht_renouvellement:> : </label>
-	<span dir='#LANG_DIR' class='#EDIT{prix_ht_renouvellement} prix_ht_renouvellement'>(#PRIX_HT_RENOUVELLEMENT|affiche_monnaie)</span>
+	<span dir='#LANG_DIR' class='#EDIT{prix_ht_renouvellement} prix_ht_renouvellement'>(#CHAMP*{prix_ht_renouvellement}|affiche_monnaie)</span>
 </div>]
 
 [<div class="champ contenu_taxe[ (#TAXE*|strlen|?{'',vide})]">
