@@ -111,6 +111,11 @@ function formulaires_editer_abooffre_verifier_dist($id_abo_offre='new', $retour=
 	$verifier = charger_fonction('verifier','inc');
 
 	foreach(array('prix_ht','prix_ht_renouvellement') as $champ_prix){
+		$prix = _request($champ_prix);
+		if (strpos($prix, ',') !== false) {
+			$prix = str_replace(',','.',$prix);
+			set_request($champ_prix, $prix);
+		}
 		if ($err=$verifier(_request($champ_prix),'decimal')){
 			$erreurs[$champ_prix] = $err;
 		}
