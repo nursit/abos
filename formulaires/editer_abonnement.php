@@ -140,6 +140,19 @@ function formulaires_editer_abonnement_verifier_dist($id_abonnement='new', $reto
 			$erreurs['message_erreur'] = '';
 		}
 
+		foreach(array('debut','echeance','fin') as $suffixe) {
+			$time = verifier_corriger_date_saisie($suffixe, false, $erreurs);
+			if ($time){
+				// on prend le nouveau jour en gardant l'heure initiale
+				$d = date('Y-m-d', $time) . ' ' . end(explode(' ', $row['date_' . $suffixe]));
+				if ($d!==$row['date_' . $suffixe] and !_request('confirm_date_' . $suffixe)){
+					$confirm = " <br /><input type='checkbox' class='checkbox' name='confirm_date_" . $suffixe . "' id='confirm_date_" . $suffixe . "' /> <label for='confirm_date_" . $suffixe . "'>"._T('abonnement:label_confirmer_modification')."</label>";
+					$erreurs['date_' . $suffixe] = _T('abonnement:confirmer_changement_date',array('presta'=>$row['mode_paiement'])). $confirm;
+					$erreurs['message_erreur'] = '';
+				}
+			}
+		}
+
 	}
 
 

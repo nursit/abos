@@ -22,6 +22,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'confirmer_resilier_echeance' => 'Résilier à l\'échéance ?  (L\'utilisateur pourra normalement utiliser son abonnement jusqu\'à la date d\'échéance)',
 	'confirmer_changement_abonne_uid' => 'Vous devez faire la modification manuelle correspondante chez votre prestataire de paiement <tt>@presta@</tt>.',
 	'confirmer_changement_prix_echeance' => 'Vous devez faire la modification manuelle correspondante chez votre prestataire de paiement <tt>@presta@</tt>.',
+	'confirmer_changement_date' => 'Vous devez faire la modification manuelle correspondante chez votre prestataire de paiement <tt>@presta@</tt>.',
 	'label_confirmer_modification' => 'Confirmer la modification ?',
 
 	'erreur_date_echeance_ou_fin_obli' => 'Indiquez une date d\'echéance ou une date de fin',
