@@ -34,6 +34,7 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			'prix_ht_initial' => null,
 			'prix_ht_echeance' => null,
 			'id_commande' => 0,
+			'date' => date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']),
 			'date_debut' => '',
 			'mode_paiement' => '',
 		);
@@ -82,6 +83,7 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			'id_abo_offre'=>$id_abo_offre,
 			'id_auteur'=>$id_auteur,
 			'id_commande'=>$options['id_commande'],
+			'date'=>$options['date'],
 			'date_debut'=>$date_debut,
 			'date_echeance'=>$date_echeance,
 			'duree_echeance'=>$row['duree'],
