@@ -97,7 +97,7 @@ function abos_renouveler_abonnement_dist($id_transaction,$abo_uid,$mode_paiement
 			$time_ref = strtotime($trans['date_transaction']);
 			if (!$time_ref) $time_ref = strtotime($trans['date_paiement']);
 			if (!$time_ref) $time_ref = $_SERVER['REQUEST_TIME'];
-			
+
 			$datep15 = date('Y-m-d H:i:s',strtotime("+15 day", $time_ref));
 
 			// retablir un abo qui avait ete resilie a tort (puisqu'on a un paiement)

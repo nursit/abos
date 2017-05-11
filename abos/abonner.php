@@ -39,6 +39,7 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			'date' => date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']),
 			'date_debut' => '',
 			'mode_paiement' => '',
+			'abonne_uid' => '',
 		);
 		$options = array_merge($defaut, $options);
 
@@ -96,6 +97,7 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			'prix_echeance' => $prix_ttc,
 			'statut' => $statut,
 			'mode_paiement' => $options['mode_paiement'],
+			'abonne_uid' => $options['abonne_uid'],
 		);
 		// si c'est un abonnement actif, on le met en date_fin=date_echeance
 		// si c'est un paiement recurrent periodique, pas de date de fin, il sera passe en resilie par cron si date passee
