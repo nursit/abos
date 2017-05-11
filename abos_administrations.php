@@ -68,12 +68,16 @@ function abos_upgrade($nom_meta_base_version, $version_cible) {
 		array('sql_alter','TABLE spip_abonnements CHANGE commentaire log text NOT NULL DEFAULT \'\''),
 		array('maj_tables', array('spip_abonnements','spip_abo_offres')),
 	);
+
 	$maj['2.4.0'] = array(
 		array('maj_tables', array('spip_abo_offres', 'spip_abonnements')),
 	);
 	$maj['2.4.2'] = array(
 		array('sql_updateq', 'spip_abonnements', array('date_fin'=>'0000-00-00 00:00:00'), 'date_fin IS NULL'),
 		array('sql_alter','TABLE spip_abonnements CHANGE date_fin date_fin datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\''),
+	);
+	$maj['2.4.3'] = array(
+		array('sql_alter','TABLE spip_abonnements CHANGE mode_paiement mode_paiement varchar(25) NOT NULL DEFAULT \'\''),
 	);
 
 	include_spip('base/upgrade');

@@ -117,7 +117,7 @@ function abos_declarer_tables_objets_sql($tables) {
 			"id_transaction_echeance" => "bigint(21) NOT NULL DEFAULT '0'",
 			"id_transaction_essai" => "bigint(21) NOT NULL DEFAULT '0'",
 			"credits"            => "text NOT NULL DEFAULT ''",
-			"mode_paiement"      => "varchar(10) NOT NULL DEFAULT ''",
+			"mode_paiement"      => "varchar(25) NOT NULL DEFAULT ''",
 			"abonne_uid"         => "varchar(50) NOT NULL DEFAULT ''",
 			"confirm"            => "varchar(255) NOT NULL DEFAULT ''",
 			"log"                => "text NOT NULL DEFAULT ''",

@@ -1,12 +1,12 @@
 <paquet
 	prefix="abos"
 	categorie="outil"
-	version="3.2.7"
+	version="3.2.8"
 	etat="stable"
 	compatibilite="[3.0.0;3.1.*]"
 	logo="prive/themes/spip/images/abos-32.png"
 	documentation=""
-	schema="2.4.2"
+	schema="2.4.3"
 >
 
 	<nom>Abonnements</nom>
