@@ -15,8 +15,8 @@ if (!defined('_ECRIRE_INC_VERSION')){
 include_spip('base/abstract_sql');
 /**
  * Activer un abonnement reccurent (appele par bank)
- * ne sert pas beaucoup si on utilise les commandes : distribuer/abooffre distribue directement l'abonnement en statut ok
- * (mais met a jour les relances quand meme)
+ * si on utilise les commandes : distribuer/abooffre distribue directement l'abonnement en statut ok
+ * mais met a jour les relances et abonne_uid et mode_paiement
  *
  * @param $id_transaction
  * @param $abo_uid
@@ -57,10 +57,10 @@ function abos_activer_abonnement_dist($id_transaction, $abo_uid, $mode_paiement,
 			return false;
 		}
 
-		if ($abo = sql_fetsel("*", "spip_abonnements", "id_commande=" . intval($id_commande))
+		if (!$abo = sql_fetsel("*", "spip_abonnements", "id_commande=" . intval($id_commande))
 			OR !$id_abonnement = $abo['id_abonnement']
 		){
-			spip_log("Impossible de retrouver l'abo lie a la transaction $id_transaction", 'abo_erreurs' . _LOG_ERREUR);
+			spip_log("Impossible de retrouver l'abo lie a la transaction $id_transaction / commande $id_commande", 'abo_erreurs' . _LOG_ERREUR);
 			return false;
 		}
 
