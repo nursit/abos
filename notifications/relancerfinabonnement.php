@@ -10,7 +10,9 @@
  * @package    SPIP\abonnement\Genie
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')){
+	return;
+}
 
 /**
  * @param string $quoi
@@ -19,16 +21,16 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  */
 function notifications_relancerfinabonnement_dist($quoi, $id_abonnement, $options){
 
-	$abonnement = sql_fetsel("*","spip_abonnements","id_abonnement=".intval($id_abonnement));
+	$abonnement = sql_fetsel("*", "spip_abonnements", "id_abonnement=" . intval($id_abonnement));
 
 	// on prend l'email de l'id_auteur
-	$email = sql_getfetsel("email","spip_auteurs","id_auteur=".intval($abonnement['id_auteur']));
+	$email = sql_getfetsel("email", "spip_auteurs", "id_auteur=" . intval($abonnement['id_auteur']));
 
 	if ($email){
-		$texte = recuperer_fond("notifications/relancer_fin_abonnement",array('id_abonnement'=>$id_abonnement));
+		$texte = recuperer_fond("notifications/relancer_fin_abonnement", array('id_abonnement' => $id_abonnement));
 
 		include_spip('inc/notifications');
-		notifications_envoyer_mails($email,$texte);
+		notifications_envoyer_mails($email, $texte);
 	}
 
 }

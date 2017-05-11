@@ -9,13 +9,17 @@
  * @package    SPIP\Abos\Autorisations
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')){
+	return;
+}
 
 
 /**
  * Fonction d'appel pour le pipeline
- * @pipeline autoriser */
-function abos_autoriser(){}
+ * @pipeline autoriser
+ */
+function abos_autoriser(){
+}
 
 
 // -----------------
@@ -26,42 +30,42 @@ function abos_autoriser(){}
  * Autorisation de voir un élément de menu (abooffres)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
+ **/
 function autoriser_abooffres_menu_dist($faire, $type, $id, $qui, $opt){
 	return true;
-} 
+}
 
 
 /**
  * Autorisation de créer (abooffre)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_abooffre_creer_dist($faire, $type, $id, $qui, $opt) {
-	return in_array($qui['statut'], array('0minirezo', '1comite')); 
+ **/
+function autoriser_abooffre_creer_dist($faire, $type, $id, $qui, $opt){
+	return in_array($qui['statut'], array('0minirezo', '1comite'));
 }
 
 /**
  * Autorisation de voir (abooffre)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_abooffre_voir_dist($faire, $type, $id, $qui, $opt) {
+ **/
+function autoriser_abooffre_voir_dist($faire, $type, $id, $qui, $opt){
 	return true;
 }
 
@@ -69,13 +73,13 @@ function autoriser_abooffre_voir_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de modifier (abooffre)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_abooffre_modifier_dist($faire, $type, $id, $qui, $opt) {
+ **/
+function autoriser_abooffre_modifier_dist($faire, $type, $id, $qui, $opt){
 	return in_array($qui['statut'], array('0minirezo', '1comite'));
 }
 
@@ -83,17 +87,17 @@ function autoriser_abooffre_modifier_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de supprimer (abooffre)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_abooffre_supprimer_dist($faire, $type, $id, $qui, $opt) {
-	return $qui['statut'] == '0minirezo' AND !$qui['restreint'];
+ **/
+function autoriser_abooffre_supprimer_dist($faire, $type, $id, $qui, $opt){
+	return $qui['statut']=='0minirezo' AND !$qui['restreint'];
 }
 
-function autoriser_abooffre_iconifier_dist($faire, $type, $id, $qui, $opt) {
+function autoriser_abooffre_iconifier_dist($faire, $type, $id, $qui, $opt){
 	return false;
 }
 
@@ -101,19 +105,17 @@ function autoriser_abooffre_iconifier_dist($faire, $type, $id, $qui, $opt) {
 // Objet abonnements
 
 
-
-
 /**
  * Autorisation de créer (abonnement)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_abonnement_creer_dist($faire, $type, $id, $qui, $opt) {
+ **/
+function autoriser_abonnement_creer_dist($faire, $type, $id, $qui, $opt){
 	return in_array($qui['statut'], array('0minirezo')) and !$qui['restreint'];
 }
 
@@ -121,13 +123,13 @@ function autoriser_abonnement_creer_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de voir (abonnement)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_abonnement_voir_dist($faire, $type, $id, $qui, $opt) {
+ **/
+function autoriser_abonnement_voir_dist($faire, $type, $id, $qui, $opt){
 	return true;
 }
 
@@ -135,13 +137,13 @@ function autoriser_abonnement_voir_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de modifier (abonnement)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_abonnement_modifier_dist($faire, $type, $id, $qui, $opt) {
+ **/
+function autoriser_abonnement_modifier_dist($faire, $type, $id, $qui, $opt){
 	return in_array($qui['statut'], array('0minirezo')) and !$qui['restreint'];
 }
 
@@ -149,40 +151,40 @@ function autoriser_abonnement_modifier_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de prolonger (abonnement)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_abonnement_prolonger_dist($faire, $type, $id, $qui, $opt) {
-	$abo = sql_fetsel("statut,date_fin","spip_abonnements","id_abonnement=".intval($id));
+ **/
+function autoriser_abonnement_prolonger_dist($faire, $type, $id, $qui, $opt){
+	$abo = sql_fetsel("statut,date_fin", "spip_abonnements", "id_abonnement=" . intval($id));
 	return
 		($abo['statut']=='ok'
 			AND intval($abo['date_fin'])
-			AND autoriser('modifier','abonnement',$id,$qui,$opt));
+			AND autoriser('modifier', 'abonnement', $id, $qui, $opt));
 }
 
 /**
  * Autorisation de supprimer (abonnement)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_abonnement_supprimer_dist($faire, $type, $id, $qui, $opt) {
-	return $qui['statut'] == '0minirezo' AND !$qui['restreint'];
+ **/
+function autoriser_abonnement_supprimer_dist($faire, $type, $id, $qui, $opt){
+	return $qui['statut']=='0minirezo' AND !$qui['restreint'];
 }
 
-function autoriser_abonnement_iconifier_dist($faire, $type, $id, $qui, $opt) {
+function autoriser_abonnement_iconifier_dist($faire, $type, $id, $qui, $opt){
 	return false;
 }
 
-function autoriser_abonnement_resilier_dist($faire, $type, $id, $qui, $opt) {
-	return $qui['statut'] == '0minirezo' AND !$qui['restreint'];
+function autoriser_abonnement_resilier_dist($faire, $type, $id, $qui, $opt){
+	return $qui['statut']=='0minirezo' AND !$qui['restreint'];
 }
 
 
@@ -190,13 +192,13 @@ function autoriser_abonnement_resilier_dist($faire, $type, $id, $qui, $opt) {
  * Autorisation de lier/délier l'élément (abonnements)
  *
  * @param  string $faire Action demandée
- * @param  string $type  Type d'objet sur lequel appliquer l'action
- * @param  int    $id    Identifiant de l'objet
- * @param  array  $qui   Description de l'auteur demandant l'autorisation
- * @param  array  $opt   Options de cette autorisation
+ * @param  string $type Type d'objet sur lequel appliquer l'action
+ * @param  int $id Identifiant de l'objet
+ * @param  array $qui Description de l'auteur demandant l'autorisation
+ * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
-**/
-function autoriser_associerabonnements_dist($faire, $type, $id, $qui, $opt) {
-	return $qui['statut'] == '0minirezo' AND !$qui['restreint'];
+ **/
+function autoriser_associerabonnements_dist($faire, $type, $id, $qui, $opt){
+	return $qui['statut']=='0minirezo' AND !$qui['restreint'];
 }
 

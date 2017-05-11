@@ -10,7 +10,9 @@
  * @package    SPIP\Abos\Genie
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')){
+	return;
+}
 
 /**
  * Maintenance des abonnements,
@@ -19,9 +21,9 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  */
 function genie_abos_reparer_dist(){
 
-	$repair = charger_fonction('repair','abos');
+	$repair = charger_fonction('repair', 'abos');
 	$repair();
-	spip_log("Maintenance des abonnements",'abos_reparer_cron');
-	
+	spip_log("Maintenance des abonnements", 'abos_reparer_cron');
+
 	return 1;
 }

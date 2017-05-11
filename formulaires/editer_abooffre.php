@@ -9,7 +9,9 @@
  * @package    SPIP\Abos\Formulaires
  */
 
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')){
+	return;
+}
 
 include_spip('inc/actions');
 include_spip('inc/editer');
@@ -32,7 +34,7 @@ include_spip('inc/editer');
  * @return string
  *     Hash du formulaire
  */
-function formulaires_editer_abooffre_identifier_dist($id_abo_offre='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+function formulaires_editer_abooffre_identifier_dist($id_abo_offre = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = ''){
 	return serialize(array(intval($id_abo_offre)));
 }
 
@@ -58,22 +60,22 @@ function formulaires_editer_abooffre_identifier_dist($id_abo_offre='new', $retou
  * @return array
  *     Environnement du formulaire
  */
-function formulaires_editer_abooffre_charger_dist($id_abo_offre='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
-	$valeurs = formulaires_editer_objet_charger('abooffre',$id_abo_offre,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
+function formulaires_editer_abooffre_charger_dist($id_abo_offre = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = ''){
+	$valeurs = formulaires_editer_objet_charger('abooffre', $id_abo_offre, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
 
-	$duree = explode(" ",$valeurs['duree']);
+	$duree = explode(" ", $valeurs['duree']);
 	$valeurs['duree_valeur'] = reset($duree);
 	$valeurs['duree_unite'] = end($duree);
 
 	if (strlen($valeurs['taxe'])){
-		$valeurs['taxe'] = 100 * $valeurs['taxe'];
+		$valeurs['taxe'] = 100*$valeurs['taxe'];
 	}
 
 	if (test_plugin_actif('accesrestreint')){
 		$valeurs['acces_zones'] = array();
 		if (intval($id_abo_offre)){
-			$zones = sql_allfetsel("id_zone","spip_zones_liens","objet='abooffre' AND id_objet=".intval($id_abo_offre));
-			$valeurs['acces_zones'] = array_map('reset',$zones);
+			$zones = sql_allfetsel("id_zone", "spip_zones_liens", "objet='abooffre' AND id_objet=" . intval($id_abo_offre));
+			$valeurs['acces_zones'] = array_map('reset', $zones);
 		}
 	}
 
@@ -102,26 +104,27 @@ function formulaires_editer_abooffre_charger_dist($id_abo_offre='new', $retour='
  * @return array
  *     Tableau des erreurs
  */
-function formulaires_editer_abooffre_verifier_dist($id_abo_offre='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+function formulaires_editer_abooffre_verifier_dist($id_abo_offre = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = ''){
 
-	if (intval(_request('duree_valeur')) AND _request('duree_unite'))
-		set_request('duree',intval(_request('duree_valeur')).' '._request('duree_unite'));
-	$erreurs = formulaires_editer_objet_verifier('abooffre',$id_abo_offre, array('titre', 'duree'));
+	if (intval(_request('duree_valeur')) AND _request('duree_unite')){
+		set_request('duree', intval(_request('duree_valeur')) . ' ' . _request('duree_unite'));
+	}
+	$erreurs = formulaires_editer_objet_verifier('abooffre', $id_abo_offre, array('titre', 'duree'));
 
-	$verifier = charger_fonction('verifier','inc');
+	$verifier = charger_fonction('verifier', 'inc');
 
-	foreach(array('prix_ht','prix_ht_renouvellement') as $champ_prix){
+	foreach (array('prix_ht', 'prix_ht_renouvellement') as $champ_prix){
 		$prix = _request($champ_prix);
-		if (strpos($prix, ',') !== false) {
-			$prix = str_replace(',','.',$prix);
+		if (strpos($prix, ',')!==false){
+			$prix = str_replace(',', '.', $prix);
 			set_request($champ_prix, $prix);
 		}
-		if ($err=$verifier(_request($champ_prix),'decimal')){
+		if ($err = $verifier(_request($champ_prix), 'decimal')){
 			$erreurs[$champ_prix] = $err;
 		}
 	}
 
-	if ($err=$verifier(_request('taxe'),'decimal',array('min' => 0,'max' => 100))){
+	if ($err = $verifier(_request('taxe'), 'decimal', array('min' => 0, 'max' => 100))){
 		$erreurs['taxe'] = $err;
 	}
 
@@ -150,24 +153,25 @@ function formulaires_editer_abooffre_verifier_dist($id_abo_offre='new', $retour=
  * @return array
  *     Retours des traitements
  */
-function formulaires_editer_abooffre_traiter_dist($id_abo_offre='new', $retour='', $lier_trad=0, $config_fonc='', $row=array(), $hidden=''){
+function formulaires_editer_abooffre_traiter_dist($id_abo_offre = 'new', $retour = '', $lier_trad = 0, $config_fonc = '', $row = array(), $hidden = ''){
 	if ($taxe = _request('taxe')){
-		set_request('taxe',$taxe/100);
+		set_request('taxe', $taxe/100);
 	}
 
-	$res = formulaires_editer_objet_traiter('abooffre',$id_abo_offre,'',$lier_trad,$retour,$config_fonc,$row,$hidden);
+	$res = formulaires_editer_objet_traiter('abooffre', $id_abo_offre, '', $lier_trad, $retour, $config_fonc, $row, $hidden);
 
 	if (test_plugin_actif('accesrestreint')
-	  AND $id_abo_offre = $res['id_abo_offre']){
+		AND $id_abo_offre = $res['id_abo_offre']
+	){
 		$ins = array();
 		$zones = _request('acces_zones');
-		foreach($zones as $id_zone){
+		foreach ($zones as $id_zone){
 			if ($id_zone = intval($id_zone)){
-				$ins = array('id_zone'=>$id_zone,'objet'=>'abooffre','id_objet'=>$id_abo_offre);
-				sql_insertq("spip_zones_liens",$ins);
+				$ins = array('id_zone' => $id_zone, 'objet' => 'abooffre', 'id_objet' => $id_abo_offre);
+				sql_insertq("spip_zones_liens", $ins);
 			}
 		}
-		sql_delete("spip_zones_liens","objet='abooffre' AND id_objet=".intval($id_abo_offre)." AND ".sql_in('id_zone',$zones,'NOT'));
+		sql_delete("spip_zones_liens", "objet='abooffre' AND id_objet=" . intval($id_abo_offre) . " AND " . sql_in('id_zone', $zones, 'NOT'));
 	}
 
 	return $res;

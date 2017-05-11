@@ -9,7 +9,9 @@
  * (c) 2012-2015 - Distribue sous licence GNU/GPL
  *
  */
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')){
+	return;
+}
 
 function genie_abos_daily_reporting_dist($t){
 

@@ -8,7 +8,9 @@
  * @licence    GNU/GPL
  * @package    SPIP\Abos\API
  */
-if (!defined('_ECRIRE_INC_VERSION')) return;
+if (!defined('_ECRIRE_INC_VERSION')){
+	return;
+}
 
 /**
  * Distribuer un ou des(?) abonnements
@@ -17,11 +19,11 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param $commande
  * @return bool|string
  */
-function distribuer_abooffre_dist($id_abo_offre,$detail,$commande){
+function distribuer_abooffre_dist($id_abo_offre, $detail, $commande){
 
-	if ($detail['statut'] == 'attente') {
+	if ($detail['statut']=='attente'){
 
-		$abonner = charger_fonction("abonner","abos");
+		$abonner = charger_fonction("abonner", "abos");
 		$options = array(
 			'id_commande' => $commande['id_commande'],
 			'id_auteur' => $commande['id_auteur'],
@@ -30,13 +32,13 @@ function distribuer_abooffre_dist($id_abo_offre,$detail,$commande){
 			'prix_ht_initial' => $detail['prix_unitaire_ht'], // reprendre le prix qui a ete enregistre dans la commande
 		);
 
-		if (isset($commande['echeances_date_debut']) and intval($commande['echeances_date_debut'])) {
+		if (isset($commande['echeances_date_debut']) and intval($commande['echeances_date_debut'])){
 			$options['date_debut'] = $commande['echeances_date_debut'];
 		}
 
 		$nb = $detail['quantite'];
-		while($nb-->0){
-			$abonner($id_abo_offre,$options);
+		while ($nb-->0){
+			$abonner($id_abo_offre, $options);
 		}
 
 		return 'envoye';
