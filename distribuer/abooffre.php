@@ -15,26 +15,32 @@ if (!defined('_ECRIRE_INC_VERSION')) return;
  * @param $id_abo_offre
  * @param $detail
  * @param $commande
+ * @return bool|string
  */
 function distribuer_abooffre_dist($id_abo_offre,$detail,$commande){
 
+	if ($detail['statut'] == 'attente') {
 
-	$abonner = charger_fonction("abonner","abos");
-	$options = array(
-		'id_commande' => $commande['id_commande'],
-		'id_auteur' => $commande['id_auteur'],
-		'statut' => 'ok',
-		'mode_paiement' => $commande['mode'],
-		'prix_ht_initial' => $detail['prix_unitaire_ht'], // reprendre le prix qui a ete enregistre dans la commande
-	);
+		$abonner = charger_fonction("abonner","abos");
+		$options = array(
+			'id_commande' => $commande['id_commande'],
+			'id_auteur' => $commande['id_auteur'],
+			'statut' => 'ok',
+			'mode_paiement' => $commande['mode'],
+			'prix_ht_initial' => $detail['prix_unitaire_ht'], // reprendre le prix qui a ete enregistre dans la commande
+		);
 
-	if (isset($commande['echeances_date_debut']) and intval($commande['echeances_date_debut'])) {
-		$options['date_debut'] = $commande['echeances_date_debut'];
+		if (isset($commande['echeances_date_debut']) and intval($commande['echeances_date_debut'])) {
+			$options['date_debut'] = $commande['echeances_date_debut'];
+		}
+
+		$nb = $detail['quantite'];
+		while($nb-->0){
+			$abonner($id_abo_offre,$options);
+		}
+
+		return 'envoye';
 	}
 
-	$nb = $detail['quantite'];
-	while($nb-->0){
-		$abonner($id_abo_offre,$options);
-	}
-
+	return false;
 }
