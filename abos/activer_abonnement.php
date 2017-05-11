@@ -15,6 +15,8 @@ if (!defined('_ECRIRE_INC_VERSION')){
 include_spip('base/abstract_sql');
 /**
  * Activer un abonnement reccurent (appele par bank)
+ * ne sert pas beaucoup si on utilise les commandes : distribuer/abooffre distribue directement l'abonnement en statut ok
+ * (mais met a jour les relances quand meme)
  *
  * @param $id_transaction
  * @param $abo_uid
@@ -117,7 +119,7 @@ function abos_activer_abonnement_dist($id_transaction, $abo_uid, $mode_paiement,
 		AND $abo['date_fin']==$abo['date_echeance']
 	){
 		if ($validite=='echeance'){
-			$set["date_fin"] = date('Y-m-d H:i:s', strtotime("+1 day", strtotime($abo['date_echeance'])));
+			$set["date_fin"] = "0000-00-00 00:00:00";
 		} elseif ($validite) {
 			$set["date_fin"] = $validite;
 		} else {
@@ -141,9 +143,8 @@ function abos_activer_abonnement_dist($id_transaction, $abo_uid, $mode_paiement,
 			}
 			$set["id_transaction_echeance"] = 0;
 			if ($validite=='echeance'){
-				// fixons la date de fin a l'echeance+1jour
-				$fin = date('Y-m-d H:i:s', strtotime("+1 day", strtotime($echeance)));
-				$set["date_fin"] = $fin;
+				// fixons la date de fin a 0000 c'est le cron qui coupera apres echeance
+				$set["date_fin"] = "0000-00-00 00:00:00";
 			}
 		} else {
 			$set['statut'] = 'resilie';
