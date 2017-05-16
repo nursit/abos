@@ -12,6 +12,12 @@
 <h2>Cadeaux</h2>
 (#REM|abos_reporting_cadeaux)]
 
+<hr />
+<h2>Encaissements par durées</h2>
+<BOUCLE_duree(ABO_OFFRES){fusion duree}>
+[<h3>[Abonnements (#DUREE|abos_periode_en_clair|ucfirst)]</h3>
+(#DUREE|abos_historique_encaissements_periode)]
+</BOUCLE_duree>
 
 <hr />
 

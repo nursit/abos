@@ -280,12 +280,15 @@ function abos_auteur_plusieurs_abonnements(){
  * @param $id_abo_offre
  * @return string
  */
-function abos_historique_encaissements($id_abo_offre){
+function abos_historique_encaissements($id_abo_offres){
+	if (!is_array($id_abo_offres)) {
+		$id_abo_offres = array($id_abo_offres);
+	}
 	$rows = sql_allfetsel(
 		"count(T.id_transaction) as nombre_mensuel, sum(T.montant_ht) as montant_mensuel_ht,sum(T.montant) as montant_mensuel,T.date_paiement",
 		"spip_transactions AS T
 			JOIN spip_abonnements AS A ON A.id_commande=T.id_commande",
-		"T.id_commande>0 AND T.statut='ok' AND A.id_abo_offre=" . intval($id_abo_offre),
+		"T.id_commande>0 AND T.statut='ok' AND " . sql_in('A.id_abo_offre', $id_abo_offres),
 		"DATE_FORMAT(T.date_paiement,'%Y-%m')",
 		"T.date_paiement DESC"
 	);
@@ -305,4 +308,15 @@ function abos_historique_encaissements($id_abo_offre){
 	}
 
 	return $out;
+}
+
+function abos_historique_encaissements_periode($duree) {
+
+	$id_abo_offres = sql_allfetsel('id_abo_offre','spip_abo_offres','duree='.sql_quote($duree));
+	if (!$id_abo_offres) {
+		return '';
+	}
+	$id_abo_offres = array_map('reset', $id_abo_offres);
+	return abos_historique_encaissements($id_abo_offres);
+
 }
