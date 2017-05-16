@@ -1,5 +1,5 @@
 #CACHE{0}
-"N°";"Client";"Nom";"Email";"Statut";"N° Abo";"Debut";"Echeance";"fin";"UID";"Mode paiement";"nb mois";"prix";"prix renouv";"CA - abo"
-<BOUCLE_abos2(ABONNEMENTS){statut?}>
-"[(#ID_ABONNEMENT)]";"[(#ID_AUTEUR)]";<B_auteur><BOUCLE_auteur(AUTEURS){id_auteur=#ID_AUTEUR}{tous}>"[(#NOM)]";"[(#EMAIL)]";</BOUCLE_auteur></B_auteur><//B_auteur>"[ (#STATUT|abos_statut_en_clair{#DATE_ECHEANCE}|_T)]";"[(#ID_ABO_OFFRE)]";"[(#DATE_DEBUT|affdate{d/m/Y})]";"[(#DATE_ECHEANCE|affdate{d/m/Y})]";"[(#DATE_FIN|affdate{d/m/Y})]";"[(#ABONNE_UID)]";"[(#MODE_PAIEMENT)]";"[(#DATE_DEBUT|abos_duree_abonnement|moins{1})]";<BOUCLE_abos_offre(ABO_OFFRES){id_abo_offre=#ID_ABO_OFFRE}{statut IN prop,prepa,publie,refuse,poubelle,off}>"[(#PRIX)]";"[(#PRIX_RENOUVELLEMENT)]";"[(#PRIX_RENOUVELLEMENT|?{#PRIX|plus{#PRIX_RENOUVELLEMENT|mult{#DATE_DEBUT|duree_abonnement|moins{1}}},#PRIX|mult{#DATE_DEBUT|duree_abonnement|moins{1}} })]"</BOUCLE_abos_offre>
-</BOUCLE_abos2>
+"N°";"Client";"Nom";"Email";"Statut";"N° Abo";"Debut";"Echeance";"fin";"UID";"Mode paiement";"nb mois";"prix";"prix renouv";"CA - abo"[(#REM)
+]<BOUCLE_abos2(ABONNEMENTS){statut?}>
+"[(#ID_ABONNEMENT)]";"[(#ID_AUTEUR)]";<B_auteur><BOUCLE_auteur(AUTEURS){id_auteur=#ID_AUTEUR}{tous}>"[(#NOM)]";"[(#EMAIL)]";</BOUCLE_auteur></B_auteur><//B_auteur>"[ (#STATUT|abos_statut_en_clair{#DATE_ECHEANCE}|_T)]";"[(#ID_ABO_OFFRE)]";"[(#DATE_DEBUT|affdate{d/m/Y})]";"[(#DATE_ECHEANCE|affdate{d/m/Y})]";"[(#DATE_FIN|affdate{d/m/Y})]";"[(#ABONNE_UID)]";"[(#MODE_PAIEMENT)]";"[(#DATE_DEBUT|abos_duree_abonnement|moins{1})]";<BOUCLE_abos_offre(ABO_OFFRES){id_abo_offre=#ID_ABO_OFFRE}{statut IN prop,prepa,publie,refuse,poubelle,off}>"[(#PRIX)]";"[(#PRIX_RENOUVELLEMENT)]";"[(#PRIX_RENOUVELLEMENT|?{#PRIX|plus{#PRIX_RENOUVELLEMENT|mult{#DATE_DEBUT|duree_abonnement|moins{1}}},#PRIX|mult{#DATE_DEBUT|duree_abonnement|moins{1}} })]"</BOUCLE_abos_offre>[(#REM)
+]</BOUCLE_abos2>
