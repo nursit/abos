@@ -27,7 +27,7 @@ function abos_upgrade($nom_meta_base_version, $version_cible){
 	$maj = array();
 
 	$maj['create'] = array(
-		array('maj_tables', array('spip_abo_offres', 'spip_abonnements', 'spip_abonnements_liens')),
+		array('maj_tables', array('spip_abo_offres', 'spip_abonnements', 'spip_abonnements_liens', 'spip_abo_stats')),
 	);
 
 	$maj['2.0.0'] = array(
