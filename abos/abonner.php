@@ -22,6 +22,8 @@ include_spip('base/abstract_sql');
  *   string prix_echeance
  *   int id_commande
  *   string date_debut
+ *   string date_echeance
+ *   string date_fin
  *   string mode_paiement
  * @return int|bool
  */
@@ -38,6 +40,8 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			'id_commande' => 0,
 			'date' => date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']),
 			'date_debut' => '',
+			'date_echeance' => '',
+			'date_fin' => '',
 			'mode_paiement' => '',
 			'abonne_uid' => '',
 		);
@@ -85,6 +89,9 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 			$date_echeance = strtotime("+" . $row['duree'], $date_echeance);
 			$date_echeance = date('Y-m-d H:i:s', $date_echeance);
 		}
+		if ($options['date_echeance']) {
+			$date_echeance = $options['date_echeance'];
+		}
 		$ins = array(
 			'id_abo_offre' => $id_abo_offre,
 			'id_auteur' => $id_auteur,
@@ -103,6 +110,9 @@ function abos_abonner_dist($id_abo_offre, $options = array()){
 		// si c'est un paiement recurrent periodique, pas de date de fin, il sera passe en resilie par cron si date passee
 		if ($statut=='ok' and $ins['mode_echeance']!=='tacite'){
 			$ins['date_fin'] = $date_echeance;
+		}
+		if ($options['date_fin']) {
+			$ins['date_fin'] = $options['date_fin'];
 		}
 
 		// permettre des ajustement metiers sur les abonnements (date de fin par periode par exemple)
