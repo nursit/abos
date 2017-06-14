@@ -7,8 +7,8 @@
 		<[(#DIV|sinon{li})] class="editer editer_id_abo_offre">
 			<label for="id_abo_offre">Offre</label>
 			<select name="id_abo_offre" id="id_abo_offre">
-				<BOUCLE_offres(ABO_OFFRES)>
-				<option value="#ID_ABO_OFFRE">#TITRE</option>
+				<BOUCLE_offres(ABO_OFFRES){statut IN publie,refuse}>
+				<option value="#ID_ABO_OFFRE">#TITRE[(#STATUT|=={refuse}|oui) \(<:abooffre:texte_statut_refuse:>\)]</option>
 				</BOUCLE_offres>
 			</select>
 		</[(#DIV|sinon{li})]>
