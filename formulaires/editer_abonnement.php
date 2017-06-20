@@ -221,7 +221,7 @@ function formulaires_editer_abonnement_traiter_dist($id_abonnement = 'new', $ret
 		$add_log .= ' abonne_uid (' . $row['abonne_uid'] . ' -> ' . $abo_uid . ')';
 	}
 	$prix_echeance = _request('prix_echeance');
-	if (floatval($prix_echeance)!==floatval($row['prix_echeance'])){
+	if (!is_null($prix_echeance) and floatval($prix_echeance)!==floatval($row['prix_echeance'])){
 		$add_log .= ' prix_echeance (' . $row['prix_echeance'] . ' -> ' . $prix_echeance . ')';
 	}
 
