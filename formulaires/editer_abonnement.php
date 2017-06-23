@@ -207,16 +207,19 @@ function formulaires_editer_abonnement_traiter_dist($id_abonnement = 'new', $ret
 	// si changement d'abonne_uid il faut aussi changer dans les transactions et les commandes
 	// TODO le plus propre serait : faire un objet_modifier sur chaque transaction concernee
 	// et les autres plugins se synchro automatiquement via pipeline pre_edition
+	// on s'assure de ne toucher qu'aux transactions/souscriptions/commandes de l'id_auteur et que la valeur precedente etait non vide
 	$abo_uid = _request('abonne_uid');
-	if ($abo_uid!=$row['abonne_uid']){
+	if ($abo_uid!=$row['abonne_uid']
+		and $row['abonne_uid']
+		and $id_auteur = $row['id_auteur']){
 		if (defined('_DIR_PLUGIN_BANK')){
-			sql_updateq('spip_transactions', array('abo_uid' => $abo_uid), 'abo_uid=' . sql_quote($row['abonne_uid']));
+			sql_updateq('spip_transactions', array('abo_uid' => $abo_uid), 'abo_uid=' . sql_quote($row['abonne_uid']).' AND id_auteur='.intval($id_auteur));
 		}
 		if (defined('_DIR_PLUGIN_SOUSCRIPTION')){
-			sql_updateq('spip_souscriptions', array('abonne_uid' => $abo_uid), 'abonne_uid=' . sql_quote($row['abonne_uid']));
+			sql_updateq('spip_souscriptions', array('abonne_uid' => $abo_uid), 'abonne_uid=' . sql_quote($row['abonne_uid']).' AND id_auteur='.intval($id_auteur));
 		}
 		if (defined('_DIR_PLUGIN_COMMANDES')){
-			sql_updateq('spip_commandes', array('bank_uid' => $abo_uid), 'bank_uid=' . sql_quote($row['abonne_uid']));
+			sql_updateq('spip_commandes', array('bank_uid' => $abo_uid), 'bank_uid=' . sql_quote($row['abonne_uid']).' AND id_auteur='.intval($id_auteur));
 		}
 		$add_log .= ' abonne_uid (' . $row['abonne_uid'] . ' -> ' . $abo_uid . ')';
 	}

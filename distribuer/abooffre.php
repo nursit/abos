@@ -22,7 +22,7 @@ if (!defined('_ECRIRE_INC_VERSION')){
 function distribuer_abooffre_dist($id_abo_offre, $detail, $commande){
 
 	if ($detail['statut']=='attente'){
-		
+
 		$transaction = sql_fetsel('*','spip_transactions','statut='.sql_quote('ok').' AND id_commande='.intval($commande['id_commande']),'','id_transaction','0,1');
 		$abonne_uid = '';
 		if ($transaction) {
