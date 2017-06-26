@@ -305,15 +305,15 @@ function abos_reporting_parrainages($nb_mois = 6){
 		$jm1 = date('Y-m-01', strtotime("-15 day", strtotime($jm1)));
 		$jm31 = date('Y-m-31', strtotime($jm1));
 
-		$trans = sql_allfetsel('id_transaction,id_auteur,date_transaction', 'spip_transactions', 'mode=\'parrain\' AND date_transaction>=' . sql_quote($jm1) . ' AND date_transaction<=' . sql_quote($jm31));
-		$nb_parrainnages = count($trans);
+		$parrainages = sql_allfetsel('id_abonnement,id_auteur,date,date_debut', 'spip_abonnements', 'mode_paiement=\'parrain\' AND date>=' . sql_quote($jm1) . ' AND date<=' . sql_quote($jm31));
+		$nb_parrainnages = count($parrainages);
 		$nb_convertis = 0;
-		foreach ($trans as $t){
-			$nba = sql_countsel('spip_abonnements', 'id_auteur=' . intval($t['id_auteur']) . ' AND date>' . sql_quote($t['date_transaction'] . ' AND ' . sql_in('statut', array('ok', 'resilie'))));
-			if ($nba>1){
+		foreach ($parrainages as $p){
+			$nba = sql_countsel('spip_abonnements', 'id_auteur=' . intval($p['id_auteur']) . ' AND date>' . sql_quote($p['date'] . ' AND ' . sql_in('statut', array('ok', 'resilie'))));
+			if ($nba>0){
 				$nb_convertis++;
-				if (!sql_countsel('spip_auteurs', 'id_auteur=' . intval($t['id_auteur']))){
-					spip_log('parrainage converti en abonnement pour auteur perdu #' . $t['id_auteur'], 'filleursperdus');
+				if (!sql_countsel('spip_auteurs', 'id_auteur=' . intval($p['id_auteur']))){
+					spip_log('parrainage converti en abonnement pour auteur perdu #' . $p['id_auteur'], 'filleulsperdus');
 				}
 			}
 		}
