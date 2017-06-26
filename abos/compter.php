@@ -300,7 +300,7 @@ function abos_reporting_parrainages($nb_mois = 6){
 	$head = "<tr><th>Mois</th><th>Nb parrainages</th><th>dont convertis par la suite</th></tr>";
 	// $nb_mois derniers mois
 	$lignes = "";
-	$jm1 = date('Y-m-01', $now);
+	$jm1 = date('Y-m-01',strtotime('+15 days',strtotime(date('Y-m-28', $now))));
 	for ($i = 0; $i<$nb_mois; $i++){
 		$jm1 = date('Y-m-01', strtotime("-15 day", strtotime($jm1)));
 		$jm31 = date('Y-m-31', strtotime($jm1));
