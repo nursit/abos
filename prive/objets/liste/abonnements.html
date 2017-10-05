@@ -12,14 +12,14 @@
 		<tr class='first_row'>
             <th class='id' scope='col'>[(#TRI{id_abonnement,<:info_numero_abbreviation:>,ajax})]</th>
 			<th class='statut' scope='col'>[(#TRI{statut,<span title="<:lien_trier_statut|attribut_html:>">#</span>,ajax})]</th>
-			<th class='client' scope='col'>Compte</th>
-			<th class='offre' scope='col'>[(#TRI{id_abo_offre,Offre,ajax})]</th>
-			<th class='credits' scope='col'>Crd.</th>
+			<th class='client' scope='col'><:abonnement:label_compte:></th>
+			<th class='offre' scope='col'>[(#TRI{id_abo_offre,<:abonnement:label_offre:>,ajax})]</th>
+			<th class='credits' scope='col'><:abonnement:label_credit_abbr:></th>
 			<th class='uid' scope='col'>UID</th>
-			<th class='debut' scope='col'>[(#TRI{date_debut,Début,ajax})]</th>
-			<th class='echeance' scope='col'>[(#TRI{date_echeance,Ech.,ajax})]</th>
-			<th class='fin' scope='col'>[(#TRI{date_fin,Fin,ajax})]</th>
-			<th class='mode' scope='col'>[(#TRI{mode_paiement,Mode,ajax})]</th>
+			<th class='debut' scope='col'>[(#TRI{date_debut,<:abonnement:label_debut:>,ajax})]</th>
+			<th class='echeance' scope='col'>[(#TRI{date_echeance,<:abonnement:label_echeance_abbr:>,ajax})]</th>
+			<th class='fin' scope='col'>[(#TRI{date_fin,<:abonnement:label_fin:>,ajax})]</th>
+			<th class='mode' scope='col'>[(#TRI{mode_paiement,<:abonnement:label_mode:>,ajax})]</th>
 		</tr>
 	</thead>
 	<tbody>

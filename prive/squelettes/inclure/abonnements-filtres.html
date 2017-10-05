@@ -1,9 +1,9 @@
 <div class='onglets_simple clearfix'>
 	<ul>
-		<li>[(#SELF|parametre_url{statut|id_abonnement,'XXX'}|replace{XXX,''}|lien_ou_expose{Tous,[(#ENV{statut}|non|et{#ENV{id_abonnement,''}|non})],ajax})]</li>
-		<li>[(#SELF|parametre_url{statut,'ok'}|lien_ou_expose{En cours,#ENV{statut}|=={ok},ajax})]</li>
-		<li>[(#SELF|parametre_url{statut,'prepa'}|lien_ou_expose{En commande,#ENV{statut}|=={prepa},ajax})]</li>
-		<li>[(#SELF|parametre_url{statut,'resilie'}|lien_ou_expose{Résiliés,#ENV{statut}|=={resilie},ajax})]</li>
+		<li>[(#SELF|parametre_url{statut|id_abonnement,'XXX'}|replace{XXX,''}|lien_ou_expose{<:abonnement:tous:>,[(#ENV{statut}|non|et{#ENV{id_abonnement,''}|non})],ajax})]</li>
+		<li>[(#SELF|parametre_url{statut,'ok'}|lien_ou_expose{<:abonnement:texte_statut_ok:>,#ENV{statut}|=={ok},ajax})]</li>
+		<li>[(#SELF|parametre_url{statut,'prepa'}|lien_ou_expose{<:abonnement:texte_statut_prepa:>,#ENV{statut}|=={prepa},ajax})]</li>
+		<li>[(#SELF|parametre_url{statut,'resilie'}|lien_ou_expose{<:abonnement:texte_statut_resilie:>,#ENV{statut}|=={resilie},ajax})]</li>
 	</ul>
 </div>
 [(#ENV{export}|oui)<a class="right" href="#URL_ECRIRE{telecharger,quoi=abos&statut=#ENV{statut}&delim=tab}">Export CSV</a>]
