@@ -17,6 +17,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'confirmer_changement_date' => 'Vous devez faire la modification manuelle correspondante chez votre prestataire de paiement <tt>@presta@</tt>.',
 
 	// D
+	'derniers_jours_nb' => '@nb@ derniers jours',
+	'derniers_mois_nb' => '@nb@ derniers mois',
+	'dernieres_semaines_nb' => '@nb@ dernières semaines',
 	'dont' => 'Dont',
 
 	// E
@@ -43,7 +46,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_statut_erreur' => '(erreur)',
 
 	// L
-	'label_abonne_uid' => 'Abonne uid',
+	'label_abonne_uid' => 'Abonné uid',
+	'label_abonnes' => 'Abonnés',
+	'label_actifs' => 'ACtifs',
 	'label_confirmer_modification' => 'Confirmer la modification ?',
 	'label_confirm' => 'Confirm',
 	'label_message' => 'Message client',
@@ -68,11 +73,17 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_mode_paiement' => 'Mode paiement',
 	'label_mois_de_fin' => 'Mois de fin',
 	'label_nombre' => 'Nombre',
+	'label_nombre_parrainages_abbr' => 'Nb. parrainages',
+	'label_montant' => 'Montant',
+	'label_montant_ht' => 'Montant HT',
 	'label_non_renouveles' => 'Non renouvelés',
+	'label_nouveau_abbr' => 'Nouv.',
 	'label_offre' => 'Offre',
 	'label_total' => 'Total',
 	'label_prix_echeance' => 'Prix echeance',
 	'label_renouveles' => 'Renouvelés',
+	'label_resilies' => 'Résiliés',
+	'label_vendus' => 'Vendus',
 
 	// N
 	'non_commences_zero' => '0 pas encore commencé',
@@ -95,6 +106,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_aucune_fin_abonnement_nb_mois' => 'Aucune fin d\'abonnement d\'ici @nb@ mois.',
 	'texte_changer_statut_abonnement' => 'Cet abonnement est :',
 	'texte_creer_associer_abonnement' => 'Créer et associer un abonnement',
+	'texte_dont_convertis_ensuite' => 'Dont convertis par la suite',
 	'texte_statut_prepa' => 'En commande',
 	'texte_statut_ok' => 'Actif',
 	'texte_statut_resilie' => 'Résilié',

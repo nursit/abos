@@ -17,6 +17,9 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'confirmer_changement_date' => 'You must make the corresponding manual change at your payment provider <tt>@presta@</tt>.',
 
 	// D
+	'derniers_jours_nb' => 'Last @nb@ days',
+	'derniers_mois_nb' => 'Last @nb@ months',
+	'dernieres_semaines_nb' => 'Last @nb@ weeks',
 	'dont' => 'Including',
 
 	// E
@@ -42,18 +45,10 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'info_statut_prepa' => 'command',
 	'info_statut_erreur' => '(error)',
 
-	// N
-	'non_commences_zero' => '0 not started yet',
-	'non_commences_un' => '1 not started yet',
-	'non_commences_nb' => '@nb@ not started yet',
-
-	// P
-	'parraines_zero' => '0 sponsorred',
-	'parraines_un' => '1 sponsorred',
-	'parraines_nb' => '@nb@ sponsorred',
-
 	// L
 	'label_abonne_uid' => 'Subscriber uid',
+	'label_abonnes' => 'Subscribers',
+	'label_actifs' => 'Active',
 	'label_confirmer_modification' => 'Confirm modification?',
 	'label_confirm' => 'Confirm',
 	'label_message' => 'Message client',
@@ -78,11 +73,27 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_mode_echeance' => 'Term mode',
 	'label_mode_paiement' => 'Payment mode',
 	'label_nombre' => 'Count',
+	'label_nombre_parrainages_abbr' => 'Nb. sponsorships',
+	'label_montant' => 'Amount',
+	'label_montant_ht' => 'Amount w/o tax',
 	'label_non_renouveles' => 'Not renewed',
+	'label_nouveau_abbr' => 'New',
 	'label_offre' => 'Offer',
 	'label_total' => 'Total',
 	'label_prix_echeance' => 'Term price',
 	'label_renouveles' => 'Renewed',
+	'label_resilies' => 'Terminated',
+	'label_vendus' => 'Sold',
+
+	// N
+	'non_commences_zero' => '0 not started yet',
+	'non_commences_un' => '1 not started yet',
+	'non_commences_nb' => '@nb@ not started yet',
+
+	// P
+	'parraines_zero' => '0 sponsorred',
+	'parraines_un' => '1 sponsorred',
+	'parraines_nb' => '@nb@ sponsorred',
 
 	// R
 	'retirer_lien_abonnement' => 'Remove this subscription',
@@ -95,6 +106,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'texte_aucune_fin_abonnement_nb_mois' => 'No subscription ends within @nb@ months.',
 	'texte_changer_statut_abonnement' => 'This subscription is:',
 	'texte_creer_associer_abonnement' => 'Create and link a subscription',
+	'texte_dont_convertis_ensuite' => 'Converted thereafter',
 	'texte_statut_prepa' => 'Command',
 	'texte_statut_ok' => 'Active',
 	'texte_statut_resilie' => 'Terminated',
@@ -107,7 +119,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'titre_logo_abonnement' => 'Subscription\'s logo',
 	'titre_diagnostic' => 'Diagnostic Subscriptions',
 	'titre_diagnostic_paybox' => 'Diagnostic Paybox/Subscriptions',
-	'titre_statistiques_abonnement' => 'Subscriptions statistiques',
+	'titre_statistiques_abonnement' => 'Subscriptions statistics',
 	'titre_parrainages' => 'Sponsorships',
 	'titre_repartition_des_offres' => 'Breakdown of offers',
 	'tous' => 'All',

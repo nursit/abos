@@ -305,9 +305,14 @@ function abos_historique_encaissements($id_abo_offres){
 	}
 
 	if ($out){
-		$out = "<table class='spip'>
-<thead><tr class='row_first'><th>Mois</th><th class='numeric'>Nombre</th><th class='numeric'>Montant HT</th><th class='numeric'>Montant</th></td></thead>
-<tbody>$out</tbody></table>";
+		$out = "<table class='spip'>"
+			. "<thead><tr class='row_first'>"
+			. "<th>" . spip_ucfirst(_T('date_un_mois')) . "</th>"
+			. "<th class='numeric'>" . _T('abonnement:label_nombre') . "</th>"
+			. "<th class='numeric'>" . _T('abonnement:label_montant_ht') . "</th>"
+			. "<th class='numeric'>" . _T('abonnement:label_montant') . "</th>"
+			. "</tr></thead>"
+			. "<tbody>$out</tbody></table>";
 	}
 
 	return $out;

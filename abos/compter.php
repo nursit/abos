@@ -163,15 +163,26 @@ function abos_reporting_decompte($nb_mois = 6){
 	$jm7 = date('Y-m-d', strtotime("-7 day", $now));
 
 
-	$head = "<tr><th>Date</th><th>Abonnes</th><th>Abonnements</th><th>+</th><th>(+new)</th><th>-</th></tr>";
-	$head .= "<tr><td></td><td colspan='2' style='text-align: center'>Actifs</td><td colspan='2' style='text-align: center'>Vendus</td><td style='text-align: center'>Résiliés</td></tr>";
+	$head = "<tr>"
+		. "<th>" . _T('public:date') . "</th>"
+		. "<th>" . _T('abonnement:label_abonnes') . "</th>"
+		. "<th>" . _T('abonnement:titre_abonnements') . "</th>"
+		. "<th>+</th>"
+		. "<th>(+" . _T('abonnement:label_nouveau_abbr') . ")</th>"
+		. "<th>-</th>"
+		. "</tr>";
+	$head .= "<tr><td></td>"
+		. "<td colspan='2' style='text-align: center'>" . _T('abonnement:label_actifs') . "</td>"
+		. "<td colspan='2' style='text-align: center'>" . _T('abonnement:label_vendus') . "</td>"
+		. "<td style='text-align: center'>" . _T('abonnement:label_resilies') . "</td>"
+		. "</tr>";
 
 	$jours = sql_allfetsel('*', 'spip_abo_stats', 'date>=' . sql_quote($jm7) . ' AND date<' . sql_quote($j), '', 'date DESC');
 	$lignes = "";
 	foreach ($jours as $jour){
 		$lignes .= abos_one_line(affdate($jour['date']), $jour, $offres_vues);
 	}
-	$texte .= "<h2>7 derniers jours</h2>
+	$texte .= "<h2>" . _T('abonnement:derniers_jours_nb', array('nb' => 7)) . "</h2>
 <table class='spip'>
 $head
 $lignes
@@ -189,7 +200,7 @@ $lignes
 		$total = abos_sum_lines($jours);
 		$lignes .= abos_one_line("Semaine du " . date('d/m', strtotime($jm7)), $total, $offres_vues);
 	}
-	$texte .= "<h2>4 dernieres semaines</h2>
+	$texte .= "<h2>" . _T('abonnement:dernieres_semaines_nb', array('nb' => 4)) . "</h2>
 <table class='spip'>
 $head
 $lignes
@@ -205,7 +216,7 @@ $lignes
 		$total = abos_sum_lines($jours);
 		$lignes .= abos_one_line(ucfirst(affdate_mois_annee($jm1)), $total, $offres_vues);
 	}
-	$texte .= "<h2>$nb_mois derniers mois</h2>
+	$texte .= "<h2>" . _T('abonnement:derniers_mois_nb', array('nb' => $nb_mois)) . "</h2>
 <table class='spip'>
 $head
 $lignes
@@ -297,7 +308,11 @@ function abos_reporting_parrainages($nb_mois = 6){
 	$now = $_SERVER['REQUEST_TIME'];
 
 	$texte = "";
-	$head = "<tr><th>Mois</th><th>Nb parrainages</th><th>dont convertis par la suite</th></tr>";
+	$head = "<tr>"
+		. "<th>" . spip_ucfirst(_T('date_un_mois')) . "</th>"
+		. "<th>" . _T('abonnement:label_nombre_parrainages_abbr') . "</th>"
+		. "<th>" . _T('abonnement:texte_dont_convertis_ensuite') . "</th>"
+		. "</tr>";
 	// $nb_mois derniers mois
 	$lignes = "";
 	$jm1 = date('Y-m-01',strtotime('+15 days',strtotime(date('Y-m-28', $now))));
@@ -319,11 +334,11 @@ function abos_reporting_parrainages($nb_mois = 6){
 		}
 
 		$lignes .= "<tr>"
-			. "<td>" . ucfirst(affdate_mois_annee($jm1)) . "</td>"
+			. "<td>" . spip_ucfirst(affdate_mois_annee($jm1)) . "</td>"
 			. "<td>$nb_parrainnages</td>"
 			. "<td>$nb_convertis</td>";
 	}
-	$texte .= "<h2>$nb_mois derniers mois</h2>
+	$texte .= "<h2>" . _T('abonnement:derniers_mois_nb', array('nb' => 6)) . "</h2>
 <table class='spip'>
 $head
 $lignes
