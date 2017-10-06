@@ -1,21 +1,21 @@
-<h1 class="grostitre">Statistiques d'abonnements</h1>
+<h1 class="grostitre"><:abonnement:titre_statistiques_abonnement:></h1>
 
 [(#REM|abos_reporting_decompte)]
 
 <hr />
 
-<h2>Parrainages</h2>
+<h2><:abonnement:titre_parrainages:></h2>
 [(#REM|abos_reporting_parrainages)]
 
 
 [<hr />
-<h2>Cadeaux</h2>
+<h2><:abonnement:titre_cadeaux:></h2>
 (#REM|abos_reporting_cadeaux)]
 
 <hr />
-<h2>Encaissements par durées</h2>
+<h2><:abonnement:titre_encaissements_par_durees:></h2>
 <BOUCLE_duree(ABO_OFFRES){fusion duree}>
-[<h3>[Abonnements (#DUREE|abos_periode_en_clair|ucfirst)]</h3>
+[<h3>[<:abonnement:titre_abonnement:> (#DUREE|abos_periode_en_clair|ucfirst)]</h3>
 (#DUREE|abos_historique_encaissements_periode)]
 </BOUCLE_duree>
 
@@ -23,11 +23,14 @@
 
 <BOUCLE_total(ABONNEMENTS){statut=ok} />#SET{total,#TOTAL_BOUCLE}<//B_total>
 
-<h2>Répartition des offres</h2>
-<p>Abonnements en cours</p>
+<h2><:abonnement:titre_repartition_des_offres:></h2>
+<p><:abonnement:texte_abonnements_en_cours:></p>
 <table class="spip">
 	<thead>
-	<tr><th>Offre</th><th class='center'>Nombre</th><th class='center'>%</th></tr>
+	<tr>
+		<th><:abonnement:label_offre:></th>
+		<th class='center'><:abonnement:label_nombre:></th>
+		<th class='center'>%</th></tr>
 	</thead>
 	<tbody>
 	<BOUCLE_offres(abo_offres){par id_abo_offre}>
@@ -35,11 +38,16 @@
 		<tr>
 			<td>
 				<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a>
-				<br /> Dont <ul class="spip">
-				<BOUCLE_totalgratuit(ABONNEMENTS){id_abo_offre}{mode_paiement=gratuit} /><li>[(#TOTAL_BOUCLE) gratuits]</li><//B_totalgratuit>
-				<BOUCLE_totalparrain(ABONNEMENTS){id_abo_offre}{mode_paiement=parrain} /><li>[(#TOTAL_BOUCLE) parrainés]</li><//B_totalparrain>
-				<BOUCLE_totalfutur(ABONNEMENTS){id_abo_offre}{mode_paiement !IN parrain,gratuit}{date_debut>#ENV{date}} /><li>[(#TOTAL_BOUCLE) pas encore commencés]</li><//B_totalfutur>
+				#SET{dont,#LISTE}
+				<BOUCLE_totalgratuit(ABONNEMENTS){id_abo_offre}{mode_paiement=gratuit} />[(#SET{dont,#GET{dont}|push{#TOTAL_BOUCLE|singulier_ou_pluriel{abonnement:gratuits_un,abonnement:gratuits_nb}}})]<//B_totalgratuit>
+				<BOUCLE_totalparrain(ABONNEMENTS){id_abo_offre}{mode_paiement=parrain} />[(#SET{dont,#GET{dont}|push{#TOTAL_BOUCLE|singulier_ou_pluriel{abonnement:parraines_un,abonnement:parraines_nb}}})]<//B_totalparrain>
+				<BOUCLE_totalfutur(ABONNEMENTS){id_abo_offre}{mode_paiement !IN parrain,gratuit}{date_debut>#ENV{date}} />[(#SET{dont,#GET{dont}|push{#TOTAL_BOUCLE|singulier_ou_pluriel{abonnement:non_commences_un,abonnement:non_commences_nb}}})]<//B_totalfutur>
+				<B_dont>
+				<br /> <:abonnement:dont:>
+				<ul class="spip">
+					<BOUCLE_dont(DATA){source tableau,#GET{dont}|array_filter}><li>#VALEUR</li></BOUCLE_dont>
 				</ul>
+				</B_dont>
 			</td>
 			<td class='numeric'>#GET{totaloffre}</td>
 			<td class='numeric'>[(#GET{totaloffre}|div{#GET{total}}|mult{1000}|round|div{10})%]</td>
@@ -48,7 +56,7 @@
 	</tbody>
 	<tfoot>
 	<tr>
-		<td>Total</td><td class='numeric'>#GET{total}</td><td class='numeric'></td>
+		<td><:abonnement:label_total:></td><td class='numeric'>#GET{total}</td><td class='numeric'></td>
 	</tr>
 
 	</tfoot>
@@ -58,10 +66,14 @@
 
 <h2><a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></h2>
 <B_mois>
-<p>Abonnements finis en fonction des mois</p>
+<p><:abonnement:texte_abonnements_finis_selon_mois:></p>
 <table class="spip">
 	<thead>
-	<tr><th>Mois de fin</th><th class='center'>Nombre</th><th colspan="2" class='center'>Renouvelés</th><th colspan="2" class='center'>Non renouvelés</th></tr>
+	<tr>
+		<th><:abonnement:label_mois_de_fin:></th>
+		<th class='center'><:abonnement:label_nombre:></th>
+		<th colspan="2" class='center'><:abonnement:label_renouveles:></th>
+		<th colspan="2" class='center'><:abonnement:label_non_renouveles:></th></tr>
 	</thead>
 	<tbody>
 	<BOUCLE_mois(POUR){tableau #LISTE{-2,-1,0,1,2,3,4,5,6}}>[
@@ -70,7 +82,7 @@
 	</tbody>
 </table>
 </B_mois>
-<p>Aucune fin d'abonnement d'ici 6 mois.</p>
+<p><:abonnement:texte_aucune_fin_abonnement_nb_mois{nb=6}:></p>
 <//B_mois>
 
 </BOUCLE_paroffre>
