@@ -136,7 +136,7 @@ function abos_declarer_tables_objets_sql($tables) {
 		'champs_versionnes' => array(),
 		'rechercher_champs' => array('abonne_uid'=>1,'mode_paiement'=>1),
 		'rechercher_jointures' => array(
-			'auteur' => array('email' => 1),
+			'auteur' => array('email' => 1,'nom'=>1),
 		),
 		'tables_jointures'  => array('id_transaction'=>'abonnements_liens'),
 		'statut_textes_instituer' => array(
