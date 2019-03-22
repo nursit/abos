@@ -24,10 +24,11 @@ include_spip('base/abstract_sql');
  *   numero d'abonne chez le presta bancaire
  * @param string $mode_paiement
  *   mode de paiement (presta bancaire)
+ * @param string $validite
  * @return bool|int
  *   false si pas reussi
  */
-function abos_renouveler_abonnement_dist($id_transaction,$abo_uid,$mode_paiement){
+function abos_renouveler_abonnement_dist($id_transaction,$abo_uid,$mode_paiement, $validite = ""){
 
 	spip_log("abos/renouveler_abonnement id_transaction=$id_transaction abo_uid=$abo_uid mode=$mode_paiement","bank");
 
@@ -103,9 +104,14 @@ function abos_renouveler_abonnement_dist($id_transaction,$abo_uid,$mode_paiement
 			// retablir un abo qui avait ete resilie a tort (puisqu'on a un paiement)
 			if ($abo['statut']=='resilie'){
 				$prochaine_echeance = $abo['date_debut']; // on recalcul l'echeance depuis le debut
-				$set['date_fin'] = '';
+				$set['date_fin'] = '0000-00-00 00:00:00';
 				$set['statut'] = 'ok';
-				if ($validite = $trans["validite"]){
+				if ($validite) {
+					if ($validite!=='echeance') {
+						$set['date_fin'] = $validite;
+					}
+				}
+				elseif ($validite = $trans["validite"]){
 					$d = date($validite."-d H:i:s",strtotime($abo['date_debut']));
 					$d = strtotime($d);
 					$d = strtotime("+1 month",$d);
