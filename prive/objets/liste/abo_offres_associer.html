@@ -39,7 +39,7 @@ a mis a jour la valeur avec la page reelle]
 	</BOUCLE_liste_abo_offres>
 	</tbody>
 </table>
-[<p class='pagination'>(#PAGINATION{prive})</p>]
+[<nav class='pagination'>(#PAGINATION{prive})</nav>]
 [(#GRAND_TOTAL|>{3}|oui)<div class="action"><button type="submit" class="button link" name="supprimer_lien\[abooffre-*-#OBJET-#ID_OBJET\]" value="X"><:abooffre:retirer_tous_liens_abo_offres:> [(#CHEMIN_IMAGE{supprimer-8.png}|balise_img{'X'})]</button></div>]
 </div>
 </B_liste_abo_offres>[(#ENV{recherche}|oui)
