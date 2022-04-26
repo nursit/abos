@@ -3,18 +3,18 @@
 [<div class='reponse_formulaire reponse_formulaire_erreur'>(#ENV*{message_erreur})</div>]
 <form action="[(#ENV{action})]" method="post"><div>
 	#ACTION_FORMULAIRE{#ENV{action}}
-	<[(#DIV|sinon{ul})] class="editer-groupe">
-		<[(#DIV|sinon{li})] class="editer editer_id_abo_offre">
+	<div class="editer-groupe">
+		<div class="editer editer_id_abo_offre">
 			<label for="id_abo_offre">Offre</label>
 			<select name="id_abo_offre" id="id_abo_offre">
 				<BOUCLE_offres(ABO_OFFRES){statut IN publie,refuse}>
 				<option value="#ID_ABO_OFFRE">#TITRE[(#STATUT|=={refuse}|oui) \(<:abooffre:texte_statut_refuse:>\)]</option>
 				</BOUCLE_offres>
 			</select>
-		</[(#DIV|sinon{li})]>
+		</div>
 		[(#SAISIE{date, date_fin, obligatoire=non,
 			label='Date de fin'})]
-	</[(#DIV|sinon{ul})]>
+	</div>
 	<p class="boutons">
 		<input type="submit" value="Abonner" />
 	</p>

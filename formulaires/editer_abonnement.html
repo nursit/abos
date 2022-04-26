@@ -7,7 +7,7 @@
 	<form method='post' action='#ENV{action}'><div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 		<input type='hidden' name='id_abonnement' value='#ENV{id_abonnement}' />
-		<[(#DIV|sinon{ul})] class="editer-groupe">
+		<div class="editer-groupe">
 
 			[(#SAISIE{input, abonne_uid,
 				label=<:abonnement:label_abonne_uid:>})]
@@ -26,7 +26,7 @@
 					label=<:abonnement:label_prix_echeance:>,
 					explication=[<:abonnement:label_duree_echeance:> : (#DUREE_ECHEANCE|abos_periode_en_clair)]})]
 			]
-		</[(#DIV|sinon{ul})]>
+		</div>
 		[(#REM) ajouter les saisies supplementaires : extra et autre, a cet endroit ]
 		<!--extra-->
 		<p class="boutons"><input type='submit' class='submit' value='<:bouton_enregistrer:>' /></p>

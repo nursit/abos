@@ -9,7 +9,7 @@
 	<div>
 		#ACTION_FORMULAIRE{#ENV{action}}
 
-		<[(#DIV|sinon{ul})] class="editer-groupe">
+		<div class="editer-groupe">
 
 			[(#SAISIE{input, taxe, obligatoire=non,
 				label=<:abos:configurer_taxe_defaut_label:>,
@@ -19,7 +19,7 @@
 				label=<:abos:configurer_relance_label:>,
 			  explication=<:abos:configurer_relance_explication:>})]
 
-		</[(#DIV|sinon{ul})]>
+		</div>
 
 		<input type="hidden" name="_meta_casier" value="abos" />
 		<p class="boutons"><span class="image_loading">&nbsp;</span><input type="submit" class="submit" value="<:bouton_enregistrer:>" /></p>
