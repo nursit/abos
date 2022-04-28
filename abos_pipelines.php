@@ -56,9 +56,9 @@ function abos_liste_zones_acces_auteur($id_auteur){
 		include_spip('base/abstract_sql');
 		$now = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']);
 		if ($id_abo_offres = sql_allfetsel("id_abo_offre", "spip_abonnements", "id_auteur=" . intval($id_auteur) . " AND statut='ok' AND (date_fin IS NULL OR date_fin<date_debut OR date_fin>" . sql_quote($now) . ")")){
-			$id_abo_offres = array_map('reset', $id_abo_offres);
+			$id_abo_offres = array_column($id_abo_offres, 'id_abo_offre');
 			$liste_zones[$id_auteur] = sql_allfetsel("id_zone", "spip_zones_liens", "objet='abooffre' AND " . sql_in('id_objet', $id_abo_offres));
-			$liste_zones[$id_auteur] = array_map('reset', $liste_zones[$id_auteur]);
+			$liste_zones[$id_auteur] = array_column($liste_zones[$id_auteur], 'id_zone');
 		}
 	}
 	return $liste_zones[$id_auteur];

@@ -34,7 +34,7 @@ function abos_repair_dist(){
 
 			// verifier qu'on a pas deja un abo OK sur cette transaction
 			$ids = sql_allfetsel("id_abonnement","spip_abonnements_liens","objet='transaction' AND id_objet=".intval($row['id_transaction_echeance']));
-			$ids = array_map('reset',$ids);
+			$ids = array_column($ids, 'id_abonnement');
 			if (sql_countsel("spip_abonnements",sql_in('id_abonnement',$ids)." AND statut='ok'")){
 				spip_log("annulation commande abonnement ".$row['id_abonnement'],'abos_reparer_cron'._LOG_INFO_IMPORTANTE);
 				sql_updateq("spip_abonnements",array('id_transaction_echeance'=>0),"id_abonnement=".intval($row['id_abonnement']));
@@ -96,7 +96,7 @@ function abos_repair_dist(){
 		JOIN spip_souscriptions AS S ON (S.id_souscription=T.tracking_id AND T.parrain='souscription')",
 			"A.statut='resilie' AND S.abo_statut='ok'");
 		if (count($ids)){
-			$ids = array_map('reset', $ids);
+			$ids = array_column($ids, 'id_souscription');
 			spip_log('Resilier souscriptions ' . implode(',', $ids) . ' car abos resilies', 'resiliation_auto' . _LOG_INFO_IMPORTANTE);
 			$set = array(
 				'abo_statut' => 'resilie',

@@ -99,10 +99,10 @@ function abos_compter_jour($day){
 	// les conquetes de ce jour : ce sont des abonnements (actifs ou resilies) souscrits ce jour
 	// par des abonnes qui n'avaient aucun autre abonnement souscrit avant ce jour
 	$id_auteurs = sql_allfetsel('DISTINCT id_auteur', 'spip_abonnements', $where_abos);
-	$id_auteurs = array_map('reset', $id_auteurs);
+	$id_auteurs = array_column($id_auteurs, 'id_auteur');
 	// maintenant exclure les auteurs qui avaient un abonnement souscrit avant (hors gratuit/parrain)
 	$exclus = sql_allfetsel('DISTINCT id_auteur', 'spip_abonnements', 'date<' . sql_quote($day_start) . ' AND ' . sql_in('statut', array('ok', 'resilie')) . ' AND ' . sql_in('id_auteur', $id_auteurs) . ' AND ' . sql_in('mode_paiement', array('gratuit', 'parrain'), 'NOT'));
-	$exclus = array_map('reset', $exclus);
+	$exclus = array_column($exclus, 'id_auteur');
 	$id_auteurs = array_diff($id_auteurs, $exclus);
 	$where_abos[] = sql_in('id_auteur', $id_auteurs);
 	$rows = sql_allfetsel('id_abo_offre,count(id_abonnement) AS N', 'spip_abonnements', $where_abos, 'id_abo_offre');
@@ -120,10 +120,10 @@ function abos_compter_jour($day){
 	/*
 	// par des abonnes qui n'ont aucun autre abonnement souscrit a la suite (renouvellement)
 	$id_auteurs = sql_allfetsel('DISTINCT id_auteur','spip_abonnements',$where_abos);
-	$id_auteurs = array_map('reset',$id_auteurs);
+	$id_auteurs = array_column($id_auteurs, 'id_auteur');
 	// maintenant exclure les auteurs qui ont souscrit un autre abonnement a la suite
 	$exclus = sql_allfetsel('DISTINCT id_auteur','spip_abonnements','date_debut>='.sql_quote($day_start).' AND '.sql_in('statut',array('ok','resilie')).' AND '.sql_in('id_auteur',$id_auteurs));
-	$exclus = array_map('reset',$exclus);
+	$exclus = array_column($exclus, 'id_auteur');
 	$id_auteurs = array_diff($id_auteurs,$exclus);
 	$where_abos[] = sql_in('id_auteur',$id_auteurs);
 	*/

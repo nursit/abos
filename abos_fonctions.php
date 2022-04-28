@@ -124,10 +124,10 @@ function abos_duree_abonnement($date_debut){
  */
 function abos_liste_transactions($id_abonnement, $id_commande = 0){
 	$ids = sql_allfetsel("id_objet", "spip_abonnements_liens", "id_abonnement=" . intval($id_abonnement) . " AND objet=" . sql_quote('transaction'));
-	$ids = array_map('reset', $ids);
+	$ids = array_column($ids, "id_objet");
 	if ($id_commande){
 		$id2s = sql_allfetsel("id_transaction", "spip_transactions", "id_commande=" . intval($id_commande));
-		$id2s = array_map('reset', $id2s);
+		$id2s = array_column($id2s, 'id_transaction');
 		$ids = array_merge($id2s, $ids);
 	}
 	if (!$ids){
@@ -250,9 +250,9 @@ function abos_auteur_sans_abonnement(){
 	include_spip('base/abstract_sql');
 
 	$hasabo = sql_allfetsel('id_auteur', 'spip_abonnements', "statut IN ('ok','resilie')");
-	$hasabo = array_map('reset', $hasabo);
+	$hasabo = array_column($hasabo, 'id_auteur');
 	$hastrans = sql_allfetsel('id_auteur', 'spip_transactions', "statut='ok' AND id_auteur>0 AND " . sql_in('id_auteur', $hasabo, 'NOT'));
-	$hastrans = array_map('reset', $hastrans);
+	$hastrans = array_column($hastrans, 'id_auteur');
 	if (!$hastrans){
 		$hastrans = array(0);
 	}
@@ -267,7 +267,7 @@ function abos_auteur_plusieurs_abonnements(){
 	include_spip('base/abstract_sql');
 
 	$hasabo = sql_allfetsel('id_auteur, count(id_auteur) AS N', 'spip_abonnements', "statut IN ('ok')", "id_auteur", "", "", "N>1");
-	$hasabo = array_map('reset', $hasabo);
+	$hasabo = array_column($hasabo, 'id_auteur');
 	if (!$hasabo){
 		$hasabo = array(0);
 	}
@@ -286,7 +286,7 @@ function abos_historique_encaissements($id_abo_offres){
 	}
 
 	$id_commandes = sql_allfetsel('A.id_commande','spip_abonnements as A',sql_in('A.id_abo_offre',$id_abo_offres));
-	$id_commandes = array_map('reset', $id_commandes);
+	$id_commandes = array_column($id_commandes, 'id_commande');
 
 	$rows = sql_allfetsel(
 		"count(T.id_transaction) as nombre_mensuel, sum(T.montant_ht) as montant_mensuel_ht,sum(T.montant) as montant_mensuel,T.date_paiement",
@@ -324,7 +324,7 @@ function abos_historique_encaissements_periode($duree) {
 	if (!$id_abo_offres) {
 		return '';
 	}
-	$id_abo_offres = array_map('reset', $id_abo_offres);
+	$id_abo_offres = array_column($id_abo_offres, 'id_abo_offre');
 	return abos_historique_encaissements($id_abo_offres);
 
 }

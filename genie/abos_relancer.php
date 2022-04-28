@@ -45,7 +45,7 @@ function genie_abos_relancer($t){
 	// trouver tous les rappels en cours sur les statut=ok
 	$rappels = sql_allfetsel("DISTINCT relance", "spip_abonnements", 'statut=' . sql_quote('ok') . ' AND relance<>' . sql_quote('off') . ' AND relance<>' . sql_quote(''));
 	if (count($rappels)){
-		$rappels = array_map('reset', $rappels);
+		$rappels = array_column($rappels, 'relance');
 
 		$where = array();
 		foreach ($rappels as $r){

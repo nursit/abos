@@ -34,7 +34,7 @@ a mis a jour la valeur avec la page reelle]
 			<td class='prix_ht secondaire'>[(#CHAMP_SQL{prix_ht_renouvellement}|sinon{#CHAMP_SQL{prix_ht}}|affiche_monnaie)]</td>
 			<td class='action'>
 				[(#ENV{editable}|oui)
-					<button type="submit" class="button link delete" name="supprimer_lien\[abooffre-#ID_ABO_OFFRE-#OBJET-#ID_OBJET\]" value="X"><:abooffre:retirer_lien_abooffre:> [(#CHEMIN_IMAGE{supprimer-12.png}|balise_img{'X'})]</button>
+					<button type="submit" class="button link delete btn_secondaire" name="supprimer_lien\[abooffre-#ID_ABO_OFFRE-#OBJET-#ID_OBJET\]" value="X"><:abooffre:retirer_lien_abooffre:> [(#CHEMIN_IMAGE{supprimer-12.png}|balise_img{'X'})]</button>
 				]
 			</td>
 		</tr>
@@ -42,7 +42,7 @@ a mis a jour la valeur avec la page reelle]
 	</tbody>
 </table>
 [<nav class='pagination'>(#PAGINATION{prive})</nav>]
-[(#GRAND_TOTAL|>{3}|oui)<div class="action"><button type="submit" class="button link" name="supprimer_lien\[abooffre-*-#OBJET-#ID_OBJET\]" value="X"><:abooffre:retirer_tous_liens_abo_offres:> [(#CHEMIN_IMAGE{supprimer-8.png}|balise_img{'X'})]</button></div>]
+[(#GRAND_TOTAL|>{3}|oui)<div class="action"><button type="submit" class="button link btn_danger" name="supprimer_lien\[abooffre-*-#OBJET-#ID_OBJET\]" value="X"><:abooffre:retirer_tous_liens_abo_offres:> [(#CHEMIN_IMAGE{supprimer-8.png}|balise_img{'X'})]</button></div>]
 </div>
 </B_liste_abo_offres>
 <div class="liste-objets liste-objets-lies abo_offres caption-wrap">

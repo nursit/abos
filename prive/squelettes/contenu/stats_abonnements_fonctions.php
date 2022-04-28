@@ -25,8 +25,8 @@ function afficher_stats_echeances_offre($mois_relatif,$id_abo_offre){
 	$nombre = count($abos);
 
 	// compter les reabonnements
-	$id_abos = array_map('reset',$abos);
-	$id_auteur = array_map('end',$abos);
+	$id_abos = array_column($abos, 'id_abonnement');
+	$id_auteur = array_column($abos, 'id_auteur');
 
 	$reabos = sql_allfetsel("id_abonnement,id_auteur,id_abo_offre","spip_abonnements",
 		sql_in('id_auteur',$id_auteur)

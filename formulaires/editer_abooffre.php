@@ -75,7 +75,7 @@ function formulaires_editer_abooffre_charger_dist($id_abo_offre = 'new', $retour
 		$valeurs['acces_zones'] = array();
 		if (intval($id_abo_offre)){
 			$zones = sql_allfetsel("id_zone", "spip_zones_liens", "objet='abooffre' AND id_objet=" . intval($id_abo_offre));
-			$valeurs['acces_zones'] = array_map('reset', $zones);
+			$valeurs['acces_zones'] = array_column($zones, 'id_zone');
 		}
 	}
 
