@@ -1,10 +1,10 @@
 <paquet
 	prefix="abos"
 	categorie="outil"
-	version="4.0.1"
+	version="4.0.2"
 	etat="stable"
 	compatibilite="[4.0.0;4.1.*]"
-	logo="prive/themes/spip/images/abos-32.png"
+	logo="abos.svg"
 	documentation=""
 	schema="2.4.3"
 >
@@ -14,14 +14,14 @@
 	<auteur>cedric</auteur>
 
 	<licence>GNU/GPL</licence>
-	<necessite nom="saisies"  compatibilite="[1.24.0;]" /> 
+	<necessite nom="saisies"  compatibilite="[1.24.0;]" />
 
 
-	<pipeline nom="autoriser" inclure="abos_autorisations.php" /> 
+	<pipeline nom="autoriser" inclure="abos_autorisations.php" />
 
 	<pipeline nom="declarer_tables_objets_sql" inclure="base/abos.php" />
 	<pipeline nom="declarer_tables_interfaces" inclure="base/abos.php" />
-	<pipeline nom="declarer_tables_auxiliaires" inclure="base/abos.php" /> 
+	<pipeline nom="declarer_tables_auxiliaires" inclure="base/abos.php" />
 	<pipeline nom="accesrestreint_liste_zones_autorisees" inclure="abos_pipelines.php" />
 	<pipeline nom="affiche_auteurs_interventions" inclure="abos_pipelines.php" />
 	<pipeline nom="afficher_complement_objet" inclure="abos_pipelines.php" />
@@ -30,8 +30,7 @@
 	<pipeline nom="taches_generales_cron" inclure="abos_pipelines.php" />
 	<pipeline nom="preparer_visiteur_session" inclure="abos_pipelines.php" />
 
-	<menu nom="abonnements" titre="abonnement:titre_abonnements" parent="menu_activite" icone="images/abonnement-16.png" position="1" action="abonnements" />
-	<menu nom="diag_abonnements" titre="abonnement:titre_diagnostic" parent="menu_administration" icone="images/diagnostic-16.png" action="diag_abonnements" />
+	<menu nom="abonnements" titre="abonnement:titre_abonnements" parent="menu_activite" icone="images/abonnement-16.svg" position="1" action="abonnements" />
 
 	<necessite nom="bank" compatibilite="[;]"/>
 	<utilise nom="profils" compatibilite="[;]"/>

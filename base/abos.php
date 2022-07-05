@@ -147,7 +147,7 @@ function abos_declarer_tables_objets_sql($tables) {
 			'resilie'   => 'abonnement:texte_statut_resilie',
 		],
 		'statut_images' => [
-			'abonnement-16.png',
+			'abonnement-16.svg',
 			'prepa' => 'puce-preparer-8.png',
 			'ok' => 'puce-publier-8.png',
 			'resilie' => 'puce-supprimer-8.png',
