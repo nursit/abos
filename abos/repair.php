@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Reparer les abonnements
  *
@@ -8,7 +9,8 @@
  * @licence    GNU/GPL
  * @package    SPIP\Abos\API
  */
-if (!defined('_ECRIRE_INC_VERSION')){
+
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
@@ -22,7 +24,7 @@ include_spip('base/abstract_sql');
  * -> passer les abos finis en resilies
  *
  */
-function abos_repair_dist(){
+function abos_repair_dist() {
 
 	// activer des abonnements payes mais pas actives (probleme technique)
 	/*
@@ -71,37 +73,39 @@ function abos_repair_dist(){
 	$resilier = charger_fonction('resilier', 'abos');
 
 	// marquer en resilies les abos finis
-	$fin = date('Y-m-d H:i:s', strtotime("-1 day"));
-	$abonnements = sql_allfetsel("id_abonnement", "spip_abonnements", "statut=" . sql_quote('ok') . " AND date_fin<=" . sql_quote($fin) . " AND date_fin>=date_debut");
-	foreach ($abonnements as $abonnement){
-		$resilier($abonnement['id_abonnement'], array('immediat' => true, 'message' => 'resiliation auto abonnement fini', 'notify_bank' => false));
+	$fin = date('Y-m-d H:i:s', strtotime('-1 day'));
+	$abonnements = sql_allfetsel('id_abonnement', 'spip_abonnements', 'statut=' . sql_quote('ok') . ' AND date_fin<=' . sql_quote($fin) . ' AND date_fin>=date_debut');
+	foreach ($abonnements as $abonnement) {
+		$resilier($abonnement['id_abonnement'], ['immediat' => true, 'message' => 'resiliation auto abonnement fini', 'notify_bank' => false]);
 		spip_log('resiliation auto abonnement fini (date fin) abo' . $abonnement['id_abonnement'], 'resiliation_auto' . _LOG_INFO_IMPORTANTE);
 	}
 
 	// marquer en resilies les abos dont echeance passee, sans fin connue
-	$fin = date('Y-m-d H:i:s', strtotime("-2 day"));
-	$abonnements = sql_allfetsel("id_abonnement", "spip_abonnements", "statut=" . sql_quote('ok') . " AND date_echeance<=" . sql_quote($fin) . " AND date_fin<date_debut");
-	foreach ($abonnements as $abonnement){
-		$resilier($abonnement['id_abonnement'], array('immediat' => true, 'message' => 'resiliation auto abonnement fini', 'notify_bank' => false));
+	$fin = date('Y-m-d H:i:s', strtotime('-2 day'));
+	$abonnements = sql_allfetsel('id_abonnement', 'spip_abonnements', 'statut=' . sql_quote('ok') . ' AND date_echeance<=' . sql_quote($fin) . ' AND date_fin<date_debut');
+	foreach ($abonnements as $abonnement) {
+		$resilier($abonnement['id_abonnement'], ['immediat' => true, 'message' => 'resiliation auto abonnement fini', 'notify_bank' => false]);
 		spip_log('resiliation auto abonnement fini (echeance impayee, pas de fin prevue) abo' . $abonnement['id_abonnement'], 'resiliation_auto' . _LOG_INFO_IMPORTANTE);
 	}
 
 
 	// marquer en resilie les souscriptions recurrentes mensuelles liees aux abonnements resilies
-	if (test_plugin_actif('souscription')){
-		$ids = sql_allfetsel('S.id_souscription',
+	if (test_plugin_actif('souscription')) {
+		$ids = sql_allfetsel(
+			'S.id_souscription',
 			"spip_abonnements as A
 		JOIN spip_abonnements_liens as L on (L.id_abonnement=A.id_abonnement)
 		JOIN spip_transactions as T on (L.id_objet=T.id_transaction AND L.objet='transaction')
 		JOIN spip_souscriptions AS S ON (S.id_souscription=T.tracking_id AND T.parrain='souscription')",
-			"A.statut='resilie' AND S.abo_statut='ok'");
-		if (count($ids)){
+			"A.statut='resilie' AND S.abo_statut='ok'"
+		);
+		if (count($ids)) {
 			$ids = array_column($ids, 'id_souscription');
 			spip_log('Resilier souscriptions ' . implode(',', $ids) . ' car abos resilies', 'resiliation_auto' . _LOG_INFO_IMPORTANTE);
-			$set = array(
+			$set = [
 				'abo_statut' => 'resilie',
 				'abo_fin_raison' => 'abonnement resilie',
-			);
+			];
 			sql_updateq('spip_souscriptions', $set, sql_in('id_souscription', $ids));
 		}
 	}
@@ -133,54 +137,61 @@ function abos_repair_dist(){
  * Ces abonnements devraient etre renouveles par notification paybox, mais qui n'est pas arrivee au serveur
  * @deprecated
  */
-function renouveler_abos_valides_echus(){
+function renouveler_abos_valides_echus() {
 	$renouveler = charger_fonction('renouveler', 'abos');
 	$activer = charger_fonction('activer_abonnement', 'abos');
 
 	$regler_transaction = charger_fonction('regler_transaction', 'bank');
 
-	$echeance = date('Y-m-d H:i:s', strtotime("-2 day"));
+	$echeance = date('Y-m-d H:i:s', strtotime('-2 day'));
 	$now = date('Y-m-d H:i:s');
-	$res = sql_select("id_abonnement,abonne_uid,mode_paiement,date_echeance",
-		"spip_abonnements",
-		"date_echeance<'$echeance' AND date_fin>'$now' AND mode_paiement='paybox' AND duree_echeance='1 month'", "", "date_echeance");
+	$res = sql_select(
+		'id_abonnement,abonne_uid,mode_paiement,date_echeance',
+		'spip_abonnements',
+		"date_echeance<'$echeance' AND date_fin>'$now' AND mode_paiement='paybox' AND duree_echeance='1 month'",
+		'',
+		'date_echeance'
+	);
 
-	while (sql_count($res)){
-		while ($row = sql_fetch($res)){
-			if ($last_trans = tester_offline($row['id_abonnement'])){
+	while (sql_count($res)) {
+		while ($row = sql_fetch($res)) {
+			if ($last_trans = tester_offline($row['id_abonnement'])) {
 				// verifier la date de paiement
-				if ($last_trans['statut']=='ok' AND $last_trans['date_transaction']>date('Y-m-d H:i:s', strtotime("-4 day"))){
+				if ($last_trans['statut'] == 'ok' and $last_trans['date_transaction'] > date('Y-m-d H:i:s', strtotime('-4 day'))) {
 					$id_transaction = $last_trans['id_transaction'];
 				} else {
 					$id_transaction = $renouveler($row['id_abonnement']);
-					$res_prec = sql_select("*", "spip_transactions", "id_transaction=" . intval($id_transaction));
+					$res_prec = sql_select('*', 'spip_transactions', 'id_transaction=' . intval($id_transaction));
 					$row_prec = sql_fetch($res_prec);
 
 					// verifier que la transaction n'est pas deja payee. Si c'est le cas
 
-					$set = array(
-						"autorisation_id" => sql_quote('offline'),
-						"mode" => sql_quote('paybox'),
-						"montant_regle" => 'montant',
-						"date_paiement" => sql_quote($row['date_echeance']),
-						"statut" => sql_quote('ok'),
-						"reglee" => sql_quote('oui'),
-					);
+					$set = [
+						'autorisation_id' => sql_quote('offline'),
+						'mode' => sql_quote('paybox'),
+						'montant_regle' => 'montant',
+						'date_paiement' => sql_quote($row['date_echeance']),
+						'statut' => sql_quote('ok'),
+						'reglee' => sql_quote('oui'),
+					];
 
-					sql_update("spip_transactions", $set, "id_transaction=" . intval($id_transaction));
+					sql_update('spip_transactions', $set, 'id_transaction=' . intval($id_transaction));
 
-					$regler_transaction($id_transaction, array('row_prec' => $row_prec, 'notifier' => false));
+					$regler_transaction($id_transaction, ['row_prec' => $row_prec, 'notifier' => false]);
 				}
 
 				$activer($id_transaction, $row['abonne_uid'], $row['mode_paiement']);
-				spip_log("Renouvellement abonnement " . $row['id_abonnement'] . "/" . $id_transaction, 'abos_reparer_cron' . _LOG_INFO_IMPORTANTE);
+				spip_log('Renouvellement abonnement ' . $row['id_abonnement'] . '/' . $id_transaction, 'abos_reparer_cron' . _LOG_INFO_IMPORTANTE);
 			}
 		}
-		$res = sql_select("id_abonnement,abonne_uid,mode_paiement,date_echeance",
-			"spip_abonnements",
-			"date_echeance<'$echeance' AND date_fin>'$now' AND mode_paiement='paybox'", "", "date_echeance");
+		$res = sql_select(
+			'id_abonnement,abonne_uid,mode_paiement,date_echeance',
+			'spip_abonnements',
+			"date_echeance<'$echeance' AND date_fin>'$now' AND mode_paiement='paybox'",
+			'',
+			'date_echeance'
+		);
 	}
-
 }
 
 
@@ -189,27 +200,27 @@ function renouveler_abos_valides_echus(){
  * @param int $id_abonnement
  * @return bool
  */
-function tester_offline($id_abonnement){
-	static $done = array();
+function tester_offline($id_abonnement) {
+	static $done = [];
 
 	// si deja passe par la avec un false et resiliation on ne ressaye pas
-	if (isset($done[$id_abonnement]) AND !$done[$id_abonnement]){
+	if (isset($done[$id_abonnement]) and !$done[$id_abonnement]) {
 		return $done[$id_abonnement];
 	}
 
 	//prendre les deux dernieres transactions
-	$res = sql_select("id_objet AS id_transaction", "spip_abonnements_liens", "id_abonnement=" . sql_quote($id_abonnement) . " AND objet='transaction'", "", "date DESC", "0,6");
-	while ($row = sql_fetch($res)){
+	$res = sql_select('id_objet AS id_transaction', 'spip_abonnements_liens', 'id_abonnement=' . sql_quote($id_abonnement) . " AND objet='transaction'", '', 'date DESC', '0,6');
+	while ($row = sql_fetch($res)) {
 		$id_transaction = $row['id_transaction'];
-		$trans = sql_fetsel("id_transaction,statut,date_transaction,autorisation_id", "spip_transactions", "id_transaction=" . intval($id_transaction));
-		if ($trans['autorisation_id']!='offline' AND $trans['statut']=='ok'){
+		$trans = sql_fetsel('id_transaction,statut,date_transaction,autorisation_id', 'spip_transactions', 'id_transaction=' . intval($id_transaction));
+		if ($trans['autorisation_id'] != 'offline' and $trans['statut'] == 'ok') {
 			return $trans;
 		}
 	}
 
 	// on a pas trouvee de vrai transaction recette, on le resilie
 	$resilier = charger_fonction('resilier', 'abos');
-	$resilier($id_abonnement, array('immediat' => true, 'message' => 'resiliation auto des offline douteux', 'notify_bank' => false));
+	$resilier($id_abonnement, ['immediat' => true, 'message' => 'resiliation auto des offline douteux', 'notify_bank' => false]);
 	spip_log('resiliation auto offline abo' . $id_abonnement, 'resiliation_auto_offline' . _LOG_INFO_IMPORTANTE);
 
 	return false;

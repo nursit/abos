@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Définit les autorisations du plugin Abonnements
  *
@@ -9,7 +10,7 @@
  * @package    SPIP\Abos\Autorisations
  */
 
-if (!defined('_ECRIRE_INC_VERSION')){
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
@@ -18,7 +19,7 @@ if (!defined('_ECRIRE_INC_VERSION')){
  * Fonction d'appel pour le pipeline
  * @pipeline autoriser
  */
-function abos_autoriser(){
+function abos_autoriser() {
 }
 
 
@@ -36,7 +37,7 @@ function abos_autoriser(){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abooffres_menu_dist($faire, $type, $id, $qui, $opt){
+function autoriser_abooffres_menu_dist($faire, $type, $id, $qui, $opt) {
 	return true;
 }
 
@@ -51,8 +52,8 @@ function autoriser_abooffres_menu_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abooffre_creer_dist($faire, $type, $id, $qui, $opt){
-	return in_array($qui['statut'], array('0minirezo', '1comite'));
+function autoriser_abooffre_creer_dist($faire, $type, $id, $qui, $opt) {
+	return in_array($qui['statut'], ['0minirezo', '1comite']);
 }
 
 /**
@@ -65,7 +66,7 @@ function autoriser_abooffre_creer_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abooffre_voir_dist($faire, $type, $id, $qui, $opt){
+function autoriser_abooffre_voir_dist($faire, $type, $id, $qui, $opt) {
 	return true;
 }
 
@@ -79,8 +80,8 @@ function autoriser_abooffre_voir_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abooffre_modifier_dist($faire, $type, $id, $qui, $opt){
-	return in_array($qui['statut'], array('0minirezo', '1comite'));
+function autoriser_abooffre_modifier_dist($faire, $type, $id, $qui, $opt) {
+	return in_array($qui['statut'], ['0minirezo', '1comite']);
 }
 
 /**
@@ -93,11 +94,11 @@ function autoriser_abooffre_modifier_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abooffre_supprimer_dist($faire, $type, $id, $qui, $opt){
-	return $qui['statut']=='0minirezo' AND !$qui['restreint'];
+function autoriser_abooffre_supprimer_dist($faire, $type, $id, $qui, $opt) {
+	return $qui['statut'] == '0minirezo' and !$qui['restreint'];
 }
 
-function autoriser_abooffre_iconifier_dist($faire, $type, $id, $qui, $opt){
+function autoriser_abooffre_iconifier_dist($faire, $type, $id, $qui, $opt) {
 	return false;
 }
 
@@ -115,8 +116,8 @@ function autoriser_abooffre_iconifier_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abonnement_creer_dist($faire, $type, $id, $qui, $opt){
-	return in_array($qui['statut'], array('0minirezo')) and !$qui['restreint'];
+function autoriser_abonnement_creer_dist($faire, $type, $id, $qui, $opt) {
+	return in_array($qui['statut'], ['0minirezo']) and !$qui['restreint'];
 }
 
 /**
@@ -129,7 +130,7 @@ function autoriser_abonnement_creer_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abonnement_voir_dist($faire, $type, $id, $qui, $opt){
+function autoriser_abonnement_voir_dist($faire, $type, $id, $qui, $opt) {
 	return true;
 }
 
@@ -143,8 +144,8 @@ function autoriser_abonnement_voir_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abonnement_modifier_dist($faire, $type, $id, $qui, $opt){
-	return in_array($qui['statut'], array('0minirezo')) and !$qui['restreint'];
+function autoriser_abonnement_modifier_dist($faire, $type, $id, $qui, $opt) {
+	return in_array($qui['statut'], ['0minirezo']) and !$qui['restreint'];
 }
 
 /**
@@ -157,12 +158,12 @@ function autoriser_abonnement_modifier_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abonnement_prolonger_dist($faire, $type, $id, $qui, $opt){
-	$abo = sql_fetsel("statut,date_fin", "spip_abonnements", "id_abonnement=" . intval($id));
+function autoriser_abonnement_prolonger_dist($faire, $type, $id, $qui, $opt) {
+	$abo = sql_fetsel('statut,date_fin', 'spip_abonnements', 'id_abonnement=' . intval($id));
 	return
-		($abo['statut']=='ok'
-			AND intval($abo['date_fin'])
-			AND autoriser('modifier', 'abonnement', $id, $qui, $opt));
+		($abo['statut'] == 'ok'
+			and intval($abo['date_fin'])
+			and autoriser('modifier', 'abonnement', $id, $qui, $opt));
 }
 
 /**
@@ -175,16 +176,16 @@ function autoriser_abonnement_prolonger_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_abonnement_supprimer_dist($faire, $type, $id, $qui, $opt){
-	return $qui['statut']=='0minirezo' AND !$qui['restreint'];
+function autoriser_abonnement_supprimer_dist($faire, $type, $id, $qui, $opt) {
+	return $qui['statut'] == '0minirezo' and !$qui['restreint'];
 }
 
-function autoriser_abonnement_iconifier_dist($faire, $type, $id, $qui, $opt){
+function autoriser_abonnement_iconifier_dist($faire, $type, $id, $qui, $opt) {
 	return false;
 }
 
-function autoriser_abonnement_resilier_dist($faire, $type, $id, $qui, $opt){
-	return $qui['statut']=='0minirezo' AND !$qui['restreint'];
+function autoriser_abonnement_resilier_dist($faire, $type, $id, $qui, $opt) {
+	return $qui['statut'] == '0minirezo' and !$qui['restreint'];
 }
 
 
@@ -198,7 +199,6 @@ function autoriser_abonnement_resilier_dist($faire, $type, $id, $qui, $opt){
  * @param  array $opt Options de cette autorisation
  * @return bool          true s'il a le droit, false sinon
  **/
-function autoriser_associerabonnements_dist($faire, $type, $id, $qui, $opt){
-	return $qui['statut']=='0minirezo' AND !$qui['restreint'];
+function autoriser_associerabonnements_dist($faire, $type, $id, $qui, $opt) {
+	return $qui['statut'] == '0minirezo' and !$qui['restreint'];
 }
-

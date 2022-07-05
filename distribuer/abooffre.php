@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Abonner un auteur
  *
@@ -8,7 +9,8 @@
  * @licence    GNU/GPL
  * @package    SPIP\Abos\API
  */
-if (!defined('_ECRIRE_INC_VERSION')){
+
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
@@ -19,11 +21,10 @@ if (!defined('_ECRIRE_INC_VERSION')){
  * @param $commande
  * @return bool|string
  */
-function distribuer_abooffre_dist($id_abo_offre, $detail, $commande){
+function distribuer_abooffre_dist($id_abo_offre, $detail, $commande) {
 
-	if ($detail['statut']=='attente'){
-
-		$transaction = sql_fetsel('*','spip_transactions','statut='.sql_quote('ok').' AND id_commande='.intval($commande['id_commande']),'','id_transaction','0,1');
+	if ($detail['statut'] == 'attente') {
+		$transaction = sql_fetsel('*', 'spip_transactions', 'statut=' . sql_quote('ok') . ' AND id_commande=' . intval($commande['id_commande']), '', 'id_transaction', '0,1');
 		$abonne_uid = '';
 		if ($transaction) {
 			if (isset($transaction['abo_uid']) and $transaction['abo_uid']) {
@@ -34,22 +35,22 @@ function distribuer_abooffre_dist($id_abo_offre, $detail, $commande){
 			}
 		}
 
-		$abonner = charger_fonction("abonner", "abos");
-		$options = array(
+		$abonner = charger_fonction('abonner', 'abos');
+		$options = [
 			'id_commande' => $commande['id_commande'],
 			'id_auteur' => $commande['id_auteur'],
 			'statut' => 'ok',
 			'mode_paiement' => $commande['mode'],
 			'abonne_uid' => $abonne_uid,
 			'prix_ht_initial' => $detail['prix_unitaire_ht'], // reprendre le prix qui a ete enregistre dans la commande
-		);
+		];
 
-		if (isset($commande['echeances_date_debut']) and intval($commande['echeances_date_debut'])){
+		if (isset($commande['echeances_date_debut']) and intval($commande['echeances_date_debut'])) {
 			$options['date_debut'] = $commande['echeances_date_debut'];
 		}
 
 		$nb = $detail['quantite'];
-		while ($nb-->0){
+		while ($nb-- > 0) {
 			$abonner($id_abo_offre, $options);
 		}
 

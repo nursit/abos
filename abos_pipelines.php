@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Utilisations de pipelines par Abonnements
  *
@@ -9,7 +10,7 @@
  * @package    SPIP\Abos\Pipelines
  */
 
-if (!defined('_ECRIRE_INC_VERSION')){
+if (!defined('_ECRIRE_INC_VERSION')) {
 	return;
 }
 
@@ -20,21 +21,21 @@ if (!defined('_ECRIRE_INC_VERSION')){
  * @param null|int $id_auteur
  * @return string
  */
-function abos_accesrestreint_liste_zones_autorisees($zones = '', $id_auteur = NULL){
-	$id = NULL;
-	if (!is_null($id_auteur)){
+function abos_accesrestreint_liste_zones_autorisees($zones = '', $id_auteur = null) {
+	$id = null;
+	if (!is_null($id_auteur)) {
 		$id = $id_auteur;
-	} elseif (isset($GLOBALS['visiteur_session']['id_auteur']) && $GLOBALS['visiteur_session']['id_auteur']) {
+	} elseif (!empty($GLOBALS['visiteur_session']['id_auteur'])) {
 		$id = $GLOBALS['visiteur_session']['id_auteur'];
 	}
-	if (!is_null($id)){
+	if (!is_null($id)) {
 		$new = abos_liste_zones_acces_auteur($id);
-		if ($zones AND $new){
+		if ($zones and $new) {
 			$zones = array_unique(array_merge(explode(',', $zones), $new));
 			sort($zones);
 			$zones = join(',', $zones);
 		} else {
-			if ($new){
+			if ($new) {
 				sort($new);
 				$zones = join(',', $new);
 			}
@@ -49,15 +50,15 @@ function abos_accesrestreint_liste_zones_autorisees($zones = '', $id_auteur = NU
  * @param int $id_auteur
  * @return array
  */
-function abos_liste_zones_acces_auteur($id_auteur){
-	static $liste_zones = array();
-	if (!isset($liste_zones[$id_auteur])){
-		$liste_zones[$id_auteur] = array();
+function abos_liste_zones_acces_auteur($id_auteur) {
+	static $liste_zones = [];
+	if (!isset($liste_zones[$id_auteur])) {
+		$liste_zones[$id_auteur] = [];
 		include_spip('base/abstract_sql');
 		$now = date('Y-m-d H:i:s', $_SERVER['REQUEST_TIME']);
-		if ($id_abo_offres = sql_allfetsel("id_abo_offre", "spip_abonnements", "id_auteur=" . intval($id_auteur) . " AND statut='ok' AND (date_fin IS NULL OR date_fin<date_debut OR date_fin>" . sql_quote($now) . ")")){
+		if ($id_abo_offres = sql_allfetsel('id_abo_offre', 'spip_abonnements', 'id_auteur=' . intval($id_auteur) . " AND statut='ok' AND (date_fin IS NULL OR date_fin<date_debut OR date_fin>" . sql_quote($now) . ')')) {
 			$id_abo_offres = array_column($id_abo_offres, 'id_abo_offre');
-			$liste_zones[$id_auteur] = sql_allfetsel("id_zone", "spip_zones_liens", "objet='abooffre' AND " . sql_in('id_objet', $id_abo_offres));
+			$liste_zones[$id_auteur] = sql_allfetsel('id_zone', 'spip_zones_liens', "objet='abooffre' AND " . sql_in('id_objet', $id_abo_offres));
 			$liste_zones[$id_auteur] = array_column($liste_zones[$id_auteur], 'id_zone');
 		}
 	}
@@ -65,18 +66,18 @@ function abos_liste_zones_acces_auteur($id_auteur){
 }
 
 
-function abos_preparer_visiteur_session($flux){
+function abos_preparer_visiteur_session($flux) {
 
-	if ($flux['data']['statut']=='6forum'){
+	if ($flux['data']['statut'] == '6forum') {
 		$row = $flux['args']['row'];
 		// Indiquer la connexion. A la journee pres ca suffit.
 		$connect_quand = strtotime($row['en_ligne']);
 
 		$now = $_SERVER['REQUEST_TIME'];
-		if (abs($now-$connect_quand)>=64800 /*18h*/){
+		if (abs($now - $connect_quand) >= 64800 /*18h*/) {
 			$row['en_ligne'] = date('Y-m-d H:i:s', $now);
-			sql_updateq("spip_auteurs", array("en_ligne" => $row['en_ligne']), "id_auteur=" . intval($row['id_auteur']));
-			spip_log("Mise a jour en_ligne auteur " . $row['id_auteur'], "abos_enligne" . _LOG_DEBUG);
+			sql_updateq('spip_auteurs', ['en_ligne' => $row['en_ligne']], 'id_auteur=' . intval($row['id_auteur']));
+			spip_log('Mise a jour en_ligne auteur ' . $row['id_auteur'], 'abos_enligne' . _LOG_DEBUG);
 		}
 	}
 	return $flux;
@@ -90,20 +91,18 @@ function abos_preparer_visiteur_session($flux){
  * @param  array $flux Données du pipeline
  * @return array       Données du pipeline
  */
-function abos_affiche_auteurs_interventions($flux){
-	if ($id_auteur = intval($flux['args']['id_auteur'])){
-
-		$ins = recuperer_fond('prive/squelettes/inclure/abonnements-auteur', array(
+function abos_affiche_auteurs_interventions($flux) {
+	if ($id_auteur = intval($flux['args']['id_auteur'])) {
+		$ins = recuperer_fond('prive/squelettes/inclure/abonnements-auteur', [
 			'id_auteur' => $id_auteur,
 			'titre' => _T('abonnement:info_abonnements_auteur')
-		), array('ajax' => true));
+		], ['ajax' => true]);
 		$mark = '<!--bank-->';
-		if (($p = strpos($flux['data'], $mark))!==false){
-			$flux['data'] = substr_replace($flux['data'], $ins, $p+strlen($mark), 0);
+		if (($p = strpos($flux['data'], $mark)) !== false) {
+			$flux['data'] = substr_replace($flux['data'], $ins, $p + strlen($mark), 0);
 		} else {
 			$flux['data'] .= $ins;
 		}
-
 	}
 	return $flux;
 }
@@ -116,27 +115,28 @@ function abos_affiche_auteurs_interventions($flux){
  * @param array $flux
  * @return array
  */
-function abos_compter_contributions_auteur($flux){
+function abos_compter_contributions_auteur($flux) {
 
-	if ($id_auteur = intval($flux['args']['id_auteur'])
-		AND $cpt = sql_countsel("spip_abonnements AS A", "A.id_auteur=" . intval($id_auteur) . ' AND statut=' . sql_quote('ok'))
-	){
+	if (
+		$id_auteur = intval($flux['args']['id_auteur'])
+		and $cpt = sql_countsel('spip_abonnements AS A', 'A.id_auteur=' . intval($id_auteur) . ' AND statut=' . sql_quote('ok'))
+	) {
 		$contributions = singulier_ou_pluriel($cpt, 'abonnement:info_1_abonnement', 'abonnement:info_nb_abonnements');
 		$flux['data'][] = $contributions;
 	}
 	return $flux;
 }
 
-function abos_afficher_complement_objet($flux){
+function abos_afficher_complement_objet($flux) {
 
-	if ($flux['args']['type']=='commande'
+	if (
+		$flux['args']['type'] == 'commande'
 		and $id_commande = $flux['args']['id']
-	){
-		$flux['data'] .= recuperer_fond('prive/objets/liste/abonnements', array('where' => "id_commande=$id_commande"));
+	) {
+		$flux['data'] .= recuperer_fond('prive/objets/liste/abonnements', ['where' => "id_commande=$id_commande"]);
 	}
 
 	return $flux;
-
 }
 
 
@@ -148,9 +148,9 @@ function abos_afficher_complement_objet($flux){
  * @param  array $flux Données du pipeline
  * @return array       Données du pipeline
  */
-function abos_optimiser_base_disparus($flux){
+function abos_optimiser_base_disparus($flux) {
 	include_spip('action/editer_liens');
-	$flux['data'] += objet_optimiser_liens(array('abonnement' => '*'), '*');
+	$flux['data'] += objet_optimiser_liens(['abonnement' => '*'], '*');
 	return $flux;
 }
 
@@ -160,21 +160,21 @@ function abos_optimiser_base_disparus($flux){
  * @param array $taches_generales
  * @return array
  */
-function abos_taches_generales_cron($taches_generales){
+function abos_taches_generales_cron($taches_generales) {
 	// pas de cron de congirmation essais si pas de define
-	if (defined('_DUREE_CONSULTATION_ESSAI')){
+	if (defined('_DUREE_CONSULTATION_ESSAI')) {
 		$taches_generales['abos_confirmer_essais'] = 60; // toutes les 60s
 	}
 	//$taches_generales['abos_renouveler'] = 3600; // toutes les 3600s
-	$taches_generales['abos_reparer'] = 3600*12; // toutes les 12h
+	$taches_generales['abos_reparer'] = 3600 * 12; // toutes les 12h
 
 	include_spip('inc/config');
-	if (lire_config('abos/relances', '')){
+	if (lire_config('abos/relances', '')) {
 		$taches_generales['abos_relancer'] = 3600; // toutes les 1h
 	}
 
-	if (defined('_ABOS_EMAIL_REPORTING')){
-		$taches_generales['abos_daily_reporting'] = 3600*6; // toutes les 6H
+	if (defined('_ABOS_EMAIL_REPORTING')) {
+		$taches_generales['abos_daily_reporting'] = 3600 * 6; // toutes les 6H
 	}
 
 	return $taches_generales;
