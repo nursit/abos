@@ -132,7 +132,7 @@ function abos_resilier_dist($id, $options = array()){
 		$sujet = "Resiliation abonnement $id_abonnement";
 		$u = parse_url($GLOBALS['meta']['adresse_site']);
 		$host = preg_replace(",^www\.,", "", $u['host']);
-		$envoyer_mail($GLOBALS['email_webmaster'], $sujet, $message, "resiliations@$host");
+		$envoyer_mail($GLOBALS['meta']['email_webmaster'], $sujet, $message, "resiliations@$host");
 
 
 		// et on appelle le pipeline
