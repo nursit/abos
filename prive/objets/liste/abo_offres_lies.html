@@ -31,7 +31,7 @@ a mis a jour la valeur avec la page reelle]
 			<td class='statut'>[(#STATUT|puce_statut{abooffre,#ID_ABO_OFFRE})]</td>
 			<td class='titre'>[(#LOGO_ABOOFFRE|image_reduire{20,26})]<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></td>
 			<td class='duree secondaire'>[(#DUREE|abos_periode_en_clair)]</td>
-			<td class='prix_ht secondaire'>[(#CHAMP_SQL{prix_ht_renouvellement}|sinon{#CHAMP_SQL{prix_ht}}|affiche_monnaie)]</td>
+			<td class='prix_ht secondaire'>[(#CHAMP_SQL{prix_ht_renouvellement}|sinon{#CHAMP_SQL{prix_ht}}|bank_affiche_montant)]</td>
 			<td class='action'>
 				[(#ENV{editable}|oui)
 					<button type="submit" class="button link delete btn_secondaire" name="supprimer_lien\[abooffre-#ID_ABO_OFFRE-#OBJET-#ID_OBJET\]" value="X"><:abooffre:retirer_lien_abooffre:> [(#CHEMIN_IMAGE{supprimer-12.png}|balise_img{'X'})]</button>

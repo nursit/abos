@@ -301,8 +301,8 @@ function abos_historique_encaissements($id_abo_offres) {
 	$out = '';
 	foreach ($rows as $row) {
 		$mois = affdate_mois_annee($row['date_paiement']);
-		$montant = affiche_monnaie($row['montant_mensuel']);
-		$montant_ht = affiche_monnaie($row['montant_mensuel_ht']);
+		$montant = bank_affiche_montant($row['montant_mensuel']);
+		$montant_ht = bank_affiche_montant($row['montant_mensuel_ht']);
 		$nb = $row['nombre_mensuel'];
 		$out .= "<tr><td>$mois</td><td class='numeric'>$nb</td><td class='numeric'>$montant_ht</td><td class='numeric'>$montant</td></tr>\n";
 	}

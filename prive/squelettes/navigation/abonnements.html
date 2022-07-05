@@ -8,7 +8,7 @@
 [(#REM|abos_compter_abonnes_recents_enligne|singulier_ou_pluriel{abos:un_abonne_en_ligne,abos:nb_abonnes_en_ligne})]
 <ul class="liste-items">
 <BOUCLE_abosecheances(ABONNEMENTS){statut=ok}{id_abo_offre?}{id_auteur?}{fusion duree_echeance}{somme_echeance}>[(#SOMME_ECHEANCE|>{0.01}|oui)
-<li class="item">[(#SOMME_ECHEANCE|affiche_monnaie{2})] [(#DUREE_ECHEANCE|abos_periode_en_clair)]</li>
+<li class="item">[(#SOMME_ECHEANCE|bank_affiche_montant)] [(#DUREE_ECHEANCE|abos_periode_en_clair)]</li>
 ]</BOUCLE_abosecheances>
 </ul>
 #BOITE_FERMER

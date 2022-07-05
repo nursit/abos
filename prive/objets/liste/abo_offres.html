@@ -27,7 +27,7 @@
 			<td class='titre principale'>[(#LOGO_ABOOFFRE|image_reduire{20,26})]<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></td>
 			<td class='duree'>[(#DUREE|abos_periode_en_clair)]</td>
 			<td class='renew' scope='col'>[(#MODE_RENOUVELLEMENT|oui)[(#CHEMIN_IMAGE{[renew-(#MODE_RENOUVELLEMENT)-12.png]}|balise_img{#MODE_RENOUVELLEMENT})]]</td>
-			<td class='prix_ht'>[(#CHAMP_SQL{prix_ht_renouvellement}|sinon{#CHAMP_SQL{prix_ht}}|affiche_monnaie)]</td>
+			<td class='prix_ht'>[(#CHAMP_SQL{prix_ht_renouvellement}|sinon{#CHAMP_SQL{prix_ht}}|bank_affiche_montant)]</td>
 			<td class='desc'>
 				[WHA_oid:(#WHA_OID)<br />]
 			</td>
