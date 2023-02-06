@@ -198,7 +198,7 @@ function renouveler_abos_valides_echus() {
 /**
  * Verifier qu'un abonnement a bien recu des transactions reelles recemment sinon il est douteux, et on le resilie
  * @param int $id_abonnement
- * @return bool
+ * @return array|bool
  */
 function tester_offline($id_abonnement) {
 	static $done = [];
