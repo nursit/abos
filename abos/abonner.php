@@ -75,7 +75,7 @@ function abos_abonner_dist($id_abo_offre, $options = []) {
 		$prix_ht = $prix_ht_initial;
 		if ($options['prix_ht_echeance']) {
 			$prix_ht = $options['prix_ht_echeance'];
-		} elseif (intval($row['prix_ht_renouvellement'] * 100)) {
+		} elseif (!empty($row['prix_ht_renouvellement']) and intval((int)$row['prix_ht_renouvellement'] * 100)) {
 			$prix_ht = $row['prix_ht_renouvellement'];
 		}
 
