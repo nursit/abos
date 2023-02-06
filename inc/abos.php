@@ -17,7 +17,9 @@
  */
 function abos_log($abo_log) {
 	$par = '';
-	if (isset($GLOBALS['visiteur_session']['id_auteur'])) {
+	if (defined('_IS_CLI') AND _IS_CLI) {
+		$par = _T('public:par_auteur') . ' [CLI]';
+	} else if (isset($GLOBALS['visiteur_session']['id_auteur'])) {
 		$par = _T('public:par_auteur') . ' #' . $GLOBALS['visiteur_session']['id_auteur'] . ' ' . $GLOBALS['visiteur_session']['nom'];
 	} else {
 		$par = _T('public:par_auteur') . ' ' . $GLOBALS['ip'];
