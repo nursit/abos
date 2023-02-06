@@ -50,8 +50,9 @@ function distribuer_abooffre_dist($id_abo_offre, $detail, $commande) {
 		}
 
 		$nb = $detail['quantite'];
+		$id_abonnements = [];
 		while ($nb-- > 0) {
-			$abonner($id_abo_offre, $options);
+			$id_abonnements[] = $abonner($id_abo_offre, $options);
 		}
 
 		return 'envoye';
