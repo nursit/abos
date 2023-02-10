@@ -146,6 +146,11 @@ function abos_declarer_tables_objets_sql($tables) {
 			'ok'   => 'abonnement:texte_statut_ok',
 			'resilie'   => 'abonnement:texte_statut_resilie',
 		],
+		'statut_titres' => [
+			'prepa'   => 'abonnement:texte_statut_prepa',
+			'ok'   => 'abonnement:texte_statut_ok',
+			'resilie'   => 'abonnement:texte_statut_resilie',
+		],
 		'statut_images' => [
 			'abonnement-16.svg',
 			'prepa' => 'puce-preparer-8.png',
