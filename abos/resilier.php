@@ -50,7 +50,7 @@ function abos_resilier_dist($id, $options = []) {
 	$ok = true;
 	if (defined('_TEST_BLOCK_ABOS')) {
 		spip_log('Resiliations bloquees par _TEST_BLOCK_ABOS', 'abos_resil' . _LOG_INFO_IMPORTANTE);
-		$ok = false;
+		$ok = _TEST_BLOCK_ABOS;
 	} else {
 		// notifier au presta bancaire si besoin
 		if ($notify_bank) {
