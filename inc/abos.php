@@ -31,6 +31,56 @@ function abos_log($abo_log) {
 	return $abo_log;
 }
 
+/**
+ * Verifier lors de la creation d'une commande depuis un panier qu'on a pas 2 abonnements aux échances incompatibles
+ * (les moyens de paiement ne permettent pas de melanger du mensuel et de l'annuel par exemple)
+ *
+ * @param int $id_commande
+ * @param int $id_panier
+ * @param bool $supprimer_panier
+ * @return bool
+ */
+function abos_verifier_commande_echeances_compatibles($id_commande, $id_panier, $supprimer_panier = true) {
+
+	$supprimer_panier_apres = $supprimer_panier;
+	if ($supprimer_panier) {
+		sql_delete('spip_paniers_liens', 'id_panier=' . intval($id_panier));
+	}
+
+	$duree = false;
+	$details = sql_allfetsel('*', 'spip_commandes_details', 'id_commande='.intval($id_commande));
+	$rang = 1;
+	foreach ($details as $detail) {
+		if ($detail['objet'] === 'abooffre') {
+			$abooffre = sql_fetsel('*', 'spip_abo_offres', 'id_abo_offre='.intval($detail['id_objet']));
+			if ($abooffre['mode_renouvellement']) {
+				// on note la premiere duree avec renouvellement que l'on trouve
+				if ($duree === false or $duree === $abooffre['duree']) {
+					$duree = $abooffre['duree'];
+				} else {
+					spip_log("abos_verifier_commande_echeances_compatibles: abooffre #".$detail['id_objet'] ." duree ".$abooffre['duree']." incompatible avec précédente duree $duree, on l'enleve de la commande", "abos". _LOG_INFO_IMPORTANTE);
+					sql_delete('spip_commandes_details', 'id_commandes_detail='.$detail['id_commandes_detail']);
+					// et les autres sont remises dans le panier si il devait être vidé
+					if ($supprimer_panier) {
+						spip_log("abos_verifier_commande_echeances_compatibles: (on la remets dans le panier qui a été vidé)", "abos". _LOG_INFO_IMPORTANTE);
+						$supprimer_panier_apres = false;
+						$insert = [
+							'id_panier' => $id_panier,
+							'objet' => 'abooffre',
+							'id_objet' => $detail['id_objet'],
+							'quantite' => $detail['quantite'],
+							'reduction' => $detail['reduction'],
+							'rang' => $rang++,
+						];
+						sql_insertq("spip_paniers_liens", $insert);
+					}
+				}
+			}
+		}
+	}
+
+	return $supprimer_panier_apres;
+}
 
 /**
  * Calculer les echeances d'une commande
