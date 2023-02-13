@@ -47,12 +47,12 @@ function abos_calculer_echeances_commande($id_commande) {
 	];
 
 	$details = sql_allfetsel('*', 'spip_commandes_details', 'id_commande=' . intval($id_commande), '', 'id_commandes_detail');
+	$echeances_type = '';
 	foreach ($details as $detail) {
 		$prix_ht = $detail['prix_unitaire_ht'] * $detail['quantite'];
 		$prix = $prix_ht * (1.0 + $detail['taxe']);
 		$echeances[0]['montant'] += $prix;
 		$echeances[0]['montant_ht'] += $prix_ht;
-		$echeances_type = '';
 
 		// trouver toutes les offres d'abonnement en renouvellement tacite dans la commande
 		// et calculer les echeances
@@ -89,36 +89,36 @@ function abos_calculer_echeances_commande($id_commande) {
 				}
 			}
 		}
+	}
 
-		if ($echeances_type) {
-			foreach ($echeances as $k => $echeance) {
-				// on force en string pour la serialization qui sinon reintroduit des virgules non significatives
-				$echeances[$k]['montant_ht'] = (string)round($echeances[$k]['montant_ht'], 2);
-				$echeances[$k]['montant'] = (string)round($echeances[$k]['montant'], 2);
-			}
-
-			if (
-				count($echeances) == 2
-				and $echeances[0]['montant'] == $echeances[1]['montant']
-				and $echeances[0]['montant_ht'] == $echeances[1]['montant_ht']
-			) {
-				if ($echeances[0]['nb'] > 0 and $echeances[1]['nb'] > 0) {
-					$echeances[0]['nb'] += $echeances[1]['nb'];
-				} else {
-					$echeances[0]['nb'] = 0;
-				}
-				unset($echeances[1]);
-			}
-
-			$set = [
-				'echeances_type' => $echeances_type,
-				'echeances' => serialize($echeances),
-			];
-			include_spip('action/editer_objet');
-			include_spip('inc/autoriser');
-			autoriser_exception('modifier', 'commande', $id_commande);
-			objet_modifier('commande', $id_commande, $set);
-			autoriser_exception('modifier', 'commande', $id_commande, false);
+	if ($echeances_type) {
+		foreach ($echeances as $k => $echeance) {
+			// on force en string pour la serialization qui sinon reintroduit des virgules non significatives
+			$echeances[$k]['montant_ht'] = (string)round($echeances[$k]['montant_ht'], 2);
+			$echeances[$k]['montant'] = (string)round($echeances[$k]['montant'], 2);
 		}
+
+		if (
+			count($echeances) == 2
+			and $echeances[0]['montant'] == $echeances[1]['montant']
+			and $echeances[0]['montant_ht'] == $echeances[1]['montant_ht']
+		) {
+			if ($echeances[0]['nb'] > 0 and $echeances[1]['nb'] > 0) {
+				$echeances[0]['nb'] += $echeances[1]['nb'];
+			} else {
+				$echeances[0]['nb'] = 0;
+			}
+			unset($echeances[1]);
+		}
+
+		$set = [
+			'echeances_type' => $echeances_type,
+			'echeances' => serialize($echeances),
+		];
+		include_spip('action/editer_objet');
+		include_spip('inc/autoriser');
+		autoriser_exception('modifier', 'commande', $id_commande);
+		objet_modifier('commande', $id_commande, $set);
+		autoriser_exception('modifier', 'commande', $id_commande, false);
 	}
 }
