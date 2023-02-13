@@ -86,8 +86,8 @@ function abos_periode_en_clair($periodicite) {
 }
 
 /**
- * Traduit la duree d'abonnement en info lisible, sous forme de periode
- * tous les x mois, tous les ans...
+ * Traduit la duree d'abonnement en info lisible, sous forme de durée
+ * 1 mois, 2 mois, 1 an, 2 ans...
  * @param $duree
  * @return mixed|string
  */
