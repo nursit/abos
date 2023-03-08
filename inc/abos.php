@@ -165,10 +165,16 @@ function abos_calculer_echeances_commande($id_commande) {
 			'echeances_type' => $echeances_type,
 			'echeances' => serialize($echeances),
 		];
-		include_spip('action/editer_objet');
-		include_spip('inc/autoriser');
-		autoriser_exception('modifier', 'commande', $id_commande);
-		objet_modifier('commande', $id_commande, $set);
-		autoriser_exception('modifier', 'commande', $id_commande, false);
 	}
+	else {
+		$set = [
+			'echeances_type' => '',
+			'echeances' => '',
+		];
+	}
+	include_spip('action/editer_objet');
+	include_spip('inc/autoriser');
+	autoriser_exception('modifier', 'commande', $id_commande);
+	objet_modifier('commande', $id_commande, $set);
+	autoriser_exception('modifier', 'commande', $id_commande, false);
 }
