@@ -38,10 +38,11 @@ function abos_resilier_dist($id, $options = []) {
 
 	$id_abonnement = $id;
 	if (!is_numeric($id)) {
-		if (strncmp($id, 'uid:', 4) == 0) {
-			$id = substr($id, 4);
+		$uid = $id;
+		if (strncmp($uid, 'uid:', 4) == 0) {
+			$uid = substr($uid, 4);
 		}
-		$row = sql_fetsel('*', 'spip_abonnements WHERE abonne_uid=' . sql_quote($id));
+		$row = sql_fetsel('*', 'spip_abonnements WHERE abonne_uid=' . sql_quote($uid));
 		$id_abonnement = $row['id_abonnement'];
 	} else {
 		$row = sql_fetsel('*', 'spip_abonnements WHERE id_abonnement=' . intval($id_abonnement));
@@ -138,7 +139,7 @@ function abos_resilier_dist($id, $options = []) {
 
 		// et on appelle le pipeline
 		$args = [
-			'id' => $id,
+			'id' => empty($row['abonne_uid']) ? $id : ('uid:' . $row['abonne_uid']),
 			'message' => isset($options['message']) ? $options['message'] : '',
 			'notify_bank' => false, // on a deja fait si besoin
 			'erreur' => $erreur,
