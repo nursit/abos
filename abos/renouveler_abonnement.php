@@ -98,52 +98,62 @@ function abos_renouveler_abonnement_dist($id_transaction, $abo_uid, $mode_paieme
 
 		$set = [];
 
-		if ($abo['duree_echeance'] === '1 month') {
-			$prochaine_echeance = $abo['date_echeance'];
-			$time_ref = strtotime($trans['date_paiement']);
-			if (!$time_ref) {
-				$time_ref = strtotime($trans['date_transaction']);
-			}
-			if (!$time_ref) {
-				$time_ref = $_SERVER['REQUEST_TIME'];
-			}
+		$prochaine_echeance = $abo['date_echeance'];
 
-			$datep15 = date('Y-m-d H:i:s', strtotime('+15 day', $time_ref));
+		$time_ref = strtotime($trans['date_paiement']);
+		if (!$time_ref) {
+			$time_ref = strtotime($trans['date_transaction']);
+		}
+		if (!$time_ref) {
+			$time_ref = $_SERVER['REQUEST_TIME'];
+		}
+		$datep15 = date('Y-m-d H:i:s', strtotime('+15 day', $time_ref));
 
-			// retablir un abo qui avait ete resilie a tort (puisqu'on a un paiement)
-			if ($abo['statut'] == 'resilie') {
-				$prochaine_echeance = $abo['date_debut']; // on recalcul l'echeance depuis le debut
-				$set['date_fin'] = '0000-00-00 00:00:00';
-				$set['statut'] = 'ok';
-				if ($validite) {
-					if ($validite !== 'echeance') {
-						$set['date_fin'] = $validite;
-					}
+		if (strpos('day', $abo['duree_echeance']) !== false) {
+			$datep15 = date('Y-m-d 23:59:59', strtotime('+' . $abo['duree_echeance'], $time_ref));
+		}
+
+		// retablir un abo qui avait ete resilie a tort (puisqu'on a un paiement)
+		if ($abo['statut'] == 'resilie') {
+			$prochaine_echeance = $abo['date_debut']; // on recalcul l'echeance depuis le debut
+			$set['date_fin'] = '0000-00-00 00:00:00';
+			$set['statut'] = 'ok';
+			if ($validite) {
+				if ($validite !== 'echeance') {
+					$set['date_fin'] = $validite;
 				}
-				elseif ($validite = $trans['validite']) {
+			}
+			elseif ($validite = $trans['validite']) {
+				// pour les mois on fait un calcul special pour garder le même jour du mois
+				if ($abo['duree_echeance'] === '1 month') {
 					$d = date($validite . '-d H:i:s', strtotime($abo['date_debut']));
 					$d = strtotime($d);
 					$d = strtotime('+1 month', $d);
 					$set['date_fin'] = date('Y-m-d H:i:s', $d);
 				}
+				else {
+					// sinon on recompte depuis le debut en incrémentant
+					$date_fin = $abo['date_debut'];
+					do {
+						$date_fin = date('Y-m-d H:i:s', strtotime('+' . $abo['duree_echeance'], strtotime($date_fin)));
+					} while (date('Y-m', strtotime($date_fin)) <= $validite);
+					$set['date_fin'] = $date_fin;
+				}
+			}
+			if (strpos('day', $abo['duree_echeance']) === false) {
 				$datep15 = date('Y-m-d H:i:s', strtotime('+5 day'));
 			}
+		}
 
-			// recaler la prochaine echeance si trop en avance (double appel anterieur ou erreur de calcul)
-			while ($prochaine_echeance > $datep15) {
-				$prochaine_echeance = date('Y-m-d H:i:s', strtotime('-' . $abo['duree_echeance'], strtotime($prochaine_echeance)));
-			}
-			// l'incrementer pour atteindre celle du mois prochain
-			while ($prochaine_echeance < $datep15) {
-				$prochaine_echeance = date('Y-m-d H:i:s', strtotime('+' . $abo['duree_echeance'], strtotime($prochaine_echeance)));
-			}
-			$set['date_echeance'] = $prochaine_echeance;
+		// recaler la prochaine echeance si trop en avance (double appel anterieur ou erreur de calcul)
+		while ($prochaine_echeance > $datep15) {
+			$prochaine_echeance = date('Y-m-d H:i:s', strtotime('-' . $abo['duree_echeance'], strtotime($prochaine_echeance)));
 		}
-		else {
-			$prochaine_echeance = $abo['date_echeance'];
+		// l'incrementer pour atteindre celle du mois prochain
+		while ($prochaine_echeance < $datep15) {
 			$prochaine_echeance = date('Y-m-d H:i:s', strtotime('+' . $abo['duree_echeance'], strtotime($prochaine_echeance)));
-			$set['date_echeance'] = $prochaine_echeance;
 		}
+		$set['date_echeance'] = $prochaine_echeance;
 
 		sql_updateq('spip_abonnements', $set, 'id_abonnement=' . intval($abo['id_abonnement']));
 	}
