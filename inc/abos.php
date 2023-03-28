@@ -100,6 +100,9 @@ function abos_calculer_echeances_commande($id_commande) {
 	$echeances_type = '';
 	foreach ($details as $detail) {
 		$prix_ht = $detail['prix_unitaire_ht'] * $detail['quantite'];
+		if ($detail['reduction'] >= 0.01) {
+			$prix_ht *= (1 - $detail['reduction']);
+		}
 		$prix = $prix_ht * (1.0 + $detail['taxe']);
 		$echeances[0]['montant'] += $prix;
 		$echeances[0]['montant_ht'] += $prix_ht;
