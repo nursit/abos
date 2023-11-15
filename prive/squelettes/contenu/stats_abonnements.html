@@ -76,7 +76,7 @@
 		<th colspan="2" class='center'><:abonnement:label_non_renouveles:></th></tr>
 	</thead>
 	<tbody>
-	<BOUCLE_mois(POUR){tableau #LISTE{-2,-1,0,1,2,3,4,5,6}}>[
+	<BOUCLE_mois(DATA){source tableau, #LISTE{-2,-1,0,1,2,3,4,5,6}}>[
 	(#VALEUR|afficher_stats_echeances_offre{#ID_ABO_OFFRE})
 	]</BOUCLE_mois>
 	</tbody>
