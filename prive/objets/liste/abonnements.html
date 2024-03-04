@@ -33,7 +33,7 @@
 				[(#INFO_AUTEUR{transaction,#ID_TRANSACTION_ECHEANCE}|abos_couper_abbr{20})]
 				]
 			</td>
-			<td class='offre secondaire'><a href="#URL_ECRIRE{abooffre,id_abo_offre=#ID_ABO_OFFRE}">##ID_ABO_OFFRE [(#INFO_TITRE{abooffre,#ID_ABO_OFFRE}|couper{80})]</a></td>
+			<td class='offre secondaire'><a href="#URL_ECRIRE{abooffre,id_abo_offre=#ID_ABO_OFFRE}" title="[(#INFO_TITRE{abooffre,#ID_ABO_OFFRE}|couper{80}|attribut_html)]">##ID_ABO_OFFRE</a></td>
 			<td class='credits secondaire'>[(#CREDITS|abos_credits_en_clair)#SET{hide_credits,''}]</td>
 			<td class='uid secondaire'><abbr title="#ABONNE_UID">[(#ABONNE_UID|couper{10,'...'})#SET{hide_uid,''}]</abbr></td>
 			<td class='debut secondaire'>[(#DATE_DEBUT|affdate{d/m/Y})]</td>
