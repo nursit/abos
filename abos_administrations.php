@@ -83,8 +83,26 @@ function abos_upgrade($nom_meta_base_version, $version_cible) {
 		['sql_alter', 'TABLE spip_abonnements CHANGE mode_paiement mode_paiement varchar(25) NOT NULL DEFAULT \'\''],
 	];
 
+	$maj['2.4.4'] = [
+		['sql_alter', 'TABLE spip_abonnements ADD date_fin_mode_paiement datetime NOT NULL DEFAULT \'0000-00-00 00:00:00\''],
+	];
+	$maj['2.4.5'] = [
+		['abos_date_fin_mode_paiement'],
+	];
+
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
+}
+
+/**
+ * Transfert des date_fin validité CB en date_fin_mode_paiement
+ * @return void
+ */
+function abos_date_fin_mode_paiement() {
+    sql_update('spip_abonnements', ['date_fin_mode_paiement' => 'date_fin', 'date_fin' => '\'0000-00-00 00:00:00\''], [
+        'statut=\'ok\'',
+        'date_fin like \'____-__-01 00:00:00\'',
+    ]);
 }
 
 function abos_rattraper_date() {
