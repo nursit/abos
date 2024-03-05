@@ -56,6 +56,11 @@
 	<label><:abonnement:label_mode_paiement:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{mode_paiement} mode_paiement'>(#MODE_PAIEMENT)</span>
 </div>]
+[<div class="champ contenu_date_fin_mode_paiement[ (#DATE_FIN_MODE_PAIEMENT*|intval|?{'',vide})]">
+	<label><:abonnement:label_date_fin_mode_paiement:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{date_fin_mode_paiement} date_fin'>(#DATE_FIN_MODE_PAIEMENT|affdate)</span>
+</div>]
+
 
 [<div class="champ contenu_confirm[ (#CONFIRM*|strlen|?{'',vide})]">
 	<label><:abonnement:label_confirm:> : </label>

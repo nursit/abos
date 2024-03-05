@@ -38,7 +38,7 @@
 			<td class='uid secondaire'><abbr title="#ABONNE_UID">[(#ABONNE_UID|couper{10,'...'})#SET{hide_uid,''}]</abbr></td>
 			<td class='debut secondaire'>[(#DATE_DEBUT|affdate{d/m/Y})]</td>
 			<td class='echeance secondaire'>[(#DATE_ECHEANCE|<{#DATE_FIN}|ou{#DATE_FIN|intval|non}?{#DATE_ECHEANCE|affdate{d/m/y}})#SET{hide_echeance,''}]</td>
-			<td class='fin secondaire'>[(#DATE_FIN|intval|?{#DATE_FIN|affdate{d/m/y},[(#MODE_ECHEANCE|oui)[(#CHEMIN_IMAGE{[renew-(#MODE_ECHEANCE)-16.svg]}|balise_img{#MODE_ECHEANCE})]]})]</td>
+			<td class='fin secondaire'>[(#DATE_FIN|intval|?{#DATE_FIN|affdate{d/m/y},[(#MODE_ECHEANCE|oui)[(#CHEMIN_IMAGE{[renew-(#MODE_ECHEANCE)-16.svg]}|balise_img{#MODE_ECHEANCE}|inserer_attribut{title,#DATE_FIN_MODE_PAIEMENT|intval|?{#DATE_FIN_MODE_PAIEMENT|affdate}})]]})]</td>
 			<td class='mode secondaire'>[(#MODE_PAIEMENT)[/(#CONFIRM|table_valeur{partner})]]</td>
 		</tr>
 	</BOUCLE_liste_abonnements>

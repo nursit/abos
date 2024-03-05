@@ -59,6 +59,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_date_debut' => 'Date début',
 	'label_date_echeance' => 'Date écheance',
 	'label_date_fin' => 'Date fin',
+	'label_date_fin_mode_paiement' => 'Fin de validité du mode de paiement',
 	'label_debut' => 'Début',
 	'label_duree_echeance' => 'Durée echéance',
 	'label_echeance_abbr' => 'Ech.',
