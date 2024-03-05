@@ -120,16 +120,10 @@ function abos_activer_abonnement_dist($id_transaction, $abo_uid, $mode_paiement,
 	// si l'abo a ete cree en oneshot mais qu'on est en recurent, repositionner la date de fin
 	if (
 		$abo['statut'] == 'ok'
-		and !$abo['id_transaction_echeance']
-		and $abo['date_fin'] == $abo['date_echeance']
+		and $abo['mode_echeance'] === 'tacite'
+		and $abo['date_fin'] <= $abo['date_echeance']
 	) {
-		if ($validite == 'echeance') {
-			$set['date_fin'] = '0000-00-00 00:00:00';
-		} elseif ($validite) {
-			$set['date_fin'] = $validite;
-		} else {
-			$set['date_fin'] = '0000-00-00 00:00:00';
-		}
+		$set['date_fin'] = '0000-00-00 00:00:00';
 	}
 
 	if (
@@ -192,8 +186,9 @@ function abos_activer_abonnement_dist($id_transaction, $abo_uid, $mode_paiement,
 		$set['id_auteur'] = $id_auteur;
 	}
 
-	if ($validite and $validite != 'echeance') {
-		$set['date_fin'] = $validite;
+    // remettre a jour la date de validité du mode de paiement qui a pu changer
+	if ($validite and $validite !== 'echeance') {
+		$set['date_fin_mode_paiement'] = $validite;
 	}
 
 	if (sql_updateq('spip_abonnements', $set, 'id_abonnement=' . intval($id_abonnement))) {
