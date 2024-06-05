@@ -5,6 +5,11 @@
 	<span dir='#LANG_DIR' class='#EDIT{titre} titre'>(#TITRE)</span>
 </div>]
 
+[<div class="champ contenu_slug[ (#SLUG*|strlen|?{'',vide})]">
+	<label><:abooffre:label_slug:> : </label>
+	<span dir='#LANG_DIR' class='#EDIT{slug} slug'>(#SLUG)</span>
+</div>]
+
 [<div class="champ contenu_duree[ (#DUREE*|strlen|?{'',vide})]">
 	<label><:abooffre:label_duree:> : </label>
 	<span dir='#LANG_DIR' class='#EDIT{duree} duree'>(#DUREE|abos_periode_en_clair)</span>

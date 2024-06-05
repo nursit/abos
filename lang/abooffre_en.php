@@ -24,6 +24,7 @@ $GLOBALS[$GLOBALS['idx_lang']] = array(
 	'label_duree' => 'Duration',
 	'label_prix_ht' => 'Price w/o taxes 1st due date',
 	'label_prix_ht_renouvellement' => 'Price w/o taxes renewal (if different)',
+	'label_slug' => 'Slug',
 	'label_texte' => 'Pitch',
 	'label_titre' => 'Title',
 	'label_wha_oid' => 'oId MSCA WHA/Orange Select',

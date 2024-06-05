@@ -90,6 +90,10 @@ function abos_upgrade($nom_meta_base_version, $version_cible) {
 		['abos_date_fin_mode_paiement'],
 	];
 
+	$maj['2.4.6'] = [
+		['maj_tables', ['spip_abo_offres']],
+	];
+
 	include_spip('base/upgrade');
 	maj_plugin($nom_meta_base_version, $version_cible, $maj);
 }
