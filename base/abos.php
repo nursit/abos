@@ -54,6 +54,7 @@ function abos_declarer_tables_objets_sql($tables) {
 		'field' => [
 			'id_abo_offre'       => 'bigint(21) NOT NULL',
 			'titre'              => 'text NOT NULL',
+			'identifiant'        => "varchar(25) NOT NULL DEFAULT ''",
 			'descriptif'         => 'text NOT NULL',
 			'texte'              => 'text NOT NULL',
 			'duree'              => "varchar(10) NOT NULL DEFAULT ''",
@@ -76,8 +77,8 @@ function abos_declarer_tables_objets_sql($tables) {
 		],
 		'titre' => "titre AS titre, '' AS lang",
 		 #'date' => "",
-		'champs_editables'  => ['titre', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','mode_renouvellement','immateriel','poids','largeur','longueur','hauteur'],
-		'champs_versionnes' => ['titre', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','mode_renouvellement','immateriel','poids','largeur','longueur','hauteur'],
+		'champs_editables'  => ['titre', 'identifiant', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','mode_renouvellement','immateriel','poids','largeur','longueur','hauteur'],
+		'champs_versionnes' => ['titre', 'identifiant', 'descriptif', 'texte', 'duree', 'prix_ht', 'prix_ht_renouvellement','taxe','mode_renouvellement','immateriel','poids','largeur','longueur','hauteur'],
 		'rechercher_champs' => ['titre' => 4,'descriptif' => 2,'texte' => 2,'wha_oid' => 1],
 		'tables_jointures'  => [],
 		'statut_textes_instituer' => [
