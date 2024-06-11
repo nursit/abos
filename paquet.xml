@@ -1,7 +1,7 @@
 <paquet
 	prefix="abos"
 	categorie="outil"
-	version="4.1.0"
+	version="4.2.0"
 	etat="stable"
 	compatibilite="[4.0.0;4.2.*]"
 	logo="abos.svg"
