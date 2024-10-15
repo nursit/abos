@@ -29,7 +29,7 @@ a mis a jour la valeur avec la page reelle]
 		{tri #ENV{par,multi titre},#GET{defaut_tri}}{pagination #ENV{nb,10} aboa}>
 		<tr class="[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})][ (#EXPOSE|unique)][ (#TITRE**|extraire_multi|initiale|=={#ENV{i}}|?{on}|unique)][(#ID_ABO_OFFRE|=={#ENV{id_lien_ajoute}}|oui)append]">
 			<td class='statut'>[(#STATUT|puce_statut{abooffre,#ID_ABO_OFFRE})]</td>
-			<td class='titre'>[(#LOGO_ABOOFFRE|image_reduire{20,26})]<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></td>
+			<td class='titre'>[(#LOGO_ABOOFFRE|image_reduire{20,26})]<a href="[(#ID_ABO_OFFRE|generer_objet_url{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></td>
 			<td class='duree secondaire'>[(#DUREE|abos_periode_en_clair)]</td>
 			<td class='prix_ht secondaire'>[(#CHAMP_SQL{prix_ht_renouvellement}|sinon{#CHAMP_SQL{prix_ht}}|bank_affiche_montant)]</td>
 			<td class='action'>

@@ -11,7 +11,7 @@
 	]
 
 	<h1>UID : (#ABONNE_UID|sinon{&mdash;})[(#CHEMIN_IMAGE{abonnement-24.svg}|balise_img{abonnement,cadre-icone})]</h1>
-	<h3 class="soustitre">Compte <a href="[(#ID_AUTEUR|generer_url_entite{auteur})]">##ID_AUTEUR[ : (#INFO_EMAIL{auteur,#ID_AUTEUR})]</a></h3>
+	<h3 class="soustitre">Compte <a href="[(#ID_AUTEUR|generer_objet_url{auteur})]">##ID_AUTEUR[ : (#INFO_EMAIL{auteur,#ID_AUTEUR})]</a></h3>
 
 
 ],simple fiche_objet})]
@@ -23,7 +23,7 @@
 <!--affiche_milieu-->
 
 <div id="wysiwyg">
-	<h3 class="soustitre">Offre <a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]">##ID_ABO_OFFRE[ : (#INFO_TITRE{abooffre,#ID_ABO_OFFRE})]</a></h3>
+	<h3 class="soustitre">Offre <a href="[(#ID_ABO_OFFRE|generer_objet_url{abooffre})]">##ID_ABO_OFFRE[ : (#INFO_TITRE{abooffre,#ID_ABO_OFFRE})]</a></h3>
 <INCLURE{fond=prive/objets/contenu/abonnement,id=#ID_ABONNEMENT,id_abonnement=#ID_ABONNEMENT,virtuel=oui,ajax=wysiwyg,wysiwyg=1}>
 </div>
 

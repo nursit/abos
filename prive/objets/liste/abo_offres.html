@@ -24,7 +24,7 @@
 	<BOUCLE_liste_abo_offres(ABO_OFFRES){id_mot?}{id_auteur?}{where?}{statut?}{recherche?}{tri #ENV{par,num titre},#GET{defaut_tri}}{par titre}{pagination #ENV{nb,10}}>
 		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})]'>
 			<td class='statut'>[(#STATUT|puce_statut{abooffre,#ID_ABO_OFFRE})]</td>
-			<td class='titre principale'>[(#LOGO_ABOOFFRE|image_reduire{20,26})]<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></td>
+			<td class='titre principale'>[(#LOGO_ABOOFFRE|image_reduire{20,26})]<a href="[(#ID_ABO_OFFRE|generer_objet_url{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></td>
 			<td class='duree'>[(#DUREE|abos_periode_en_clair)]</td>
 			<td class='renew' scope='col'>[(#MODE_RENOUVELLEMENT|oui)[(#CHEMIN_IMAGE{[renew-(#MODE_RENOUVELLEMENT)-16.svg]}|balise_img{#MODE_RENOUVELLEMENT})]]</td>
 			<td class='prix_ht'>[(#CHAMP_SQL{prix_ht_renouvellement}|sinon{#CHAMP_SQL{prix_ht}}|bank_affiche_montant)]</td>

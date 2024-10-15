@@ -25,7 +25,7 @@
 	<tbody>
 	<BOUCLE_liste_abonnements(ABONNEMENTS){id_abo_offre?}{id_transaction_echeance?}{id_transaction_essai?}{id_mot?}{id_auteur?}{where?}{statut?}{mode_paiement?}{recherche?}{tri #ENV{par,id_abonnement},#GET{defaut_tri}}{pagination #ENV{nb,10}}>
 		<tr class='[(#COMPTEUR_BOUCLE|alterner{row_odd,row_even})][ statut_(#STATUT)][ (#STATUT|abos_statut_en_clair{#DATE_ECHEANCE}|replace{'\W','_'})]'>
-            <td class='id'><a href="[(#ID_ABONNEMENT|generer_url_entite{abonnement})]" title="#ID_ABONNEMENT">#ID_ABONNEMENT</a></td>
+            <td class='id'><a href="[(#ID_ABONNEMENT|generer_objet_url{abonnement})]" title="#ID_ABONNEMENT">#ID_ABONNEMENT</a></td>
 			<td class='statut'>[ (#STATUT|abos_statut_en_clair{#DATE_ECHEANCE}|_T)]</td>
 			<td class='client secondaire'>[<a(#ID_AUTEUR|oui)
 				href="#URL_ECRIRE{auteur,id_auteur=#ID_AUTEUR}"

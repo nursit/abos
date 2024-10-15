@@ -226,7 +226,7 @@ $lignes
 	$t = '';
 	ksort($offres_vues);
 	foreach (array_keys($offres_vues) as $id_abo_offre) {
-		$t .= "#$id_abo_offre&nbsp;: " . generer_info_entite($id_abo_offre, 'abooffre', 'titre') . '<br />';
+		$t .= "#$id_abo_offre&nbsp;: " . generer_objet_info($id_abo_offre, 'abooffre', 'titre') . '<br />';
 	}
 	if ($t) {
 		$t = "<p>$t</p>";

@@ -37,7 +37,7 @@
 		<BOUCLE_totaloffre(ABONNEMENTS){statut=ok}{id_abo_offre} />#SET{totaloffre,#TOTAL_BOUCLE}<//B_totaloffre>
 		<tr>
 			<td>
-				<a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a>
+				<a href="[(#ID_ABO_OFFRE|generer_objet_url{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a>
 				#SET{dont,#LISTE}
 				<BOUCLE_totalgratuit(ABONNEMENTS){id_abo_offre}{mode_paiement=gratuit} />[(#SET{dont,#GET{dont}|push{#TOTAL_BOUCLE|singulier_ou_pluriel{abonnement:gratuits_un,abonnement:gratuits_nb}}})]<//B_totalgratuit>
 				<BOUCLE_totalparrain(ABONNEMENTS){id_abo_offre}{mode_paiement=parrain} />[(#SET{dont,#GET{dont}|push{#TOTAL_BOUCLE|singulier_ou_pluriel{abonnement:parraines_un,abonnement:parraines_nb}}})]<//B_totalparrain>
@@ -64,7 +64,7 @@
 
 <BOUCLE_paroffre(abo_offres){par id_abo_offre}>
 
-<h2><a href="[(#ID_ABO_OFFRE|generer_url_entite{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></h2>
+<h2><a href="[(#ID_ABO_OFFRE|generer_objet_url{abooffre})]" title="<:info_numero_abbreviation|attribut_html:> #ID_ABO_OFFRE">[(#RANG). ]#TITRE</a></h2>
 <B_mois>
 <p><:abonnement:texte_abonnements_finis_selon_mois:></p>
 <table class="spip">
