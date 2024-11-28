@@ -28,6 +28,7 @@ include_spip('base/abstract_sql');
 function abos_resilier_dist($id, $options = []) {
 	$abo_log = (isset($options['message']) ? $options['message'] : '');
 	$immediat = (isset($options['immediat']) ? $options['immediat'] : false);
+	$graceful = (isset($options['graceful']) ? $options['graceful'] : false);
 	$notify_bank = (isset($options['notify_bank']) ? $options['notify_bank'] : true);
 	$erreur = (isset($options['erreur']) ? $options['erreur'] : false);
 
@@ -96,6 +97,11 @@ function abos_resilier_dist($id, $options = []) {
 	}
 
 	if ($ok) {
+		// si graceful est que l'abo a deja été résilié, on ne fait rien
+		if ($graceful && $row['statut'] === 'resilie') {
+			return $ok;
+		}
+
 		$set = [];
 		$now = date('Y-m-d H:i:s');
 		if ($immediat) {
