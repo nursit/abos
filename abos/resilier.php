@@ -23,6 +23,7 @@ include_spip('base/abstract_sql');
  *   bool immediat
  *   string message
  *   bool notify_bank
+ *   bool silencieux : pour désactiver l'envoi de notification
  * @return bool
  */
 function abos_resilier_dist($id, $options = []) {
@@ -31,6 +32,7 @@ function abos_resilier_dist($id, $options = []) {
 	$graceful = (isset($options['graceful']) ? $options['graceful'] : false);
 	$notify_bank = (isset($options['notify_bank']) ? $options['notify_bank'] : true);
 	$erreur = (isset($options['erreur']) ? $options['erreur'] : false);
+	$silencieux = $options['silencieux'] ?? false;
 
 	if (!$abo_log) {
 		$abo_log = 'Resiliation';
@@ -129,19 +131,20 @@ function abos_resilier_dist($id, $options = []) {
 		spip_log($log = "resiliation abo $id/$id_abonnement : " . var_export($set, true), 'abos_resil' . _LOG_INFO_IMPORTANTE);
 
 		// email webmaster pour surveillance
-		$message = generer_url_ecrire('abonnement', "id_abonnement=$id_abonnement", true, false) . "\n";
-		if ($notify_bank) {
-			$message .= "AVEC notification a la banque (interruption forcée des paiements)\n";
-		} else {
-			$message .= "sans notification a la banque\n";
+		if (!$silencieux) {
+			$message = generer_url_ecrire('abonnement', "id_abonnement=$id_abonnement", true, false) . "\n";
+			if ($notify_bank) {
+				$message .= "AVEC notification a la banque (interruption forcée des paiements)\n";
+			} else {
+				$message .= "sans notification a la banque\n";
+			}
+			$envoyer_mail = charger_fonction('envoyer_mail', 'inc');
+			$message .= "\n\n" . $log;
+			$sujet = "Resiliation abonnement $id_abonnement";
+			$u = parse_url($GLOBALS['meta']['adresse_site']);
+			$host = preg_replace(',^www\.,', '', $u['host']);
+			$envoyer_mail($GLOBALS['meta']['email_webmaster'], $sujet, $message, "resiliations@$host");
 		}
-		$envoyer_mail = charger_fonction('envoyer_mail', 'inc');
-		$message .= "\n\n" . $log;
-		$sujet = "Resiliation abonnement $id_abonnement";
-		$u = parse_url($GLOBALS['meta']['adresse_site']);
-		$host = preg_replace(',^www\.,', '', $u['host']);
-		$envoyer_mail($GLOBALS['meta']['email_webmaster'], $sujet, $message, "resiliations@$host");
-
 
 		// et on appelle le pipeline
 		$args = [

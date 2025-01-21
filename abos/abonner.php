@@ -27,6 +27,7 @@ include_spip('base/abstract_sql');
  *   string date_echeance
  *   string date_fin
  *   string mode_paiement
+ *   bool silencieux : pour désactiver l'envoi de notification
  * @return int|bool
  */
 function abos_abonner_dist($id_abo_offre, $options = []) {
@@ -45,6 +46,7 @@ function abos_abonner_dist($id_abo_offre, $options = []) {
 			'date_fin' => '',
 			'mode_paiement' => '',
 			'abonne_uid' => '',
+			'silencieux' => false,
 		];
 		$options = array_merge($defaut, $options);
 
@@ -141,7 +143,10 @@ function abos_abonner_dist($id_abo_offre, $options = []) {
 			sql_updateq('spip_abonnements', ['credits_echeance' => $limites, 'credits' => $limites], 'id_abonnement=' . intval($id_abonnement));
 		}
 
-		if ($statut == 'ok') {
+		if (
+			$statut == 'ok'
+			&& !$options['silencieux']
+		) {
 			$notifications = charger_fonction('notifications', 'inc');
 			$notifications('activerabonnement', $id_abonnement, ['statut' => $statut, 'statut_ancien' => 'prepa']);
 		}
