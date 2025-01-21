@@ -16,8 +16,19 @@
 .formulaire_editer_abooffre .editer_duree .select {width: auto;}
 .abooffre #wysiwyg label {font-weight: bold; color:#666;}
 
-.liste-objets.abonnements .abonnement_info_statut_impaye td, .liste-objets.abonnements .abonnement_info_statut_impaye th {background-color: #D2D2C1}
-.liste-objets.abonnements .abonnement_info_statut_resilie td, .liste-objets.abonnements .abonnement_info_statut_resilie th {background-color: #B7A5A5}
+/* Listes d'abonnements : lignes impayées et résiliées */
+.liste-objets.abonnements .abonnement_info_statut_impaye :is(td, th) {
+	background-color: hsl(var(--spip-color-notice--h), var(--spip-color-notice--s), 94%) !important;
+}
+.liste-objets.abonnements .abonnement_info_statut_impaye :is(td, th) a:not(.btn) {
+	color: hsl(var(--spip-color-notice--h), var(--spip-color-notice--s), 30%);
+}
+.liste-objets.abonnements .abonnement_info_statut_resilie :is(td, th) {
+	background-color: hsl(var(--spip-color-error--h), var(--spip-color-error--s), 94%) !important;
+}
+.liste-objets.abonnements .abonnement_info_statut_resilie :is(td, th) a:not(.btn) {
+	color: hsl(var(--spip-color-error--h), var(--spip-color-error--s), 30%);
+}
 
 .liste-objets.abonnements .wo-credits td.credits,.liste-objets.abonnements .wo-credits th.credits {display: none}
 .liste-objets.abonnements .wo-echeance td.echeance,.liste-objets.abonnements .wo-echeance th.echeance  {display: none}
