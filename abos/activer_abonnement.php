@@ -192,6 +192,8 @@ function abos_activer_abonnement_dist($id_transaction, $abo_uid, $mode_paiement,
 	}
 
 	if (sql_updateq('spip_abonnements', $set, 'id_abonnement=' . intval($id_abonnement))) {
+		include_spip('inc/abos');
+		abos_journaliser($id_abonnement, "Activer abonnement : " . json_encode($set));
 		if ($row = sql_fetsel('*', 'spip_transactions', 'id_transaction=' . intval($id_transaction))) {
 			if (($row['id_auteur'] == 0) and $id_transaction) {
 				sql_updateq('spip_transactions', ['id_auteur' => $row['id_auteur'] = $abo['id_auteur']], 'id_transaction=' . intval($id_transaction));

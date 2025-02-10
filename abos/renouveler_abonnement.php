@@ -120,25 +120,13 @@ function abos_renouveler_abonnement_dist($id_transaction, $abo_uid, $mode_paieme
 			$set['statut'] = 'ok';
 			if ($validite) {
 				if ($validite !== 'echeance') {
-					$set['date_fin'] = $validite;
+					$set['date_fin_mode_paiement'] = $validite;
 				}
 			}
 			elseif ($validite = $trans['validite']) {
-				// pour les mois on fait un calcul special pour garder le même jour du mois
-				if ($abo['duree_echeance'] === '1 month') {
-					$d = date($validite . '-d H:i:s', strtotime($abo['date_debut']));
-					$d = strtotime($d);
-					$d = strtotime('+1 month', $d);
-					$set['date_fin'] = date('Y-m-d H:i:s', $d);
-				}
-				else {
-					// sinon on recompte depuis le debut en incrémentant
-					$date_fin = $abo['date_debut'];
-					do {
-						$date_fin = date('Y-m-d H:i:s', strtotime('+' . $abo['duree_echeance'], strtotime($date_fin)));
-					} while (date('Y-m', strtotime($date_fin)) <= $validite);
-					$set['date_fin'] = $date_fin;
-				}
+				$d = $validite . '-15 00:00:00';
+				$d = strtotime('+1 month', strtotime($d));
+				$set['date_fin_mode_paiement'] = date('Y-m-01 00:00:00', $d);
 			}
 			if (strpos('day', $abo['duree_echeance']) === false) {
 				$datep15 = date('Y-m-d H:i:s', strtotime('+5 day'));
@@ -149,13 +137,15 @@ function abos_renouveler_abonnement_dist($id_transaction, $abo_uid, $mode_paieme
 		while ($prochaine_echeance > $datep15) {
 			$prochaine_echeance = date('Y-m-d H:i:s', strtotime('-' . $abo['duree_echeance'], strtotime($prochaine_echeance)));
 		}
-		// l'incrementer pour atteindre celle du mois prochain
+		// l'incrementer pour atteindre l'echeance suivante
 		while ($prochaine_echeance < $datep15) {
 			$prochaine_echeance = date('Y-m-d H:i:s', strtotime('+' . $abo['duree_echeance'], strtotime($prochaine_echeance)));
 		}
 		$set['date_echeance'] = $prochaine_echeance;
 
 		sql_updateq('spip_abonnements', $set, 'id_abonnement=' . intval($abo['id_abonnement']));
+		include_spip('inc/abos');
+		abos_journaliser($id_abonnement, "Renouveler abonnement : " . json_encode($set));
 	}
 
 	return $id_abonnement;

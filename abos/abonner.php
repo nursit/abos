@@ -127,6 +127,8 @@ function abos_abonner_dist($id_abo_offre, $options = []) {
 			spip_log("Impossible de creer l'abonnement en base " . var_export($ins, true), 'abos' . _LOG_ERREUR);
 			return false;
 		}
+		include_spip('inc/abos');
+		abos_journaliser($id_abonnement, "Créer abonnement : " . json_encode($ins));
 
 		// affecter les credits eventuels
 		$limites = [];

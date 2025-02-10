@@ -11,6 +11,19 @@
  */
 
 /**
+ * Journaliser une action sur un abonnement : garde la trace de la date et de l'auteur de l'action
+ * @param int $id_abonnement
+ * @param string $action
+ * @return void
+ */
+function abos_journaliser($id_abonnement, $action) {
+	include_spip('inc/abonnements');
+	$log = abos_log($action);
+
+	sql_update('spip_abonnements', ['log' => 'concat(log,'.sql_quote($log).')'], 'id_abonnement='.intval($id_abonnement));
+}
+
+/**
  * Mise en forme des logs abonnement
  * @param $abo_log
  * @return string

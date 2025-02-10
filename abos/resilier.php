@@ -134,6 +134,8 @@ function abos_resilier_dist($id, $options = []) {
 		}
 
 		sql_update('spip_abonnements', $set, 'id_abonnement=' . intval($id_abonnement));
+		include_spip('inc/abos');
+		abos_journaliser($id_abonnement, "Resilier : " . json_encode($set));
 		spip_log($log = "resiliation abo $id/$id_abonnement : " . var_export($set, true), 'abos_resil' . _LOG_INFO_IMPORTANTE);
 
 		// email webmaster pour surveillance
