@@ -97,9 +97,17 @@ function abos_resilier_dist($id, $options = []) {
 	}
 
 	if ($ok) {
-		// si graceful est que l'abo a deja été résilié, on ne fait rien
-		if ($graceful && $row['statut'] === 'resilie') {
-			return $ok;
+		if ($graceful) {
+			// si graceful est que l'abo a deja été résilié, on ne fait rien
+			if ($row['statut'] === 'resilie') {
+				spip_log($log = "resiliation abo $id/$id_abonnement : GRACEFULL mais deja résilié, on ne fait rien", 'abos_resil' . _LOG_INFO_IMPORTANTE);
+				return $ok;
+			}
+			// si graceful est que l'abo se finit à la prochaine echeance, on ne fait rien
+			if ($row['statut'] === 'ok' && intval($row['date_fin']) && $row['date_fin'] === $row['date_echeance']) {
+				spip_log($log = "resiliation abo $id/$id_abonnement : GRACEFULL mais se finit à la prochaine echeance, on ne fait rien", 'abos_resil' . _LOG_INFO_IMPORTANTE);
+				return $ok;
+			}
 		}
 
 		$set = [];
