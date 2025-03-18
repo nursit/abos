@@ -22,7 +22,13 @@ function action_prolonger_abonnement_dist($arg = null) {
 		$arg = $securiser_action();
 	}
 
-	list($id_abonnement, $nb, $unite) = explode('-', $arg);
+	$args = explode('-', $arg, 3);
+	if (count($args) < 3) {
+		spip_log("action_prolonger_abonnement_dist: arg '$arg' mal formé",  'abos' . _LOG_ERREUR);
+		return;
+	}
+
+	[$id_abonnement, $nb, $unite] = $args;
 
 	include_spip('inc/autoriser');
 	if (
