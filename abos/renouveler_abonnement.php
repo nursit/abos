@@ -118,6 +118,7 @@ function abos_renouveler_abonnement_dist($id_transaction, $abo_uid, $mode_paieme
 			$prochaine_echeance = $abo['date_debut']; // on recalcul l'echeance depuis le debut
 			$set['date_fin'] = '0000-00-00 00:00:00';
 			$set['statut'] = 'ok';
+			$set['message'] = '';
 			if ($validite) {
 				if ($validite !== 'echeance') {
 					$set['date_fin_mode_paiement'] = $validite;
@@ -129,7 +130,7 @@ function abos_renouveler_abonnement_dist($id_transaction, $abo_uid, $mode_paieme
 				$set['date_fin_mode_paiement'] = date('Y-m-01 00:00:00', $d);
 			}
 			if (strpos('day', $abo['duree_echeance']) === false) {
-				$datep15 = date('Y-m-d H:i:s', strtotime('+5 day'));
+				$datep15 = max($datep15, date('Y-m-d H:i:s', strtotime('+5 day')));
 			}
 		}
 
