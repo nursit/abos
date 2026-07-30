@@ -68,7 +68,7 @@ function abos_liste_zones_acces_auteur($id_auteur) {
 
 function abos_preparer_visiteur_session($flux) {
 
-	if ($flux['data']['statut'] == '6forum') {
+	if (($flux['data']['statut'] ?? null) === '6forum') {
 		$row = $flux['args']['row'];
 		// Indiquer la connexion. A la journee pres ca suffit.
 		$connect_quand = strtotime($row['en_ligne']);
